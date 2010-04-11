@@ -1,0 +1,234 @@
+#===========================================================
+#
+# MED file mode definition file
+# Last updated: 02.12.2004   11:42
+#
+#===========================================================
+
+files: *.opl
+title: Open UI's OPL
+
+default: no
+caseSensitive: yes
+checkCommentInString: yes
+shiftDistance: 1
+tabWidth: 8
+tabLoadExpand: 0
+tabInsAsBlank: 1
+
+sectionRegexp: (^[ ]*)(class|function)[ ]+([a-zA-Z0-9_\$]+)
+sectionDisplayRegexp: (^[ ]*)(class|function)[ ]+([a-zA-Z0-9_\$]+) *[:\(] *([^\(\)/]*)[\): ]*([^/\(\){}]*)
+sectionBrowserOrder: 2, 3, 4, 5
+sectionDisplayOrder: 2, 3
+sectionBrowserMainKey: 3
+sectionDisplay: 5000, 1000
+
+wordWrap: disabled 70 >!:~#  
+
+wordSep:'&()[]{}\<>.,;-+*:?!=-|"/~
+
+# 3rd party online help
+inf: cmd.exe|/C|internet|%h http://info.propack-data.de/Doku/Programmierung/OpenUI/htmlindx.htm * http://info.propack-data.de/Doku/Programmierung/OpenUI/htmlindx.htm
+
+
+# brackets
+bracket: ( ) 1
+bracket: { } 1
+bracket: [ ] 0
+
+
+# Color definitions
+defineColor: myGreen 0 100 10
+defineColor: myDarkYellow 150 150 0
+defineColor: myDarkBlue 0 0 150
+defineColor: myDarkRed 200 0 0
+defineColor: myDarkestRed 150 0 0
+defineColor: myLightGray 220 220 220
+
+
+foregroundColor: black
+backgroundColor: white
+blockColor: myLightGray
+
+# Reserved words
+
+color: blue, normal, blue, bold
+token: FALSE OuiBooleanT OuiCharT OuiDecimalT OuiFloatT OuiIntegerT OuiLongT OuiPointerT
+token: OuiShortT OuiStringT OuiZonedT TRUE accelerator action alias and array
+token: attr attribute begin bool char class const constant declid div doobrie
+token: else end enum export extern false float for func function goto if in init
+token: initially inst instance int local long message mnemonic not of on or priv
+token: private pub public readonly record rem repeat return short slot slotno
+token: string to true type until var variable virtual when while zoned
+
+color: myDarkRed, normal, myDarkRed, normal
+token: Application Button Evaluator Filledge Graphic Menu OuiObj Region Scrollable
+token: Separator StandardDialog Visual arc cascade colorDialog comboBox controlBar
+token: dataManager database devFontDialog dialogb diversion editText fontDialog
+token: form graphicCompound groupBox horizontalSep interactor label list mdiFrameForm
+token: menuBar menuBarButton menuButton menuCascadeButton menuPushButton menuRadioButton
+token: menuToggleButton messageBox module multiTextL multiTextW openSaveDialog
+token: optionMenu panel popupMenu pulldown pushButton query radioButton radioPushButton
+token: scene scrollbar session slider spline statusText table timer toggleButton
+token: togglePushButton tpMenuBar tpSpreadSheet tpStatusBar tpTable tpToolBar
+token: verticalSep
+
+color: myGreen, normal, myGreen, normal
+token: AccelLabel Active ActiveCell ActiveCellBackground ActiveCellForeground
+token: ActivePrefix ActiveQuery AlignHoriz AlignVert Alignment AllowClose AllowMaximize
+token: AllowMinimize AllowMove AllowResize AspectLock AspectRatio AutoCommit AutoFlow
+token: AutoResizePolicy BaseHeight BaseWidth BeepOnDiscard BorderStyle BorderStyle
+token: BorderWidth Bounds ButtonModifiers ButtonNumber Bytes CatName CatSetNum
+token: Changed Class Closed ColumnCount ColumnLengths ColumnNames ColumnTypes
+token: ComboBoxStyle CommitDirection Connected CursorName DataDemandPolicy DataOrigin
+token: DataPendingPolicy DatasourceName DateInputFormat DecimalPoints Depth Direction
+token: DiscardInput DrawGridColor DrawGridStyle DynamicGrid EdgeStyle EdgeWidth
+token: Editable Editable ErrorText ExtendClassLibrary FastDraw FillAlternate FillAngle
+token: FocusItem Font Font Font Font Font Foreground FormState GUIType GrabInput
+token: Height HeightInc HelpId IconImage IconX Image ImageData ImageTileName Increment
+token: IncrementMulti IndexMajor IndexMinor InputEdit InputMode InsensColor InsensColor
+token: InsertMode IsDefault ItemCount Items JumpScroll Label LabelDisplayPolicy
+token: LastNativeError Length LineStyle LineWidth LockedColumns LockedRows MajorCount
+token: MajorIncrement MarginHeight MarginHeight MarginWidth MarginWidth MaxAspectX
+token: MaxAspectY MaxBytes MaxBytes MaxHeight MaxOffsetHoriz MaxOffsetVert MaxWidth
+token: Maximized MinAspectX MinAspectY MinChars MinChars MinColumns MinHeight
+token: MinLines MinRows MinWidth Mnemonic Modal Mode NPoints NPoints Name NativeHandle
+token: NativeHandle NativeHandle NavigateLocked Offset OffsetHoriz OffsetVert
+token: OnDesktop Orientation OutputEdit OutputFormat OverrideRedirect PageSize
+token: PagesLocked PagesMemory PagingPolicy Parent PassivePrefix PasswordChar
+token: Pattern Placement PlacementDetail PlacementPolicy Points PositionX PositionY
+token: PrimarySource PrimarySource QueryType Radio RadiusMajor RadiusMinor RangeHoriz
+token: RangeMajor RangeMinor RangeVert RealizePolicy RotateAngle RowMajor RowMajor
+token: SaveUnder ScaleX ScaleY ScreenHeight, ScreenWidth ScrollBarPlacement ScrollBarTroughColor
+token: ScrollHoriz ScrollVert Sector SelectedAreas SelectedItemBG SelectedItemCount
+token: SelectedItemFG SelectedItemList SelectedItemMap SelectedItems SelectedText
+token: SelectionBackground SelectionForeground SelectionLength SelectionPolicy
+token: SelectionPolicy SelectionStart Self Sensitive Sensitive ShortHelpText ShowButtons
+token: ShowIndicator ShowMinimize ShowResizeHandles ShowSysMenu ShowTitle ShowValue
+token: SizeVisible SoftKey SpaceColumns SpaceItems SpaceRows SpanX SpanY StartAngle
+token: StretchHoriz StretchVert Style Suffix Template Thickness ThumbSize Title
+token: Title TitleFont TitlePlacement Toggle TopLeft Trace Transient Traversable
+token: TroughColor UniformColumns UniformRows Units Updatable Valid Value Value
+token: ValueMax ValueMin Visible VisibleColumns VisibleItems VisibleRows Width
+token: WidthInc WorldCoords WrapMode WrapNavigation X Y
+
+color: myDarkestRed, normal, myDarkestRed, normal
+token: OuiDestroy OuiGetTime OuiInstantiate OuiListAppend OuiListDeleteItem OuiListFind
+token: OuiListInsertItem OuiListItems OuiListNumItems OuiListReFind OuiListSort
+token: OuiLookup OuiPrefsClose OuiPrefsGetBoolean OuiPrefsGetEnum OuiPrefsGetLong
+token: OuiPrefsGetMask OuiPrefsGetString OuiPrefsItemEnumerate OuiPrefsMerge OuiPrefsOpen
+token: OuiPrefsSave OuiPrefsSectionEnumerate OuiPrefsSetBoolean OuiPrefsSetEnum
+token: OuiPrefsSetLong OuiPrefsSetMask OuiPrefsSetString OuiPrint OuiQueueMessage
+token: OuiReCmp OuiReDestroy OuiReExtract OuiReMatch OuiStrChr OuiStrIsAlnum OuiStrIsAlpha
+token: OuiStrIsDigit OuiStrIsLower OuiStrIsPunct OuiStrIsSpace OuiStrIsUpper OuiStrLen
+token: OuiStrPad OuiStrRChr OuiStrStr OuiStrToLower OuiStrToUpper OuiStrTrim OuiSubStr
+token: OuiSynchronize OuiTrace OuiWebBrowserLoadURL
+
+color: myDarkestRed, normal, myDarkestRed, normal
+token: KeyAltBack KeyAltBackTab KeyAltCancel KeyAltClrDisp KeyAltClrLine KeyAltCopy
+token: KeyAltCut KeyAltDelChar KeyAltDelLine KeyAltDo KeyAltDown KeyAltEof KeyAltExtend
+token: KeyAltForm KeyAltHelp KeyAltHome KeyAltHomeD KeyAltInsChar KeyAltInsLine
+token: KeyAltKeys KeyAltLeft KeyAltLocal KeyAltLocalTab KeyAltMenu KeyAltMenuBar
+token: KeyAltNext KeyAltNull KeyAltPaste KeyAltPoint KeyAltPrev KeyAltPrint KeyAltReplace
+token: KeyAltReturn KeyAltRight KeyAltRollDn KeyAltRollUp KeyAltSelect KeyAltSoft1
+token: KeyAltSoft10 KeyAltSoft11 KeyAltSoft12 KeyAltSoft13 KeyAltSoft14 KeyAltSoft15
+token: KeyAltSoft16 KeyAltSoft17 KeyAltSoft18 KeyAltSoft19 KeyAltSoft2 KeyAltSoft20
+token: KeyAltSoft21 KeyAltSoft22 KeyAltSoft23 KeyAltSoft24 KeyAltSoft25 KeyAltSoft26
+token: KeyAltSoft27 KeyAltSoft28 KeyAltSoft29 KeyAltSoft3 KeyAltSoft30 KeyAltSoft31
+token: KeyAltSoft32 KeyAltSoft4 KeyAltSoft5 KeyAltSoft6 KeyAltSoft7 KeyAltSoft8
+token: KeyAltSoft9 KeyAltTab KeyAltTimer KeyAltUp KeyAltWindowList KeyAltWindowMenu
+token: KeyBack KeyBackTab KeyCancel KeyClrDisp KeyClrLine KeyCopy KeyCut KeyDelChar
+token: KeyDelLine KeyDo KeyDown KeyEof KeyExtend KeyForm KeyHelp KeyHome KeyHomeD
+token: KeyInsChar KeyInsLine KeyKeys KeyLeft KeyLocal KeyLocalTab KeyMenu KeyMenuBar
+token: KeyNext KeyNull KeyPaste KeyPoint KeyPrev KeyPrint KeyReplace KeyReturn
+token: KeyRight KeyRollDn KeyRollUp KeySelect KeySoft1 KeySoft10 KeySoft11 KeySoft12
+token: KeySoft13 KeySoft14 KeySoft15 KeySoft16 KeySoft17 KeySoft18 KeySoft19 KeySoft2
+token: KeySoft20 KeySoft21 KeySoft22 KeySoft23 KeySoft24 KeySoft25 KeySoft26 KeySoft27
+token: KeySoft28 KeySoft29 KeySoft3 KeySoft30 KeySoft31 KeySoft32 KeySoft4 KeySoft5
+token: KeySoft6 KeySoft7 KeySoft8 KeySoft9 KeyTab KeyTimer KeyUp KeyWindowList
+token: KeyWindowMenu
+
+color: myDarkestRed, normal, myDarkestRed, normal
+token: OuiMsgAny OuiMsgKeyAny OuiMsgKeyAnyPrintable OuiMsgMouseAny OuiMsgMouseAnyDbl
+token: OuiMsgMouseAnyDown OuiMsgMouseAnyDrag OuiMsgMouseAnyUp
+
+color: myDarkestRed, normal, myDarkestRed, normal
+token: OuiMsgB1Down OuiMsgB1Drag OuiMsgB1Up OuiMsgB2Down OuiMsgB2Drag OuiMsgB2Up
+token: OuiMsgB3Down OuiMsgB3Drag OuiMsgB3Up OuiMsgB4Down OuiMsgB4Drag OuiMsgB4Up
+token: OuiMsgB5Down OuiMsgB5Drag OuiMsgB5Up OuiMsgMouseB1 OuiMsgMouseB1Dbl OuiMsgMouseB1Down
+token: OuiMsgMouseB1Down OuiMsgMouseB1Drag OuiMsgMouseB1Up OuiMsgMouseB2Dbl OuiMsgMouseB2Down
+token: OuiMsgMouseB2Down OuiMsgMouseB2Drag OuiMsgMouseB2Up OuiMsgMouseB2Up OuiMsgMouseB3Dbl
+token: OuiMsgMouseB3Down OuiMsgMouseB3Down OuiMsgMouseB3Drag OuiMsgMouseB3Up OuiMsgMouseB3Up
+token: OuiMsgMouseB4Dbl OuiMsgMouseB4Down OuiMsgMouseB4Drag OuiMsgMouseB4Up OuiMsgMouseB5Dbl
+token: OuiMsgMouseB5Dowkn OuiMsgMouseB5Drag OuiMsgMouseB5Up
+
+color: myDarkestRed, normal, myDarkestRed, normal
+token: OuiMessageHelponHelp OuiMsgAbout OuiMsgClose OuiMsgCreationAborted OuiMsgDbCommit
+token: OuiMsgDbCommit OuiMsgDbCommitResult OuiMsgDbCommitResult OuiMsgDbConnect
+token: OuiMsgDbConnectResult OuiMsgDbDisconnect OuiMsgDbDisconnectResult OuiMsgDbExecuteSQL
+token: OuiMsgDbExecuteSQLResult OuiMsgDefocus OuiMsgDmDeleteMajor OuiMsgDmDeleteMinor
+token: OuiMsgDmInsertMajor OuiMsgDmInsertMinor OuiMsgDmInvalidateArea OuiMsgDmNotify
+token: OuiMsgDoublePick OuiMsgDrag OuiMsgDragCancel OuiMsgDragDone OuiMsgDragHelp
+token: OuiMsgDragMotion OuiMsgDragStart OuiMsgDrop OuiMsgEvaluatorChanged OuiMsgEvaluatorDrag
+token: OuiMsgExitApplication OuiMsgFocus OuiMsgFocusIn OuiMsgFocusOut OuiMsgFormStateChanged
+token: OuiMsgGridDragged OuiMsgHelp OuiMsgHelpClearStatus OuiMsgHelpClose OuiMsgHelpContext
+token: OuiMsgHelpHideHint OuiMsgHelpIndex OuiMsgHelpKey OuiMsgHelpPick OuiMsgHelpShowHint
+token: OuiMsgHelpShowStatus OuiMsgInvisible OuiMsgLockClear OuiMsgLockException
+token: OuiMsgLockId OuiMsgLockRelease OuiMsgLockRequest OuiMsgLowResources OuiMsgMDIArrangeIcons
+token: OuiMsgMDICascade OuiMsgMDIClose OuiMsgMDITile OuiMsgMove OuiMsgNewRadioButton
+token: OuiMsgNoResources OuiMsgNothingCanHappen OuiMsgPick OuiMsgPlace OuiMsgQueryExecute
+token: OuiMsgQueryExecuteResult OuiMsgQueryFetchRows OuiMsgQueryFetchRowsResult
+token: OuiMsgRubberLine OuiMsgRubberRect OuiMsgSelect OuiMsgSelectionChange OuiMsgSelectionDefocus
+token: OuiMsgSelectionDoubleClick OuiMsgSessionAborted OuiMsgSize OuiMsgTableDataArrived
+token: OuiMsgTimer OuiMsgTimerCancel OuiMsgTnfData<Type> OuiMsgTnfException OuiMsgTnfInitiateRequest
+token: OuiMsgTnfInitiateSupply OuiMsgTopLeftChanged OuiMsgTxnCancel OuiMsgTxnCommit
+token: OuiMsgTxnData<Type> OuiMsgTxnException OuiMsgTxnId OuiMsgTxnIdRequest OuiMsgTxnInitiateRequest
+token: OuiMsgTxnInitiateSupply OuiMsgVisible OuiMsgWMFocusIn
+
+color: red, normal, red, bold
+token: FALSE NULL TRUE
+
+color: darkred, normal, darkred, normal
+token: div not
+
+# Comments
+color: darkcyan, normal, darkcyan, outline
+eolCom: //
+comCol: 0
+
+openCom: /*
+closeCom: */
+
+# Symbols
+
+color: darkpink, normal, darkpink, italic
+string: "
+
+color: darkpink, normal, darkpink, italic
+char: '
+
+color: red, normal, red, normal
+literal: \
+
+color: myDarkBlue, normal, myDarkBlue, bold
+funcParml: (
+
+color: myDarkYellow, normal, myDarkYellow, normal
+decPrefix: 
+
+color: darkgreen, normal, darkgreen, normal
+hexPrefix: 0X
+
+color: darkgray, normal, darkgray, normal
+octalPrefix: 0
+
+numPostfix: L
+
+color: red, normal, red, normal
+symbol: ><{}()+-:&!|=~?.;,^/*
+color: red, normal, red, normal
+symbol: []
+
+
+#===========================================================
+

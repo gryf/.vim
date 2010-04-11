@@ -1,0 +1,37 @@
+snippet pgbreak
+	<p class="break">&nbsp;</p>
+snippet brk
+	<p class="break">&nbsp;</p>
+snippet head
+	<head>
+	<style type='text/css'>
+	.break { page-break-after: always; text-indent: 0em; }
+	.toc { page-break-after: always; text-indent: 0em; }
+	.tocpn {text-align: right; }
+	.tocchr {text-align: right;}
+	.hanging_indent { padding-left:4em; text-indent:-4em }
+	.drop { text-indent: 0pt}
+	.drop:first-letter { font-size:xx-large}
+	.centre {text-align: center; }
+	</style>
+	</head>
+snippet toc
+	///Table of Contents///
+snippet title
+	# ${1:title}
+snippet author
+	# ${1: author}
+snippet autor
+	# ${1: author}
+snippet chapter
+	## ${1: chapter}
+snippet bold
+	**${1: bold}**
+snippet italic
+	*${1:italic}*
+snippet img
+	!${1:[Alt text]}(${2:/path/to/img.jpg}${3: "Optional title"})
+snippet table
+	|         |* Col 1  *|* Col 2 *|
+	|* Row 1 *| (1, 1)   | (1, 2)   |
+	|* Row 2 *| (2, 1)   | (2, 2)   |
