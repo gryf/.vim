@@ -111,17 +111,6 @@ endif
   let s:show_current_error_displaying = 0
 " }}}
 
-" Balloon(message) eclim/autoload/eclim/util.vim {{{2
-" Function for use as a vim balloonexpr expression.
-function! Balloon(message)
-  let message = a:message
-  if !has('balloon_multiline')
-    " remove any new lines
-    let message = substitute(message, '\n', ' ', 'g')
-  endif
-  return message
-endfunction " }}}
-
 " DelayedCommand(command, [delay]) eclim/autoload/eclim/util.vim {{{2
 " Executes a delayed command.  Useful in cases where one would expect an
 " autocommand event (WinEnter, etc) to fire, but doesn't, or you need a
@@ -156,11 +145,6 @@ function! EchoTrace(message, ...)
   endif
 endfunction " }}}
 
-" EchoWarning(message) eclim/autoload/eclim/util.vim {{{2
-function! EchoWarning(message)
-  call s:EchoLevel(a:message, 3, g:EclimWarningHighlight)
-endfunction " }}}
-
 " EchoError(message) eclim/autoload/eclim/util.vim {{{2
 function! EchoError(message)
   call s:EchoLevel(a:message, 2, g:EclimErrorHighlight)
@@ -173,19 +157,6 @@ function! s:EchoLevel(message, level, highlight)
   " only echo if the result is not 0, which signals that ExecuteEclim failed.
   if a:message != "0" && g:EclimLogLevel >= a:level
     exec "echohl " . a:highlight
-    redraw
-    for line in split(a:message, '\n')
-      echom line
-    endfor
-    echohl None
-  endif
-endfunction " }}}
-
-" Echo(message) eclim/autoload/eclim/util.vim {{{2
-" Echos a message using the info highlight regardless of what log level is set.
-function! Echo(message)
-  if a:message != "0" && g:EclimLogLevel > 0
-    exec "echohl " . g:EclimInfoHighlight
     redraw
     for line in split(a:message, '\n')
       echom line
@@ -281,27 +252,6 @@ function! GoToBufferWindow(buf)
   return 0
 endfunction " }}}
 
-" GoToBufferWindowOrOpen(name, cmd) eclim/autoload/eclim/util.vim {{{2
-" Gives focus to the window containing the buffer for the supplied file, or if
-" none, opens the file using the supplied command.
-function! GoToBufferWindowOrOpen(name, cmd)
-  let name = EscapeBufferName(a:name)
-  let winnr = bufwinnr(bufnr('^' . name))
-  if winnr != -1
-    exec winnr . "winc w"
-    call DelayedCommand('doautocmd WinEnter')
-  else
-    let cmd = a:cmd
-    " if splitting and the buffer is a unamed empty buffer, then switch to an
-    " edit.
-    if cmd == 'split' && expand('%') == '' &&
-     \ !&modified && line('$') == 1 && getline(1) == ''
-      let cmd = 'edit'
-    endif
-    silent exec cmd . ' ' . escape(Simplify(a:name), ' ')
-  endif
-endfunction " }}}
-
 " GoToBufferWindowRegister(buf) eclim/autoload/eclim/util.vim {{{2
 " Registers the autocmd for returning the user to the supplied buffer when the
 " current buffer is closed.
@@ -309,153 +259,6 @@ function! GoToBufferWindowRegister(buf)
   exec 'autocmd BufWinLeave <buffer> ' .
     \ 'call GoToBufferWindow("' . escape(a:buf, '\') . '") | ' .
     \ 'doautocmd BufEnter'
-endfunction " }}}
-
-" SetLocationList(list, [action]) eclim/autoload/eclim/util.vim {{{2
-" Sets the contents of the location list for the current window.
-function! SetLocationList(list, ...)
-  let loclist = a:list
-
-  " filter the list if the current buffer defines a list of filters.
-  if exists('b:EclimLocationListFilter')
-    let newlist = []
-    for item in loclist
-      let addit = 1
-
-      for filter in b:EclimLocationListFilter
-        if item.text =~ filter
-          let addit = 0
-          break
-        endif
-      endfor
-
-      if addit
-        call add(newlist, item)
-      endif
-    endfor
-    let loclist = newlist
-  endif
-
-  if a:0 == 0
-    call setloclist(0, loclist)
-  else
-    call setloclist(0, loclist, a:1)
-  endif
-  if g:EclimShowCurrentError && len(loclist) > 0
-    call DelayedCommand('call ShowCurrentError()')
-  endif
-  call s:SignsUpdate()
-endfunction " }}}
-
-" ClearLocationList([namespace, namespace, ...]) eclim/autoload/eclim/util.vim {{{2
-" Clears the current location list.  Optionally 'namespace' arguments can be
-" supplied which will only clear items with text prefixed with '[namespace]'.
-" Also the special namespace 'global' may be supplied which will only remove
-" items with no namepace prefix.
-function! ClearLocationList(...)
-  if a:0 > 0
-    let loclist = getloclist(0)
-    if len(loclist) > 0
-      let pattern = ''
-      for ns in a:000
-        if pattern != ''
-          let pattern .= '\|'
-        endif
-        if ns == 'global'
-          let pattern .= '\(\[\w\+\]\)\@!'
-        else
-          let pattern .= '\[' . ns . '\]'
-        endif
-      endfor
-      let pattern = '^\(' . pattern . '\)'
-
-      call filter(loclist, 'v:val.text !~ pattern')
-      call setloclist(0, loclist, 'r')
-    endif
-  else
-    call setloclist(0, [], 'r')
-  endif
-  call s:SignsUpdate()
-endfunction " }}}
-
-" SetQuickfixList(list, [action]) eclim/autoload/eclim/util.vim {{{2
-" Sets the contents of the quickfix list.
-function! SetQuickfixList(list, ...)
-  let qflist = a:list
-  if exists('b:EclimQuickfixFilter')
-    let newlist = []
-    for item in qflist
-      let addit = 1
-
-      for filter in b:EclimQuickfixFilter
-        if item.text =~ filter
-          let addit = 0
-          break
-        endif
-      endfor
-
-      if addit
-        call add(newlist, item)
-      endif
-    endfor
-    let qflist = newlist
-  endif
-  if a:0 == 0
-    call setqflist(qflist)
-  else
-    call setqflist(qflist, a:1)
-  endif
-  if g:EclimShowCurrentError && len(qflist) > 0
-    call DelayedCommand('call ShowCurrentError()')
-  endif
-  call s:SignsUpdate()
-endfunction " }}}
-
-" ShowCurrentError() eclim/autoload/eclim/util.vim {{{2
-" Shows the error on the cursor line if one.
-function! ShowCurrentError()
-  let message = GetLineError(line('.'))
-  if message != ''
-    " remove any new lines
-    let message = substitute(message, '\n', ' ', 'g')
-
-    if len(message) > (&columns - 1)
-      let message = strpart(message, 0, &columns - 4) . '...'
-    endif
-
-    call WideMessage('echo', message)
-    let s:show_current_error_displaying = 1
-  else
-    " clear the message if one of our error messages was displaying
-    if s:show_current_error_displaying
-      call WideMessage('echo', message)
-      let s:show_current_error_displaying = 0
-    endif
-  endif
-endfunction " }}}
-
-" Simplify(file) eclim/autoload/eclim/util.vim {{{2
-" Simply the supplied file to the shortest valid name.
-function! Simplify(file)
-  let file = a:file
-
-  " Don't run simplify on url files, it will screw them up.
-  if file !~ '://'
-    let file = simplify(file)
-  endif
-
-  " replace all '\' chars with '/' except those escaping spaces.
-  let file = substitute(file, '\\\([^[:space:]]\)', '/\1', 'g')
-  let cwd = substitute(getcwd(), '\', '/', 'g')
-  if cwd !~ '/$'
-    let cwd .= '/'
-  endif
-
-  if file =~ '^' . cwd
-    let file = substitute(file, '^' . cwd, '', '')
-  endif
-
-  return file
 endfunction " }}}
 
 " System(cmd, [exec]) eclim/autoload/eclim/util.vim {{{2
@@ -543,106 +346,6 @@ function! System(cmd, ...)
   endif
 
   return result
-endfunction " }}}
-
-" TempWindow(name, lines, [readonly]) eclim/autoload/eclim/util.vim {{{2
-" Opens a temp window w/ the given name and contents which is readonly unless
-" specified otherwise.
-function! TempWindow(name, lines, ...)
-  let filename = expand('%:p')
-  let winnr = winnr()
-
-  call TempWindowClear(a:name)
-  let name = EscapeBufferName(a:name)
-
-  if bufwinnr(name) == -1
-    silent! noautocmd exec "botright 10sview " . escape(a:name, ' ')
-    let b:eclim_temp_window = 1
-
-    " play nice with maximize.vim
-    "if eclim#display#maximize#GetMaximizedWindow()
-    "  call eclim#display#maximize#AdjustFixedWindow(10, 1)
-    "endif
-
-    setlocal nowrap
-    setlocal winfixheight
-    setlocal noswapfile
-    setlocal nobuflisted
-    setlocal buftype=nofile
-    setlocal bufhidden=delete
-  else
-    exec bufwinnr(name) . "winc w"
-  endif
-
-  setlocal modifiable
-  setlocal noreadonly
-  call append(1, a:lines)
-  retab
-  silent 1,1delete _
-
-  if len(a:000) == 0 || a:000[0]
-    setlocal nomodified
-    setlocal nomodifiable
-    setlocal readonly
-  endif
-
-  silent doautocmd BufEnter
-
-  " Store filename and window number so that plugins can use it if necessary.
-  if filename != expand('%:p')
-    let b:filename = filename
-    let b:winnr = winnr
-
-    augroup eclim_temp_window
-      autocmd! BufWinLeave <buffer>
-      call GoToBufferWindowRegister(b:filename)
-    augroup END
-  endif
-endfunction " }}}
-
-" TempWindowClear(name) eclim/autoload/eclim/util.vim {{{2
-" Clears the contents of the temp window with the given name.
-function! TempWindowClear(name)
-  let name = EscapeBufferName(a:name)
-  if bufwinnr(name) != -1
-    let curwinnr = winnr()
-    exec bufwinnr(name) . "winc w"
-    setlocal modifiable
-    setlocal noreadonly
-    silent 1,$delete _
-    exec curwinnr . "winc w"
-  endif
-endfunction " }}}
-
-" WideMessage(command, message) eclim/autoload/eclim/util.vim {{{2
-" Executes the supplied echo command and forces vim to display as much as
-" possible without the "Press Enter" prompt.
-" Thanks to vimtip #1289
-function! WideMessage(command, message)
-  let saved_ruler = &ruler
-  let saved_showcmd = &showcmd
-
-  let message = substitute(a:message, '^\s\+', '', '')
-
-  set noruler noshowcmd
-  redraw
-  exec a:command . ' "' . escape(message, '"\') . '"'
-
-  let &ruler = saved_ruler
-  let &showcmd = saved_showcmd
-endfunction " }}}
-
-" WillWrittenBufferClose() eclim/autoload/eclim/util.vim {{{2
-" Returns 1 if the current buffer is to be hidden/closed/deleted after it is
-" written, or 0 otherwise.  This function is useful during a post write auto
-" command for determining whether or not to perform some operation based on
-" whether the buffer will still be visible to the user once the current
-" command has finished.
-" Note: This function only detects command typed by the user at the
-" command (:) prompt, not any normal mappings which may hide/close/delete the
-" buffer.
-function! WillWrittenBufferClose()
-  return histget("cmd") =~ s:buffer_write_closing_commands
 endfunction " }}}
 
 " End Util: }}}
