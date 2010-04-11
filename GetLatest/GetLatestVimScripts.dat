@@ -13,7 +13,7 @@ ScriptID SourceID Filename
 2421 9423 pysmell.vim
 152 3342 showmarks.vim
 2540 11006 snipMate.vim
-273 7701 taglist.vim
+#273 7701 taglist.vim  # exchanged with taglisttoo
 2607 10388 tasklist.vim
 90 12743 vcscommand.vim
 2226 12476 vimwiki.vim
@@ -23,6 +23,8 @@ ScriptID SourceID Filename
 2536 12154 lucius.vim
 1165 3741 tolerable.vim
 2465 11352 wombat256.vim
+# compiler
+891 10365 pylint.vim
 # ftplugin
 2441 12763 pyflakes.vim
 30 9196 python_fn.vim

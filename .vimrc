@@ -85,6 +85,8 @@ autocmd FileType python set smartindent cinwords=if,elif,else,for,while,try,exce
 autocmd FileType python set foldmethod=indent|set foldlevel=100|set list|set textwidth=78|set cinkeys-=0#
 autocmd FileType python set indentkeys-=0#|inoremap # X<BS>#
 autocmd FileType python set ofu=syntaxcomplete#Complete
+autocmd FileType python compiler pylint
+let g:pylint_onwrite = 0 " I don't want to run pylint on every save
 
 "autocmd FileType python setlocal omnifunc=pysmell#Complete
 let python_highlight_all=1
@@ -95,9 +97,6 @@ autocmd FileType sql set nolist|set nosmartindent|set autoindent|set foldmethod=
 autocmd FileType vim set nolist|set nosmartindent|set autoindent|set foldmethod=manual
 autocmd FileType snippet set nolist|set tabstop=4|set autoindent|set foldmethod=manual|set noexpandtab|set shiftwidth=4
 autocmd FileType snippets set noexpandtab, nolist
-augroup mkd
-    autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
-augroup END
 autocmd FileType rst set spf=/home/gryf/.vim/pol.utf8.add|set textwidth=80
 
 "}}}
@@ -120,9 +119,9 @@ if $TERM == 'linux'
 endif
 "}}}
 "PLUGINS: {{{
-"getscriptPlugin
+"getscriptPlugin {{{2
 "let g:GetLatestVimScripts_allowautoinstall=1  "allow autoinstall scripts
-
+"}}}
 "TagList{{{2
 let Tlist_Use_Right_Window = 1
 "show menu in gvim. usefull to pop it up from kbd
@@ -137,23 +136,26 @@ let Tlist_Sort_Type = "name"
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_WinWidth = 40
 "}}}
-
-"NERDTree
+"NERDTree {{{2
 let NERDTreeWinSize = 40
-
-"VimWIKI
+" }}}
+"VimWIKI {{{2
 let g:vimwiki_list = [{'html_header': '~/vimwiki/vimwiki_head.tpl',
                       \ 'html_footer': '~/vimwiki/vimwiki_foot.tpl'}]
-
-"ShowMarks
+" }}}
+"ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
 let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-"jsbeautify
+"}}}
+"jsbeautify {{{3
 nnoremap <silent> <leader>ff :call g:Jsbeautify()<cr>:retab!<cr>
-
-" pydiction
+"}}}
+" pydiction {{{2
 let g:pydiction_location = '/home/gryf/.vim/after/ftplugin/pytdiction/complete-dict'
+"}}}
+"TagListToo {{{2
+let g:VerticalToolWindowSide = 'right'
+"}}}
 "}}}
 "KEYS: User definied keyboard shortcuts {{{
 
@@ -175,8 +177,8 @@ if $TERM == 'rxvt-unicode'
     map <C-PageUp> :tabp<CR>
 endif
 
-map <F5> :PyLint<cr>
-map <F6> :call PyLintBuf()<cr>
+map <F5> :call <SID>runPyLint()<cr>
+map <F6> :call <SID>PyLintBuf()<cr>
 
 "map ctags plugin to show popup menu in gvim
 "map <F6> :popup Tags<CR>
@@ -228,18 +230,26 @@ map <C-F> :FufFile **/<CR>
 "    endif
 "endfunction
 
-"function <SID>PyLint()
-"    :make
-"    let l:mbe = 0
-"    if bufwinnr(bufnr('-MiniBufExplorer-')) != -1
-"        let l:mbe = 1
-"        :CMiniBufExplorer
-"    endif
-"    :cwindow
-"    if l:mbe == 1
-"        :MiniBufExplorer
-"    endif
-"endfunction
+function <SID>runPyLint()
+    echohl Statement
+    echo "Running pylint (ctrl-c to cancel) ..."
+    echohl Normal
+    :Pylint
+endfunction
+function <SID>PyLintBuf()
+    echohl Statement
+    echo "Running pylint (ctrl-c to cancel) ..."
+    echohl Normal
+    let file = expand('%:p')
+    let cmd = 'pylint --reports=n --output-format=text "' . file . '"'
+
+    if has('win32') || has('win64')
+        let command = 'cmd /c "' . command . '"'
+    endif
+    
+    exec "bel silent new " . file . ".lint"
+    exec "silent! read! " . cmd
+endfunction
 
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.

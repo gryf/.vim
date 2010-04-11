@@ -18,29 +18,23 @@
 "              License along with this program.  If not, see
 "              <http://www.gnu.org/licenses/>.
 " ============================================================================
-let s:Eclim_ver = '1.5.4'
+let s:Eclim_ver = '1.5.6'
 
 " Further Description: {{{1
-"   @gryf: Python and editor helpers taken over from Eclim project. There are
+"   @gryf: taglist and editor helpers taken over from Eclim project. There are
 "   couple of nice tools, which I want to have separately from Eclim project.
-"   Just for my conviniece and because I mainly work with Python files, I'll
-"   put all of necessary thing into this one file. 
+"   Just for my conviniece, I've puted all of necessary things into this one file.
 "
 "   Added:
 "       :Buffers
 "       :Sign
 "       :Signs
-"       :PyLint
-"       :Validate (pyflakes)
 "       :QuickFixClear
 "       :LocationListClear
 "   TODO:
-"       :Validate (rope) [this one is not crucial. at least for now.]
+"       :taglisttoo
 "       :SignClearUser
 "       :SignClearAll
-"       (w daleszej kolejności)
-"       :PythonRegex
-"       :LocateFile (do silnego przerobienia)
 "
 " }}}
 
@@ -103,7 +97,7 @@ endif
 " Command Declarations {{{2
 
 if !exists(":Buffers")
-  command Buffers :call Buffers()
+  command Buffers :call s:Buffers()
 endif
 
 if has('signs')
@@ -122,10 +116,10 @@ if has('signs')
 endif
 
 if !exists(":QuickFixClear")
-  command QuickFixClear :call setqflist([]) | call SignsUpdate()
+  command QuickFixClear :call setqflist([]) | call s:SignsUpdate()
 endif
 if !exists(":LocationListClear")
-  command LocationListClear :call setloclist(0, []) | call SignsUpdate()
+  command LocationListClear :call setloclist(0, []) | call s:SignsUpdate()
 endif
 
 " }}}
@@ -134,10 +128,10 @@ endif
 
 if g:EclimSignLevel
   augroup eclim_qf
-    autocmd QuickFixCmdPost *make* call SignsShow('', 'qf')
-    autocmd QuickFixCmdPost grep*,vimgrep* call SignsShow('i', 'qf')
-    autocmd QuickFixCmdPost lgrep*,lvimgrep* call SignsShow('i', 'loc')
-    autocmd BufWinEnter * call SignsUpdate()
+    autocmd QuickFixCmdPost *make* call s:SignsShow('', 'qf')
+    autocmd QuickFixCmdPost grep*,vimgrep* call s:SignsShow('i', 'qf')
+    autocmd QuickFixCmdPost lgrep*,lvimgrep* call s:SignsShow('i', 'loc')
+    autocmd BufWinEnter * call s:SignsUpdate()
   augroup END
 endif
 
@@ -177,7 +171,7 @@ endif
 
 " Buffers() eclim/autoload/eclim/common/buffers.vim {{{2
 " Like, :buffers, but opens a temporary buffer.
-function! Buffers()
+function! s:Buffers()
   redir => list
   silent exec 'buffers'
   redir END
@@ -367,9 +361,13 @@ function! DelayedCommand(command, ...)
   exec 'augroup END'
 endfunction " }}}
 
-" EchoTrace(message) eclim/autoload/eclim/util.vim {{{2
-function! EchoTrace(message)
-  call s:EchoLevel(a:message, 6, g:EclimTraceHighlight)
+" EchoTrace(message, [time_elapsed]) eclim/autoload/eclim/util.vim {{{2
+function! EchoTrace(message, ...)
+  if a:0 > 0
+    call s:EchoLevel('(' . a:1 . 's) ' . a:message, 6, g:EclimTraceHighlight)
+  else
+    call s:EchoLevel(a:message, 6, g:EclimTraceHighlight)
+  endif
 endfunction " }}}
 
 " EchoWarning(message) eclim/autoload/eclim/util.vim {{{2
@@ -414,7 +412,12 @@ endfunction " }}}
 " Escapes the supplied buffer name so that it can be safely used by buf*
 " functions.
 function! EscapeBufferName(name)
-  let name = escape(a:name, ' ')
+  let name = a:name
+  " escaping the space in cygwin could lead to the dos path error message that
+  " cygwin throws when a dos path is referenced.
+  if !has('win32unix')
+    let name = escape(a:name, ' ')
+  endif
   return substitute(name, '\(.\{-}\)\[\(.\{-}\)\]\(.\{-}\)', '\1[[]\2[]]\3', 'g')
 endfunction " }}}
 
@@ -489,7 +492,14 @@ function! GoToBufferWindowOrOpen(name, cmd)
     exec winnr . "winc w"
     call DelayedCommand('doautocmd WinEnter')
   else
-    silent exec a:cmd . ' ' . escape(Simplify(a:name), ' ')
+    let cmd = a:cmd
+    " if splitting and the buffer is a unamed empty buffer, then switch to an
+    " edit.
+    if cmd == 'split' && expand('%') == '' &&
+     \ !&modified && line('$') == 1 && getline(1) == ''
+      let cmd = 'edit'
+    endif
+    silent exec cmd . ' ' . escape(Simplify(a:name), ' ')
   endif
 endfunction " }}}
 
@@ -535,7 +545,7 @@ function! SetLocationList(list, ...)
   if g:EclimShowCurrentError && len(loclist) > 0
     call DelayedCommand('call ShowCurrentError()')
   endif
-  call SignsUpdate()
+  call s:SignsUpdate()
 endfunction " }}}
 
 " ClearLocationList([namespace, namespace, ...]) eclim/autoload/eclim/util.vim {{{2
@@ -566,7 +576,7 @@ function! ClearLocationList(...)
   else
     call setloclist(0, [], 'r')
   endif
-  call SignsUpdate()
+  call s:SignsUpdate()
 endfunction " }}}
 
 " SetQuickfixList(list, [action]) eclim/autoload/eclim/util.vim {{{2
@@ -599,7 +609,7 @@ function! SetQuickfixList(list, ...)
   if g:EclimShowCurrentError && len(qflist) > 0
     call DelayedCommand('call ShowCurrentError()')
   endif
-  call SignsUpdate()
+  call s:SignsUpdate()
 endfunction " }}}
 
 " ShowCurrentError() eclim/autoload/eclim/util.vim {{{2
@@ -688,11 +698,19 @@ function! System(cmd, ...)
 
   if len(a:000) > 0 && a:000[0]
     let result = ''
-    call EchoTrace('exec: ' . a:cmd)
-    exec a:cmd
+    let begin = localtime()
+    try
+      exec a:cmd
+    finally
+      call EchoTrace('exec: ' . a:cmd, localtime() - begin)
+    endtry
   else
-    call EchoTrace('system: ' . a:cmd)
-    let result = system(a:cmd)
+    let begin = localtime()
+    try
+      let result = system(a:cmd)
+    finally
+      call EchoTrace('system: ' . a:cmd, localtime() - begin)
+    endtry
   endif
 
   let &shell = saveshell
@@ -757,8 +775,8 @@ function! TempWindow(name, lines, ...)
     exec bufwinnr(name) . "winc w"
   endif
 
-  set modifiable
-  set noreadonly
+  setlocal modifiable
+  setlocal noreadonly
   call append(1, a:lines)
   retab
   silent 1,1delete _
@@ -769,7 +787,7 @@ function! TempWindow(name, lines, ...)
     setlocal readonly
   endif
 
-  doautocmd BufEnter
+  silent doautocmd BufEnter
 
   " Store filename and window number so that plugins can use it if necessary.
   if filename != expand('%:p')
@@ -1006,7 +1024,7 @@ endfunction " }}}
 " This function supports a severity level by examining the 'type' key of the
 " dictionaries in the location or quickfix list.  It supports 'i' (info), 'w'
 " (warning), and 'e' (error).
-function! SignsUpdate()
+function! s:SignsUpdate()
   if !has('signs') || !g:EclimSignLevel
     return
   endif
@@ -1103,7 +1121,7 @@ function! SignsShow(type, list)
     endif
   endif
 
-  call SignsUpdate()
+  call s:SignsUpdate()
 
   redraw!
 endfunction " }}}
@@ -1152,249 +1170,6 @@ endif " }}}
 
 " End Display Signs: }}}
 
-" Python Django: {{{1
-
-" GetProjectPath([path]) eclim/autoload/eclim/python/django/util.vim {{{2
-function! DjangoGetProjectPath(...)
-  let path = len(a:000) > 0 ? a:000[0] : escape(expand('%:p:h'), ' ')
-  let dir = findfile("manage.py", path . ';')
-  if dir != ''
-    let dir = substitute(fnamemodify(dir, ':p:h'), '\', '/', 'g')
-    " secondary check on the dir, if settings.py exists, then probably the
-    " right dir, otherwise, search again from the parent.
-    if !filereadable(dir . '/settings.py')
-      return DjangoGetProjectPath(path . '/..')
-    endif
-  endif
-  return dir
-endfunction " }}}
-
-" }}}
-
-" Python Validate: {{{1
-
-" Global Variables eclim/autoload/eclim/python/validate.vim {{{2
-  " if the user has the pyflakes plugin from vim.org, then disable our
-  " validation since the two overlap and may result in errors
-  let s:pyflakes_enabled = 1
-  if exists('g:pyflakes_builtins')
-    let s:pyflakes_enabled = 0
-  endif
-  if !exists('g:EclimValidateBuffer')
-    let g:EclimValidateBuffer = 1
-  endif
-" }}}
-
-" Script Variables eclim/autoload/eclim/python/validate.vim {{{2
-  let s:warnings = '\(' . join([
-      \ 'imported but unused',
-      \ 'local variable .* assigned to but never used',
-    \ ], '\|') . '\)'
-" }}}
-
-" Validate(on_save) eclim/autoload/eclim/python/validate.vim {{{2
-" Validates the current file.
-function! Validate(on_save)
-  if g:EclimValidateBuffer == 0
-    return
-  endif
-
-  if WillWrittenBufferClose()
-    return
-  endif
-
-  if &filetype != "python"
-    return
-  endif
-
-  let results = []
-  let syntax_error = ValidateSyntax()
-
-  if syntax_error == ''
-    if s:pyflakes_enabled
-      if !executable('pyflakes')
-        if !exists('g:eclim_python_pyflakes_warn')
-          call EchoWarning("Unable to find 'pyflakes' command.")
-          let g:eclim_python_pyflakes_warn = 1
-        endif
-      else
-        let command = 'pyflakes "' . expand('%:p') . '"'
-        let results = split(System(command), '\n')
-        if v:shell_error > 1 " pyflakes returns 1 if there where warnings.
-          call EchoError('Error running command: ' . command)
-          let results = []
-        endif
-      endif
-    endif
-
-    " rope validation
-    " currently too slow for running on every save.
-    "
-    " gryf: this stuff should be rewriten somehow. For now it is just to
-    " complicated.
-    "
-    "if eclim#project#util#IsCurrentFileInProject(0) && !a:on_save
-    "  let project = eclim#project#util#GetCurrentProjectRoot()
-    "  let filename = eclim#project#util#GetProjectRelativeFilePath(expand('%:p'))
-    "  let rope_results = eclim#python#rope#Validate(project, filename)
-    "  " currently rope gets confused with iterator var on list comprehensions
-    "  let rope_results = filter(rope_results, "v:val !~ '^Unresolved variable'")
-    "  let results += rope_results
-    "endif
-  endif
-
-  if !empty(results) || syntax_error != ''
-    call filter(results, "v:val !~ 'unable to detect undefined names'")
-
-    let errors = []
-    if syntax_error != ''
-      let lnum = substitute(syntax_error, '.*(line \(\d\+\))', '\1', '')
-      let text = substitute(syntax_error, '\(.*\)\s\+(line .*', '\1', '')
-      if lnum == syntax_error
-        let lnum = 1
-        let text .= ' (unknown line)'
-      endif
-      call add(errors, {
-          \ 'filename': Simplify(expand('%')),
-          \ 'lnum': lnum,
-          \ 'text': text,
-          \ 'type': 'e'
-        \ })
-    endif
-
-    if syntax_error == ''
-      for error in results
-        let file = substitute(error, '\(.\{-}\):[0-9]\+:.*', '\1', '')
-        let line = substitute(error, '.\{-}:\([0-9]\+\):.*', '\1', '')
-        let message = substitute(error, '.\{-}:[0-9]\+:\(.*\)', '\1', '')
-        let dict = {
-            \ 'filename': Simplify(file),
-            \ 'lnum': line,
-            \ 'text': message,
-            \ 'type': message =~ s:warnings ? 'w' : 'e',
-          \ }
-
-        call add(errors, dict)
-      endfor
-    endif
-
-    call SetLocationList(errors)
-    if g:EclimOpenQFLists
-      :lopen
-    endif
-  else
-    call ClearLocationList()
-  endif
-endfunction " }}}
-
-" ValidateSyntax() eclim/autoload/eclim/python/validate.vim {{{2
-function ValidateSyntax()
-  let syntax_error = ''
-
-  if has('python')
-
-python << EOF
-import re, vim
-from compiler import parseFile
-try:
-  parseFile(vim.eval('expand("%:p")'))
-except SyntaxError, se:
-  vim.command("let syntax_error = \"%s\"" % re.sub(r'"', r'\"', str(se)))
-except IndentationError, ie:
-  vim.command("let syntax_error = \"%s (line %s)\"" % (
-    re.sub(r'"', r'\"', ie.msg), ie.lineno)
-  )
-EOF
-
-  endif
-
-  return syntax_error
-endfunction " }}}
-
-" PyLint() eclim/autoload/eclim/python/validate.vim {{{2
-function! PyLint()
-
-  if &filetype != "python"
-    return
-  endif
-
-  let file = expand('%:p')
-
-  if !executable('pylint')
-    call EchoError("Unable to find 'pylint' command.")
-    return
-  endif
-
-  let pylint_env = ''
-  if exists('g:EclimPyLintEnv')
-    let pylint_env = g:EclimPyLintEnv
-  else
-    let paths = []
-
-    let django_dir = DjangoGetProjectPath()
-    if django_dir != ''
-      call add(paths, fnamemodify(django_dir, ':h'))
-      let settings = fnamemodify(django_dir, ':t')
-      if has('win32') || has('win64')
-        let pylint_env =
-          \ 'set DJANGO_SETTINGS_MODULE='. settings . '.settings && '
-      else
-        let pylint_env =
-          \ 'DJANGO_SETTINGS_MODULE="'. settings . '.settings" '
-      endif
-    endif
-
-    if !empty(paths)
-      if has('win32') || has('win64')
-        let pylint_env .= 'set "PYTHONPATH=' . join(paths, ';') . '" && '
-      else
-        let pylint_env .= 'PYTHONPATH="$PYTHONPATH:' . join(paths, ':') . '"'
-      endif
-    endif
-  endif
-
-  " TODO: switch to 'parseable' output format.
-  let command = pylint_env .
-    \ ' pylint --reports=n --output-format=text "' . file . '"'
-  if has('win32') || has('win64')
-    let command = 'cmd /c "' . command . '"'
-  endif
-
-  call Echo('Running pylint (ctrl-c to cancel) ...')
-  let result = System(command)
-  call Echo(' ')
-  if v:shell_error == 1
-    call EchoError('Error running command: ' . command)
-    return
-  endif
-
-  if result =~ ':'
-    let errors = []
-    for error in split(result, '\n')
-      if error =~ '^[CWERF]\(: \)\?[0-9]'
-        let line = substitute(error, '.\{-}:\s*\([0-9]\+\):.*', '\1', '')
-        let message = substitute(error, '.\{-}:\s*[0-9]\+:\(.*\)', '\1', '')
-        let dict = {
-            \ 'filename': Simplify(file),
-            \ 'lnum': line,
-            \ 'text': message,
-            \ 'type': error =~ '^E' ? 'e' : 'w',
-          \ }
-
-        call add(errors, dict)
-      endif
-    endfor
-    call SetQuickfixList(errors)
-    if g:EclimOpenQFLists
-      :copen
-    endif
-  else
-    call SetQuickfixList([], 'r')
-  endif
-endfunction " }}}
-
-" }}}
-
 " Eclim Help: {{{1
 
 " BufferHelp(lines, orientation, size) eclim/autoload/eclim/help.vim {{{
@@ -1423,7 +1198,7 @@ function! BufferHelp(lines, orientation, size)
   setlocal buftype=nofile bufhidden=delete
   nnoremap <buffer> <silent> ? :bd<cr>
 
-  set modifiable noreadonly
+  setlocal modifiable noreadonly
   silent 1,$delete _
   call append(1, a:lines)
   retab
@@ -1482,58 +1257,6 @@ function! GetAllBuffers()
 
   echo buffers
   return buffers
-
-  "let buffers = []
-  "let filelength = 0
-  "for entry in split(list, '\n')
-  "  let buffer = {}
-  "  let buffer.status = substitute(entry, '\s*[0-9]\+\s\+\(.\{-}\)\s\+".*', '\1', '')
-  "  let buffer.path = substitute(entry, '.\{-}"\(.\{-}\)".*', '\1', '')
-  "  let buffer.path = fnamemodify(buffer.path, ':p')
-  "  let buffer.file = fnamemodify(buffer.path, ':p:t')
-  "  let buffer.dir = fnamemodify(buffer.path, ':p:h')
-  "  exec 'let buffer.bufnr = ' . substitute(entry, '\s*\([0-9]\+\).*', '\1', '')
-  "  exec 'let buffer.lnum = ' .
-  "    \ substitute(entry, '.*"\s\+line\s\+\([0-9]\+\).*', '\1', '')
-  "  call add(buffers, buffer)
-
-  "  if len(buffer.file) > filelength
-  "    let filelength = len(buffer.file)
-  "  endif
-  "endfor
-
-  "if g:EclimBuffersSort != ''
-  "  call sort(buffers, 'BufferCompare')
-  "endif
-
-  "let lines = []
-  "for buffer in buffers
-  "  call add(lines, s:BufferEntryToLine(buffer, filelength))
-  "endfor
-
-  "call TempWindow('[buffers]', lines)
-  "let b:eclim_buffers = buffers
-
-  "" syntax
-  "set ft=eclim_buffers
-  "hi link BufferActive Special
-  "hi link BufferHidden Comment
-  "syntax match BufferActive /+\?active\s\+\(\[RO\]\)\?/
-  "syntax match BufferHidden /+\?hidden\s\+\(\[RO\]\)\?/
-
-  "" mappings
-  "nnoremap <silent> <buffer> <cr> :call <SID>BufferOpen(g:EclimBuffersDefaultAction)<cr>
-  "nnoremap <silent> <buffer> E :call <SID>BufferOpen('edit')<cr>
-  "nnoremap <silent> <buffer> S :call <SID>BufferOpen('split')<cr>
-  "nnoremap <silent> <buffer> T :call <SID>BufferOpen('tablast \| tabnew')<cr>
-  "nnoremap <silent> <buffer> D :call <SID>BufferDelete()<cr>
-
-  "augroup eclim_buffers
-  "  autocmd!
-  "  autocmd BufAdd,BufWinEnter,BufDelete,BufWinLeave *
-  "    \ call eclim#common#buffers#BuffersUpdate()
-  "  autocmd BufUnload <buffer> autocmd! eclim_buffers
-  "augroup END
 endfunction " }}}
 
 " ViewAllSigns(name) {{{2
@@ -1564,23 +1287,6 @@ function! SignsViewAllSigns(name)
       augroup END
     endif
   endfor
-
-  "let filename = expand('%:p')
-  "let signs = SignsGetExisting(a:name)
-  "call sort(signs, 's:CompareSigns')
-  "let content = map(signs, "v:val.line . '|' . getline(v:val.line)")
-
-  "call TempWindow('[Sign List]', content)
-
-  "set ft=qf
-  "nnoremap <silent> <buffer> <cr> :call <SID>JumpToSign()<cr>
-
-  "" Store filename so that plugins can use it if necessary.
-  "let b:filename = filename
-  "augroup temp_window
-  "  autocmd! BufWinLeave <buffer>
-  "  call GoToBufferWindowRegister(filename)
-  "augroup END
 endfunction " }}}
 
 " TODO: remove this
@@ -1621,122 +1327,6 @@ function! SignsGetAllExisting(buffernr, mark_name)
 
   return existing
 endfunction " }}}
-
-" PyLintBuf() create pylint-output buffer {{{2
-function! PyLintBuf()
-
-  if &filetype != "python"
-    return
-  endif
-
-  let file = expand('%:p')
-
-  if !executable('pylint')
-    call EchoError("Unable to find 'pylint' command.")
-    return
-  endif
-
-  let pylint_env = ''
-  if exists('g:EclimPyLintEnv')
-    let pylint_env = g:EclimPyLintEnv
-  else
-    let paths = []
-
-    if !empty(paths)
-      if has('win32') || has('win64')
-        let pylint_env .= 'set "PYTHONPATH=' . join(paths, ';') . '" && '
-      else
-        let pylint_env .= 'PYTHONPATH="$PYTHONPATH:' . join(paths, ':') . '"'
-      endif
-    endif
-  endif
-
-  " TODO: switch to 'parseable' output format.
-  let command = pylint_env .
-    \ ' pylint --reports=n --output-format=text "' . file . '"'
-  if has('win32') || has('win64')
-    let command = 'cmd /c "' . command . '"'
-  endif
-
-  call Echo('Running pylint (ctrl-c to cancel) ...')
-  let result = System(command)
-  call Echo(' ')
-  if v:shell_error == 1
-    call EchoError('Error running command: ' . command)
-    return
-  endif
-
-  exec "bel silent new " . file . ".lint"
-
-  for i in split(result, "\n")
-      call append("$", i)
-  endfor
-
-  "remove first empty line
-  exec "delete 1"
-endfunction " }}}
-
-" Marks() {{{2
-" Like, :marks, but opens a temporary buffer.
-function! Marks()
-    redir => list
-    silent exec 'marks'
-    redir END
-
-    let marks = []
-    let filelength = 0
-    for entry in split(list, '\n')
-        echo entry
-        let buffer = {}
-        let buffer.status = substitute(entry, '\s*[0-9]\+\s\+\(.\{-}\)\s\+".*', '\1', '')
-        let buffer.path = substitute(entry, '.\{-}"\(.\{-}\)".*', '\1', '')
-        let buffer.path = fnamemodify(buffer.path, ':p')
-        let buffer.file = fnamemodify(buffer.path, ':p:t')
-        let buffer.dir = fnamemodify(buffer.path, ':p:h')
-        exec 'let buffer.bufnr = ' . substitute(entry, '\s*\([0-9]\+\).*', '\1', '')
-        exec 'let buffer.lnum = ' .
-                    \ substitute(entry, '.*"\s\+line\s\+\([0-9]\+\).*', '\1', '')
-        call add(marks, buffer)
-
-        if len(buffer.file) > filelength
-            let filelength = len(buffer.file)
-        endif
-    endfor
-
-    if g:EclimBuffersSort != ''
-        call sort(buffers, 'BufferCompare')
-    endif
-
-    let lines = []
-    for buffer in buffers
-        call add(lines, s:BufferEntryToLine(buffer, filelength))
-    endfor
-
-    call TempWindow('[marks]', lines)
-    let b:eclim_buffers = buffers
-
-    " syntax
-    set ft=eclim_buffers
-    hi link BufferActive Special
-    hi link BufferHidden Comment
-    syntax match BufferActive /+\?active\s\+\(\[RO\]\)\?/
-    syntax match BufferHidden /+\?hidden\s\+\(\[RO\]\)\?/
-
-    " mappings
-    nnoremap <silent> <buffer> <cr> :call <SID>BufferOpen(g:EclimBuffersDefaultAction)<cr>
-    nnoremap <silent> <buffer> E :call <SID>BufferOpen('edit')<cr>
-    nnoremap <silent> <buffer> S :call <SID>BufferOpen('split')<cr>
-    nnoremap <silent> <buffer> T :call <SID>BufferOpen('tablast \| tabnew')<cr>
-    nnoremap <silent> <buffer> D :call <SID>BufferDelete()<cr>
-
-    "augroup eclim_buffers
-    "  autocmd!
-    "  autocmd BufAdd,BufWinEnter,BufDelete,BufWinLeave *
-    "    \ call eclim#common#buffers#BuffersUpdate()
-    "  autocmd BufUnload <buffer> autocmd! eclim_buffers
-    "augroup END
-endfunction " }}}
-command Marks :call Marks()
 
 " s:BufferOpen2(cmd) {{{2
 function! s:BufferOpen2(cmd)
