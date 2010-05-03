@@ -1094,7 +1094,7 @@ endfunction " }}}
 " Show(type, list) eclim/autoload/eclim/display/signs.vim {{{2
 " Set the type on each entry in the specified list ('qf' or 'loc') and mark
 " any matches in the current file.
-function! SignsShow(type, list)
+function! s:SignsShow(type, list)
   if a:type != ''
     if a:list == 'qf'
       let list = getqflist()

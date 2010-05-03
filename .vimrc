@@ -62,6 +62,13 @@ set wildchar=<TAB>                  "Character to start wildcard expansion in th
 set wildmenu                        "Put command-line completion in an enhanced mode
 set wrapmargin=1                    "Number of characters from the right window border where wrapping starts
 
+"backup/writeback/swapfile
+set nobackup
+set nowb
+set noswapfile
+"in case they are needed, store swapfiles in tmp
+"set dir=~/tmp/
+
 " TOhtml options
 :let html_number_lines = 1
 :let html_use_css = 1
@@ -355,7 +362,7 @@ else
 endif
 
 "highlight code beyond 79 column (must be after colorscheme)
-highlight OverLength ctermbg=black
+highlight OverLength ctermbg=black guibg=black
 match OverLength /\%81v.*/
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:
