@@ -92,7 +92,12 @@ endif
 
 " Command Declarations {{{
 if !exists(":Tlist") && !exists(":TlistToo")
-  command TlistToo :call s:Taglist()
+  "command TlistToo :call s:Taglist()
+  "I want to have possibility to explicit close the taglist by passing bang to 
+  "the command. gryf
+  command! -bang -nargs=? TlistToo :call s:Taglist(<bang>-1)
+  "And also have a command for explicit close
+  command! TlistTooOpen :call s:Taglist(1)
 endif
 " }}}
 

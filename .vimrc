@@ -208,7 +208,7 @@ map <Leader>wp <Plug>VimwikiPrevWord
 map ]b :call OpenInFirefox()<cr>
 
 "make displaying tags easy
-nmap <Leader>t :Tlist<CR>
+nmap <Leader>t :TlistToo<CR>
 "aswell minibufexplorer
 "map <Leader>b :TMiniBufExplorer<CR><CR>
 "eclim Buffer shortcut
@@ -220,7 +220,7 @@ nmap ,cn :silent call <SID>CopyFileName(1)<CR>
 nmap ,cs :silent call <SID>CopyFileName(0)<CR>
 
 "FuzzyFinder plugin. Keys for file fuf
-map <C-F> :FufFile **/<CR>
+map <C-F> :TlistToo!<CR>:FufFile **/<CR>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
 "Sessions
