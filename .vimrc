@@ -79,6 +79,11 @@ set noswapfile
 "
 "remove all trailing withitespace for python before write
 autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.rst :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.wiki :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.css :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.xml :call <SID>StripTrailingWhitespaces()
 "autocmd BufWritePre *.py :!message.py '%'
 "Load views for py files
 autocmd BufWinLeave *.py mkview
@@ -91,7 +96,7 @@ autocmd FileType python set expandtab|set smarttab|set noautoindent
 autocmd FileType python set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 autocmd FileType python set foldmethod=indent|set foldlevel=100|set list|set textwidth=78|set cinkeys-=0#
 autocmd FileType python set indentkeys-=0#|inoremap # X<BS>#
-autocmd FileType python set ofu=syntaxcomplete#Complete
+"autocmd FileType python set ofu=syntaxcomplete#Complete
 autocmd FileType python compiler pylint
 let g:pylint_onwrite = 0 " I don't want to run pylint on every save
 
@@ -150,6 +155,9 @@ let NERDTreeWinSize = 40
 let g:vimwiki_list = [{'html_header': '~/vimwiki/vimwiki_head.tpl',
                       \ 'html_footer': '~/vimwiki/vimwiki_foot.tpl'}]
 " }}}
+"FuzzyFinder {{{2
+let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
+"}}}
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
 let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -220,7 +228,7 @@ nmap ,cn :silent call <SID>CopyFileName(1)<CR>
 nmap ,cs :silent call <SID>CopyFileName(0)<CR>
 
 "FuzzyFinder plugin. Keys for file fuf
-map <C-F> :TlistToo!<CR>:FufFile **/<CR>
+map <C-F> :FufFile **/<CR>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
 "Sessions
@@ -251,7 +259,7 @@ function <SID>PyLintBuf()
     let cmd = 'pylint --reports=n --output-format=text "' . file . '"'
 
     if has('win32') || has('win64')
-        let command = 'cmd /c "' . command . '"'
+        let cmd = 'cmd /c "' . cmd . '"'
     endif
     
     exec "bel silent new " . file . ".lint"
