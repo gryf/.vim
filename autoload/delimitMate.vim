@@ -648,7 +648,7 @@ function! delimitMate#ExtraMappings() "{{{
 	"the following simply creates an ambiguous mapping so vim fully
 	"processes the escape sequence for terminal keys, see 'ttimeout' for a
 	"rough explanation, this just forces it to work
-	if &term[:4] == "xterm"
+	if &term[:4] != "builtin_gui"
 		inoremap <silent> <C-[>OC <RIGHT>
 	endif
 endfunction "}}}
