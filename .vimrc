@@ -1,4 +1,5 @@
 "Basic setup for all files {{{
+call system('message.py vimrc start')
 set nocompatible "VIM over VI
 
 filetype plugin indent on           "turn plugins/indent on
@@ -19,16 +20,10 @@ set ignorecase                      "Ignore case in search patterns
 set laststatus=2                    "Always show statusbar
 set lazyredraw                      "Don't update screen while executing macros
 
-"set listchars=tab:▸⎯,eol:◦          "Strings to use in 'list' mode. list is off by default.
-"set listchars=tab:▸⎯,eol:·          "Strings to use in 'list' mode. list is off by default.
-"set listchars=tab:⇄·,eol:↵          "Strings to use in 'list' mode. list is off by default.
-"set listchars=tab:▸⎯,eol:↲,trail:·  "Strings to use in 'list' mode. list is off by default.
 set listchars=tab:▸⎯,trail:·  "Strings to use in 'list' mode. list is off by default.
 set number                          "show line numbers
 "set ruler                           "Show the cursor position all the time
 set rulerformat=%l,%c%V%=#%n\ %3p%% "Content of the ruler string
-"set statusline=%<%F\ %h%m%r%=%-14.(%l,%c%V%=#%n\ %3p%%)\ %P
-"set statusline=%<%F\ %h%m%r%=%-14.(%l,%c%V%)\ #%n\ %3p%%
 set scrolloff=5                     "Minimal number of screen lines to keep above and below the cursor
 set selection=exclusive             "Define the behavior of the selection
 
@@ -75,45 +70,20 @@ set noswapfile
 :let html_ignore_folding = 1
 :let html_use_encoding = "utf-8"
 "}}}
-"PYTHON: specific vim behaviour for Python files {{{
+"COMMON: specific vim behaviour for Python files {{{
 "
-"remove all trailing withitespace for python before write
+"remove all trailing whitespace for python before write
 autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.rst :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.wiki :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.css :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.xml :call <SID>StripTrailingWhitespaces()
-"autocmd BufWritePre *.py :!message.py '%'
-"Load views for py files
-autocmd BufWinLeave *.py mkview
-autocmd BufWinEnter *.py silent loadview
 
-"Set python custom editor behaviour. Note, smartindent is not recommended for
-"python files!
-autocmd FileType python set tabstop=4|set softtabstop=4|set shiftwidth=4
-autocmd FileType python set expandtab|set smarttab|set noautoindent
-autocmd FileType python set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-autocmd FileType python set foldmethod=indent|set foldlevel=100|set list|set textwidth=78|set cinkeys-=0#
-autocmd FileType python set indentkeys-=0#|inoremap # X<BS>#
-"autocmd FileType python set ofu=syntaxcomplete#Complete
-autocmd FileType python compiler pylint
-let g:pylint_onwrite = 0 " I don't want to run pylint on every save
-
-"autocmd FileType python setlocal omnifunc=pysmell#Complete
-let python_highlight_all=1
 " }}}
 " OTHER FILES: {{{
-"autocmd FileType python :!echo '%'
-autocmd FileType sql set nolist|set nosmartindent|set autoindent|set foldmethod=manual
-autocmd FileType vim set nolist|set nosmartindent|set autoindent|set foldmethod=manual
-autocmd FileType snippet set nolist|set tabstop=4|set autoindent|set foldmethod=manual|set noexpandtab|set shiftwidth=4
-autocmd FileType snippets set noexpandtab, nolist
-autocmd FileType rst set spf=/home/gryf/.vim/pol.utf8.add|set textwidth=80
+autocmd BufRead *.tmux.conf set filetype=tmux
 
-"}}}
-"LaTeX: option for LaTeX files {{{
-autocmd FileType tex compiler rubber|map <F5> :make<cr>
 "}}}
 "TERMINAL: options for terminal emulators {{{
 if $TERM == 'rxvt-unicode' || $TERM == 'xterm'
@@ -122,6 +92,11 @@ if $TERM == 'rxvt-unicode' || $TERM == 'xterm'
     "repair urxvt ctrl+pgup/down behaviour
     map [5^ <C-PageUp>
     map [6^ <C-PageDown>
+elseif $TERM == 'screen' || $TERM == 'screen-256color'
+    set t_Co=256                    "Enable 256 colors support
+    set term=screen-256color        "Set terminal type
+    set t_kN=[6;*~
+    set t_kP=[5;*~
 endif
 if $TERM == 'linux'
     "For term like linux terminal keep interface simple
@@ -170,6 +145,9 @@ let g:pydiction_location = '/home/gryf/.vim/after/ftplugin/pytdiction/complete-d
 "}}}
 "TagListToo {{{2
 let g:VerticalToolWindowSide = 'right'
+"}}}
+"{{{ Pydoc
+let g:pydoc_cmd = "/usr/bin/pydoc"
 "}}}
 "}}}
 "KEYS: User definied keyboard shortcuts {{{
@@ -351,17 +329,17 @@ endfunction
 " GUI: here goes all the gvim customizations {{{
 if has('gui_running')
     "set guifont=Consolas\ 12  "I like this font, but it looks like crap on linux
-    "set listchars=tab:▸⎼,eol:↲ "Strings to use in 'list' mode. this is different from console fixed-misc font. 
     set guifont=Fixed\ 14      "I like this font better.
     set mouse=a                "Enable mouse support
     set guioptions-=T          "No toolbar
+    set guioptions-=m          "Nor menu
     "add menuitem OpenInFirefox
     nmenu 666 PopUp.&Open\ in\ browser :call OpenInFirefox()<cr>
     "Turn off annoying beep
     au GUIEnter * set vb t_vb=
 endif
 "}}}
-" HIGHLIGHT: colorscheme and highlight, which should be applyed on after {{{
+" HIGHLIGHT: colorscheme and highlight, which should be applied on after {{{
 " some vim initialization
 if $TERM == 'linux'
     colorscheme pablo
@@ -374,3 +352,4 @@ highlight OverLength ctermbg=black guibg=black
 match OverLength /\%81v.*/
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:
+call system('message.py vimrc end')

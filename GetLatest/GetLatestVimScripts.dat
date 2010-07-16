@@ -3,16 +3,18 @@ ScriptID SourceID Filename
 ### plugins
 102 9375 DirDiff.vim
 1658 11834 NERD_tree.vim
-2754 13139 :AutoInstall: delimitMate.vim
+#2754 13139 :AutoInstall: delimitMate.vim
 1984 11852 fuzzyfinder.vim
 642 8136 :AutoInstall: getscript.vim
 311 7645 grep.vim
 2727 11120 jsbeautify.vim
 2666 12423 Mark
 2262 8944 occur.vim
-2421 9423 pysmell.vim
+910 13092 pydoc.vim
+#2421 9423 pysmell.vim
 152 3342 showmarks.vim
 2540 11006 snipMate.vim
+1697 12566 :AutoInstall: surround.vim
 #273 7701 taglist.vim  # exchanged with taglisttoo
 2607 10388 tasklist.vim
 90 12743 vcscommand.vim
@@ -26,7 +28,7 @@ ScriptID SourceID Filename
 # compiler
 891 10365 pylint.vim
 # ftplugin
-2441 13229 pyflakes.vim
+2441 13300 pyflakes.vim
 30 9196 python_fn.vim
 1542 10872 pythoncomplete.vim
 ### indent
