@@ -48,5 +48,12 @@ snippet subject
 	:Subject: ${1}
 snippet code
 	.. sourcecode:: ${1:python}
-
+	
 	    ${2}
+snippet figure
+	.. figure:: ${1:image.png}
+		:target: $1
+		:alt: ${2:description}
+		:figclass: ${3:custclass}
+		
+		$2

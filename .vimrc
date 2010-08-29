@@ -1,5 +1,4 @@
 "Basic setup for all files {{{
-call system('message.py vimrc start')
 set nocompatible "VIM over VI
 
 filetype plugin indent on           "turn plugins/indent on
@@ -51,7 +50,7 @@ set t_vb=                           "Turn beeping off
 set tabstop=4                       "Set tab stop to 4
 set updatecount=50                  "After typing this many chars the swap file will be written to disk
 set viewoptions-=options            "Don't store options in view stored in ~/.vim/view dir
-set viminfo='20,\"50                "Configure .viminfo
+set viminfo='20,<1000,h,f0          "Configure .viminfo
 set whichwrap+=<,>,[,]              "Cursor keys wrap to previous/next line
 set wildchar=<TAB>                  "Character to start wildcard expansion in the command-line
 set wildmenu                        "Put command-line completion in an enhanced mode
@@ -206,7 +205,7 @@ nmap ,cn :silent call <SID>CopyFileName(1)<CR>
 nmap ,cs :silent call <SID>CopyFileName(0)<CR>
 
 "FuzzyFinder plugin. Keys for file fuf
-map <C-F> :FufFile **/<CR>
+map <C-F> :TlistToo!<cr>:FufFile **/<CR>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
 "Sessions

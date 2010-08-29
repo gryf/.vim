@@ -21,17 +21,33 @@
 " along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "
 " }}}
+" eclim version: 1.6.0
 
-"if exists('g:taglisttoo_loaded') ||
-"   \ (exists('g:taglisttoo_disabled') && g:taglisttoo_disabled)
-"  finish
-"endif
-"let g:taglisttoo_loaded = 1
+if exists('g:taglisttoo_loaded') ||
+   \ (exists('g:taglisttoo_disabled') && g:taglisttoo_disabled)
+  finish
+endif
+let g:taglisttoo_loaded = 1
 
 " Global Variables {{{
 
 if !exists("g:TaglistEnabled")
   let g:TaglistEnabled = 1
+endif
+
+" always set the taglist title since eclim references it in a few places.
+if !exists('g:TagList_title')
+  let g:TagList_title = "__Tag_List__"
+endif
+
+if !g:TaglistEnabled
+  finish
+endif
+
+" disable if user has taglist installed on windows since we can't hook into
+" taglist to fix the windows path separators to be java compatible.
+if exists('loaded_taglist') && (has('win32') || has('win64') || has('win32unix'))
+  finish
 endif
 
 if !exists('g:Tlist_Ctags_Cmd')
@@ -44,11 +60,6 @@ if !exists('g:Tlist_Ctags_Cmd')
   elseif executable('tags')
     let g:Tlist_Ctags_Cmd = 'tags'
   endif
-endif
-
-" always set the taglist title since eclim references it in a few places.
-if !exists('g:TagList_title')
-  let g:TagList_title = "__Tag_List__"
 endif
 
 " no ctags found, no need to continue.
@@ -526,6 +537,18 @@ let s:tlist_def_html_settings = {
     \ }
   \ }
 
+" java language
+let s:tlist_format_java = 'FormatJava'
+let s:tlist_def_java_settings = {
+    \ 'lang': 'java', 'tags': {
+      \ 'p': 'package',
+      \ 'c': 'class',
+      \ 'i': 'interface',
+      \ 'f': 'field',
+      \ 'm': 'method'
+    \ }
+  \ }
+
 let s:tlist_format_javascript = 'FormatJavascript'
 let s:tlist_def_javascript_settings = {
     \ 'lang': 'javascript', 'tags': {
@@ -715,7 +738,8 @@ function! s:AutoOpen()
   let buf_num = winbufnr(i)
   while buf_num != -1
     let filename = fnamemodify(bufname(buf_num), ':p')
-    if s:FileSupported(filename, getbufvar(buf_num, '&filetype'))
+    if !getbufvar(buf_num, '&diff') &&
+     \ s:FileSupported(filename, getbufvar(buf_num, '&filetype'))
       let open_window = 1
       break
     endif
@@ -758,7 +782,7 @@ function! s:Taglist(...)
   endif
 
   if action == -1 || action == 1
-    call s:ProcessTags()
+    call s:ProcessTags(1)
     call s:StartAutocmds()
 
     augroup taglisttoo
@@ -791,13 +815,17 @@ function! s:Restore()
     \ 'endif')
 endfunction " }}}
 
-" s:StartAutocmds() {{{
+" s:StartAutocmds() eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:StartAutocmds()
   augroup taglisttoo_file
     autocmd!
-    autocmd BufEnter,BufWritePost *
+    autocmd BufEnter *
       \ if bufwinnr(g:TagList_title) != -1 |
-      \   call s:ProcessTags() |
+      \   call s:ProcessTags(0) |
+      \ endif
+    autocmd BufWritePost *
+      \ if bufwinnr(g:TagList_title) != -1 |
+      \   call s:ProcessTags(1) |
       \ endif
     " bit of a hack to re-process tags if the filetype changes after the tags
     " have been processed.
@@ -805,7 +833,7 @@ function! s:StartAutocmds()
       \ if exists('b:ft') |
       \   if b:ft != &ft |
       \     if bufwinnr(g:TagList_title) != -1 |
-      \       call s:ProcessTags() |
+      \       call s:ProcessTags(1) |
       \     endif |
       \   endif |
       \ else |
@@ -818,170 +846,20 @@ function! s:StartAutocmds()
   augroup END
 endfunction " }}}
 
-" s:StopAutocmds() {{{
+" s:StopAutocmds() eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:StopAutocmds()
   augroup taglisttoo_file
     autocmd!
   augroup END
 endfunction " }}}
 
-" s:ProcessTags() {{{
-function! s:ProcessTags()
-  " on insert completion prevent vim's jumping back and forth from the
-  " completion preview window from triggering a re-processing of tags
-  if pumvisible()
-    return
-  endif
-
-  let filename = expand('%:p')
-  if filename =~ s:taglisttoo_ignore || filename == ''
-    return
-  endif
-  let filewin = winnr()
-
-  let tags = []
-  if s:FileSupported(expand('%:p'), &ft)
-    if exists('g:tlist_{&ft}_settings')
-      let settings = g:tlist_{&ft}_settings
-      let types = join(keys(settings.tags), '')
-    else
-      let settings = s:tlist_def_{&ft}_settings
-      let types = join(keys(settings.tags), '')
-    endif
-
-    let file = substitute(expand('%:p'), '\', '/', 'g')
-
-    " support generated file contents (like viewing a .class file via jad)
-    let tempfile = ''
-    if !filereadable(file) || &buftype == 'nofile'
-      let tempfile = g:EclimTempDir . '/' . fnamemodify(file, ':t')
-      if tolower(file) != tolower(tempfile)
-        let tempfile = escape(tempfile, ' ')
-        exec 'write! ' . tempfile
-        let file = tempfile
-      endif
-    endif
-
-    try
-      let command = g:Tlist_Ctags_Cmd_Ctags
-      "if eclim#EclimAvailable() && !exists('g:EclimDisabled')
-      "  let port = eclim#client#nailgun#GetNgPort()
-      "  let command = substitute(g:Tlist_Ctags_Cmd_Eclim, '<port>', port, '')
-      "endif
-
-      let command .= ' -f - --format=2 --excmd=pattern ' .
-          \ '--fields=nks --sort=no --language-force=<lang> ' .
-          \ '--<lang>-types=<types> "<file>"'
-      let command = substitute(command, '<lang>', settings.lang, 'g')
-      let command = substitute(command, '<types>', types, 'g')
-      let command = substitute(command, '<file>', file, '')
-
-      if (has('win32') || has('win64')) && command =~ '^"'
-        let command .= ' "'
-      endif
-
-      let response = System(command)
-    finally
-      if tempfile != ''
-        call delete(tempfile)
-      endif
-    endtry
-
-    if v:shell_error
-      call EchoError('taglist failed with error code: ' . v:shell_error)
-      return
-    endif
-
-    let results = split(response, '\n')
-    if len(response) == 1 && response[0] == '0'
-      return
-    endif
-
-    while len(results) && results[0] =~ 'ctags.*: Warning:'
-      call remove(results, 0)
-    endwhile
-
-    let truncated = 0
-    if len(results)
-      " for some reason, vim may truncate the output of system, leading to only
-      " a partial taglist.
-      let values = s:ParseOutputLine(results[-1])
-      if len(values) < 5
-        let truncated = 1
-      endif
-
-      if g:Tlist_Sort_Type == 'name'
-        call sort(results)
-      endif
-
-      for result in results
-        let values = s:ParseOutputLine(result)
-
-        " filter false positives found in comments.
-        if values[-1] =~ 'line:[0-9]\+'
-          exec 'let lnum = ' . substitute(values[-1], 'line:\([0-9]\+\).*', '\1', '')
-          let line = getline(lnum)
-          let col = len(line) - len(substitute(line, '^\s*', '', '')) + 1
-          if synIDattr(synID(lnum, col, 1), "name") =~ '\([Cc]omment\|[Ss]tring\)'
-            continue
-          endif
-        endif
-
-        " exit if we run into apparent bug in vim that truncates the response
-        " from system()
-        if len(values) < 5
-          break
-        endif
-
-        call add(tags, values)
-      endfor
-    endif
-
-    if exists('s:tlist_format_{&ft}')
-      exec 'call s:Window(settings.tags, tags, ' .
-        \ s:tlist_format_{&ft} . '(settings.tags, tags))'
-    else
-      call s:Window(settings.tags, tags, s:FormatDefault(settings.tags, tags))
-    endif
-
-    " if vim truncated the output, then add a note in the taglist indicating
-    " the the list has been truncated.
-    if truncated
-      setlocal modifiable
-      call append(line('$'), '')
-      call append(line('$'), 'Warning: taglist truncated.')
-      setlocal nomodifiable
-    endif
-
-    " if the file buffer is no longer in the same window it was, then find its
-    " new location. Occurs when taglist first opens.
-    if winbufnr(filewin) != bufnr(filename)
-      let filewin = bufwinnr(filename)
-    endif
-
-    if filewin != -1
-      exec filewin . 'winc w'
-    endif
-  else
-    " if the file isn't supported, then don't open the taglist window if it
-    " isn't open already.
-    let winnum = bufwinnr(g:TagList_title)
-    if winnum != -1
-      call s:Window({}, tags, [[],[]])
-      winc p
-    endif
-  endif
-
-  call s:ShowCurrentTag()
-endfunction " }}}
-
-" s:CloseTaglist() {{{
+" s:CloseTaglist() eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:CloseTaglist()
   close
   call s:Cleanup()
 endfunction " }}}
 
-" s:Cleanup() {{{
+" s:Cleanup() eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:Cleanup()
   augroup taglisttoo_file
     autocmd!
@@ -992,12 +870,22 @@ function! s:Cleanup()
   augroup END
 endfunction " }}}
 
-" s:ProcessTags() {{{
-function! s:ProcessTags()
+" s:ProcessTags(on_open_or_write) eclim/autoload/eclim/taglist/taglisttoo.vim {{{
+function! s:ProcessTags(on_open_or_write)
   " on insert completion prevent vim's jumping back and forth from the
   " completion preview window from triggering a re-processing of tags
   if pumvisible()
     return
+  endif
+
+  " if we are entering a buffer whose taglist list is already loaded, then
+  " don't do anything.
+  if !a:on_open_or_write
+    let bufnr = bufnr(g:TagList_title)
+    let filebuf = getbufvar(bufnr, 'taglisttoo_file_bufnr')
+    if filebuf == bufnr('%')
+      return
+    endif
   endif
 
   let filename = expand('%:p')
@@ -1031,10 +919,6 @@ function! s:ProcessTags()
 
     try
       let command = g:Tlist_Ctags_Cmd_Ctags
-      "if eclim#EclimAvailable() && !exists('g:EclimDisabled')
-      "  let port = eclim#client#nailgun#GetNgPort()
-      "  let command = substitute(g:Tlist_Ctags_Cmd_Eclim, '<port>', port, '')
-      "endif
 
       let command .= ' -f - --format=2 --excmd=pattern ' .
           \ '--fields=nks --sort=no --language-force=<lang> ' .
@@ -1077,10 +961,6 @@ function! s:ProcessTags()
         let truncated = 1
       endif
 
-      if g:Tlist_Sort_Type == 'name'
-        call sort(results)
-      endif
-
       for result in results
         let values = s:ParseOutputLine(result)
 
@@ -1108,6 +988,10 @@ function! s:ProcessTags()
       exec 'call s:Window(settings.tags, tags, ' .
         \ s:tlist_format_{&ft} . '(settings.tags, tags))'
     else
+      if g:Tlist_Sort_Type == 'name'
+        call sort(tags)
+      endif
+
       call s:Window(settings.tags, tags, s:FormatDefault(settings.tags, tags))
     endif
 
@@ -1142,7 +1026,7 @@ function! s:ProcessTags()
   call s:ShowCurrentTag()
 endfunction " }}}
 
-" s:ParseOutputLine(line) {{{
+" s:ParseOutputLine(line) eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:ParseOutputLine(line)
   let pre = substitute(a:line, '\(.\{-}\)\t\/\^.*', '\1', '')
   let pattern = substitute(a:line, '.\{-}\(\/\^.*\$\/;"\).*', '\1', '')
@@ -1150,7 +1034,7 @@ function! s:ParseOutputLine(line)
   return split(pre, '\t') + [pattern] + split(post, '\t')
 endfunction " }}}
 
-" s:FormatDefault(types, tags) {{{
+" s:FormatDefault(types, tags) eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 " All format functions must return a two element list containing:
 " result[0] - A list of length len(result[1]) where each value specifies the
 "             tag index such that result[0][line('.') - 1] == tag index for
@@ -1173,7 +1057,7 @@ function! s:FormatDefault(types, tags)
   return [lines, content]
 endfunction " }}}
 
-" s:JumpToTag() {{{
+" s:JumpToTag() eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:JumpToTag()
   if line('.') > len(b:taglisttoo_content[0])
     return
@@ -1203,7 +1087,7 @@ function! s:JumpToTag()
 
   " account for my plugin which removes trailing spaces from the file
   let pattern = escape(pattern, '.~*[]')
-  let pattern = substitute(pattern, '\s\+\$$', '\s*$', '')
+  let pattern = substitute(pattern, '\s\+\$$', '\\s*$', '')
 
   if getline(lnum) =~ pattern
     mark '
@@ -1248,7 +1132,7 @@ function! s:JumpToTag()
   endif
 endfunction " }}}
 
-" s:Window(types, tags, content) {{{
+" s:Window(types, tags, content) eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:Window(types, tags, content)
   let filename = expand('%:t')
   let file_bufnr = bufnr('%')
@@ -1309,7 +1193,7 @@ function! s:Window(types, tags, content)
   let b:taglisttoo_file_bufnr = file_bufnr
 endfunction " }}}
 
-" s:ShowCurrentTag() {{{
+" s:ShowCurrentTag() eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:ShowCurrentTag()
   if s:FileSupported(expand('%:p'), &ft) && bufwinnr(g:TagList_title) != -1
     let tags = getbufvar(g:TagList_title, 'taglisttoo_tags')
@@ -1350,7 +1234,7 @@ function! s:ShowCurrentTag()
   endif
 endfunction " }}}
 
-" s:FileSupported(filename, ftype) {{{
+" s:FileSupported(filename, ftype) eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 " Check whether tag listing is supported for the specified file
 function! s:FileSupported(filename, ftype)
   " Skip buffers with no names, buffers with filetype not set, and vimballs
@@ -1380,7 +1264,7 @@ function! s:FileSupported(filename, ftype)
   return 1
 endfunction " }}}
 
-" s:GetTagLineNumber(tag) {{{
+" s:GetTagLineNumber(tag) eclim/autoload/eclim/taglist/taglisttoo.vim {{{
 function! s:GetTagLineNumber(tag)
   if len(a:tag) > 4
     return substitute(a:tag[4], '.*:\(.*\)', '\1', '')
@@ -1388,6 +1272,68 @@ function! s:GetTagLineNumber(tag)
   return 0
 endfunction " }}}
 
+
+" FormatJava(types, tags) eclim/autoload/eclim/taglist/lang/java.vim {{{
+function! FormatJava(types, tags)
+  let lines = []
+  let content = []
+
+  call add(content, expand('%:t'))
+  call add(lines, -1)
+
+  let package = filter(copy(a:tags), 'v:val[3] == "p"')
+  call s:FormatType(
+      \ a:tags, a:types['p'], package, lines, content, "\t")
+
+  let classes = filter(copy(a:tags), 'v:val[3] == "c"')
+
+  " sort classes alphabetically except for the primary containing class.
+  if len(classes) > 1 && g:Tlist_Sort_Type == 'name'
+    let classes = [classes[0]] + sort(classes[1:])
+  endif
+
+  for class in classes
+    call add(content, "")
+    call add(lines, -1)
+    let visibility = s:GetVisibility(class)
+    call add(content, "\t" . visibility . a:types['c'] . ' ' . class[0])
+    call add(lines, index(a:tags, class))
+
+    let fields = filter(copy(a:tags),
+      \ 'v:val[3] == "f" && len(v:val) > 5 && v:val[5] =~ "class:.*\\<" . class[0] . "$"')
+    call s:FormatType(
+        \ a:tags, a:types['f'], fields, lines, content, "\t\t")
+
+    let methods = filter(copy(a:tags),
+      \ 'v:val[3] == "m" && len(v:val) > 5 && v:val[5] =~ "class:.*\\<" . class[0] . "$"')
+    call s:FormatType(
+        \ a:tags, a:types['m'], methods, lines, content, "\t\t")
+  endfor
+
+  let interfaces = filter(copy(a:tags), 'v:val[3] == "i"')
+  if g:Tlist_Sort_Type == 'name'
+    call sort(interfaces)
+  endif
+  for interface in interfaces
+    call add(content, "")
+    call add(lines, -1)
+    let visibility = s:GetVisibility(interface)
+    call add(content, "\t" . visibility . a:types['i'] . ' ' . interface[0])
+    call add(lines, index(a:tags, interface))
+
+    let fields = filter(copy(a:tags),
+      \ 'v:val[3] == "f" && len(v:val) > 5 && v:val[5] =~ "interface:.*\\<" . interface[0] . "$"')
+    call s:FormatType(
+        \ a:tags, a:types['f'], fields, lines, content, "\t\t")
+
+    let methods = filter(copy(a:tags),
+      \ 'v:val[3] == "m" && len(v:val) > 5 && v:val[5] =~ "interface:.*\\<" . interface[0] . "$"')
+    call s:FormatType(
+        \ a:tags, a:types['m'], methods, lines, content, "\t\t")
+  endfor
+
+  return [lines, content]
+endfunction " }}}
 
 " FormatJavascript(types, tags) eclim/autoload/eclim/taglist/lang/javascript.vim {{{
 function! FormatJavascript(types, tags)
@@ -1415,13 +1361,24 @@ function! FormatJavascript(types, tags)
     let object_end = searchpair('{', '', '}', 'W', 's:SkipComments()')
 
     let methods = []
+    let indexes = []
+    let index = 0
     for fct in members
       if len(fct) > 3
         exec 'let fct_line = ' . split(fct[4], ':')[1]
         if fct_line > object_start && fct_line < object_end
           call add(methods, fct)
+        elseif fct_line > object_end
+          break
+        elseif fct_line < object_end
+          call add(indexes, index)
         endif
       endif
+      let index += 1
+    endfor
+    call reverse(indexes)
+    for i in indexes
+      call remove(members, i)
     endfor
 
     let indexes = []
@@ -1434,6 +1391,8 @@ function! FormatJavascript(types, tags)
           call add(indexes, index)
         elseif fct_line == object_start
           call add(indexes, index)
+        elseif fct_line > object_end
+          break
         endif
       endif
       let index += 1
@@ -1451,7 +1410,6 @@ function! FormatJavascript(types, tags)
         call filter(parent_object.methods, 'index(methods, v:val) == -1')
       endif
       let object_bounds[string(object)] = [object_start, object_end]
-      call sort(methods)
       call add(object_contents, {'object': object, 'methods': methods})
     endif
   endfor
@@ -1461,6 +1419,10 @@ function! FormatJavascript(types, tags)
     call add(lines, -1)
     call s:FormatType(
         \ a:tags, a:types['f'], functions, lines, content, "\t")
+  endif
+
+  if g:Tlist_Sort_Type == 'name'
+    call sort(object_contents, function('s:ObjectComparator'))
   endif
 
   for object_content in object_contents
@@ -1478,14 +1440,21 @@ function! FormatJavascript(types, tags)
   return [lines, content]
 endfunction " }}}
 
+" s:ObjectComparator(o1, o2) eclim/autoload/eclim/taglist/lang/javascript.vim {{{
+function s:ObjectComparator(o1, o2)
+  let n1 = a:o1['object'][0]
+  let n2 = a:o2['object'][0]
+  return n1 == n2 ? 0 : n1 > n2 ? 1 : -1
+endfunction " }}}
+
 " s:SkipComments() eclim/autoload/eclim/taglist/lang/javascript.vim {{{
-function! s:SkipComments()
+function s:SkipComments()
   let synname = synIDattr(synID(line('.'), col('.'), 1), "name")
   return synname =~ '\([Cc]omment\|[Ss]tring\)'
 endfunction " }}}
 
 " s:GetParentObject(objects, bounds, start, end) eclim/autoload/eclim/taglist/lang/javascript.vim {{{
-function! s:GetParentObject(objects, bounds, start, end)
+function s:GetParentObject(objects, bounds, start, end)
   for key in keys(a:bounds)
     let range = a:bounds[key]
     if range[0] < a:start && range[1] > a:end
@@ -1509,6 +1478,10 @@ endfunction " }}}
 " indent: The indentation to use on the display (string).
 function! s:FormatType(tags, type, values, lines, content, indent)
   if len(a:values) > 0
+    if g:Tlist_Sort_Type == 'name'
+      call sort(a:values)
+    endif
+
     call add(a:content, a:indent . a:type)
     call add(a:lines, -1)
 
@@ -1556,6 +1529,9 @@ function! FormatPhp(types, tags)
 
   let class_contents = []
   let classes = filter(copy(a:tags), 'v:val[3] == "c"')
+  if g:Tlist_Sort_Type == 'name'
+    call sort(classes)
+  endif
   for class in classes
     exec 'let object_start = ' . split(class[4], ':')[1]
     call cursor(object_start, 1)
@@ -1585,6 +1561,9 @@ function! FormatPhp(types, tags)
 
   let interface_contents = []
   let interfaces = filter(copy(a:tags), 'v:val[3] == "i"')
+  if g:Tlist_Sort_Type == 'name'
+    call sort(interfaces)
+  endif
   for interface in interfaces
     exec 'let object_start = ' . split(interface[4], ':')[1]
     call cursor(object_start, 1)
@@ -1657,6 +1636,10 @@ function! FormatPython(types, tags)
       \ a:tags, a:types['f'], functions, lines, content, "\t")
 
   let classes = filter(copy(a:tags), 'len(v:val) > 3 && v:val[3] == "c"')
+  if g:Tlist_Sort_Type == 'name'
+    call sort(classes)
+  endif
+
   for class in classes
     call add(content, "")
     call add(lines, -1)
@@ -1665,10 +1648,8 @@ function! FormatPython(types, tags)
 
     let members = filter(copy(a:tags),
         \ 'len(v:val) > 5 && v:val[3] == "m" && v:val[5] == "class:" . class[0]')
-    for member in members
-      call add(content, "\t\t" . member[0])
-      call add(lines, index(a:tags, member))
-    endfor
+    call s:FormatType(
+        \ a:tags, a:types['m'], members, lines, content, "\t\t")
   endfor
 
   return [lines, content]
@@ -1871,13 +1852,25 @@ function! s:PreventCloseOnBufferDelete()
     endif
   endfor
 
-  if winnr('$') == numtoolwindows
+  let index = 1
+  let numtempwindows = 0
+  let tempbuffers = []
+  while index <= winnr('$')
+    let buf = winbufnr(index)
+    if buf != -1 && getbufvar(buf, 'eclim_temp_window') != ''
+      call add(tempbuffers, buf)
+    endif
+    let index += 1
+  endwhile
+
+  if winnr('$') == (numtoolwindows + len(tempbuffers))
     let toolbuf = bufnr('%')
     if g:VerticalToolWindowSide == 'right'
       vertical topleft new
     else
       vertical botright new
     endif
+    setlocal noreadonly modifiable
     let winnum = winnr()
     exec 'let bufnr = ' . expand('<abuf>')
 
@@ -1921,6 +1914,30 @@ function! s:PreventCloseOnBufferDelete()
 
     exec bufwinnr(toolbuf) . 'winc w'
     exec 'vertical resize ' . g:VerticalToolWindowWidth
+
+    " fix the position of the temp windows
+    if len(tempbuffers) > 0
+      for buf in tempbuffers
+        " open the buffer in the temp window position
+        botright 10new
+        exec 'buffer ' . buf
+        setlocal winfixheight
+
+        " close the old window
+        let winnr = winnr()
+        let index = 1
+        while index <= winnr('$')
+          if winbufnr(index) == buf && index != winnr
+            exec index . 'winc w'
+            close
+            winc p
+            break
+          endif
+          let index += 1
+        endwhile
+      endfor
+    endif
+
     exec winnum . 'winc w'
   endif
 endfunction " }}}

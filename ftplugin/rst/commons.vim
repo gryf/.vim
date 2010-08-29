@@ -1,16 +1,16 @@
 " Some common settings for all reSt files
-set textwidth=80
-set makeprg=rst2html.py\ %\ %.html
-set spell
-set smartindent
-set autoindent
-set formatoptions+=w
+setlocal textwidth=80
+setlocal makeprg=rst2html.py\ %\ %.html
+setlocal spell
+setlocal smartindent
+setlocal autoindent
+setlocal formatoptions=tcq "set VIms default
 
-map <F5> :call Rst2Blogger()<cr>
+map <F5> :call <SID>Rst2Blogger()<cr>
 
 " Simple function, that translates reSt text into html with specified format, 
 " suitable to copy and paste into blogger post.
-fun! Rst2Blogger()
+fun <SID>Rst2Blogger()
 python << EOF
 from docutils import core
 from docutils.writers.html4css1 import Writer, HTMLTranslator
@@ -45,7 +45,7 @@ _w = Writer()
 _w.translator_class = NoHeaderHTMLTranslator
 
 def blogify(string):
-    return core.publish_string(string,writer=_w)
+    return core.publish_string(string, writer=_w)
 
 bufcontent = "\n".join(vim.current.buffer)
 name = vim.current.buffer.name
@@ -54,16 +54,18 @@ if name.lower().endswith(".rst"):
     vim.command('new')
 
     vim.current.buffer[:] = blogify(bufcontent).split("\n")
-    vim.command('saveas %s' % name)
+    vim.command(r'silent %s/<tt class="docutils literal">/<code>/g')
+    vim.command(r'silent %s/<\/tt>/<\/code>/g')
+    vim.command('w %s' % name)
     vim.command('bd')
 else:
-    print "This is not reSt file. File should have '.rst' extension."
+    print "Ihis is not reSt file. File should have '.rst' extension."
 
 EOF
 endfun
 
 " This is similar to that above, but creates full html document
-fun! Restify()
+fun <SID>Restify()
 python << EOF
 from docutils import core
 from docutils.writers.html4css1 import Writer, HTMLTranslator
@@ -82,10 +84,12 @@ if name.lower().endswith(".rst"):
     vim.command('new')
 
     vim.current.buffer[:] = reSTify(bufcontent).split("\n")
-    vim.command('saveas %s' % name)
+    vim.command(r'silent %s/<tt class="docutils literal">/<code>/g')
+    vim.command(r'silent %s/<\/tt>/<\/code>/g')
+    vim.command('w %s' % name)
     vim.command('bd')
 else:
-    print 'To nie jest plik reSt!'
+    print "It's not reSt file!"
 
 EOF
 endfun
