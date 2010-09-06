@@ -336,6 +336,9 @@ call <SID>X("DiffChange", "", "424242", "bold")
 " DiffDelete     xxx term=bold ctermfg=12 ctermbg=6
 " DiffText       xxx term=reverse cterm=bold ctermbg=9
 
+" VIm 7.3 features
+call <SID>X("ColorColumn", "", "121212", "")
+
 if ! has('gui_running')
 	" spell, make it underline, and less bright colors. only for terminal
 	call <SID>X("SpellBad", "", "880000", "underline")

@@ -148,6 +148,16 @@ let g:VerticalToolWindowSide = 'right'
 "{{{ Pydoc
 let g:pydoc_cmd = "/usr/bin/pydoc"
 "}}}
+"mark {{{
+" addidtional colors -- 
+highlight def MarkWord7 ctermbg=White ctermfg=Black guibg=#E8E8E8 guifg=Black
+highlight def MarkWord8 ctermbg=LightGray ctermfg=Black guibg=#C0C0C0 guifg=Black
+highlight def MarkWord9 ctermbg=DarkYellow ctermfg=Black guibg=#FFC299 guifg=Black
+highlight def MarkWord10 ctermbg=DarkGreen ctermfg=Black guibg=#6E9954 guifg=Black
+"}}}
+" DirDiff{{{
+let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
+" }}}
 "}}}
 "KEYS: User definied keyboard shortcuts {{{
 
@@ -345,10 +355,5 @@ if $TERM == 'linux'
 else
     colorscheme wombat256grf
 endif
-
-"highlight code beyond 79 column (must be after colorscheme)
-highlight OverLength ctermbg=black guibg=black
-match OverLength /\%81v.*/
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:
-call system('message.py vimrc end')

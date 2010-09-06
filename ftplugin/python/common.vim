@@ -11,6 +11,7 @@ set smarttab
 set softtabstop=4
 set tabstop=4
 set textwidth=78
+set colorcolumn=+1
 
 inoremap # X<BS>#
 

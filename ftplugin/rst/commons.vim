@@ -54,8 +54,15 @@ if name.lower().endswith(".rst"):
     vim.command('new')
 
     vim.current.buffer[:] = blogify(bufcontent).split("\n")
-    vim.command(r'silent %s/<tt class="docutils literal">/<code>/g')
-    vim.command(r'silent %s/<\/tt>/<\/code>/g')
+    try:
+        vim.command(r'silent! %s/<tt class="docutils literal">/<code>/g')
+        vim.command(r'silent! %s/<\/tt>/<\/code>/g')
+    except:
+        pass
+    try:
+        vim.command(r'silent! %s/<!-- more -->/\r<!-- more -->\r\r/g')
+    except:
+        pass
     vim.command('w %s' % name)
     vim.command('bd')
 else:

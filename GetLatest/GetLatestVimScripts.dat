@@ -2,10 +2,8 @@ ScriptID SourceID Filename
 --------------------------
 ### plugins
 102 13435 DirDiff.vim
-1658 11834 NERD_tree.vim
 #2754 13139 :AutoInstall: delimitMate.vim
 1984 11852 fuzzyfinder.vim
-642 8136 :AutoInstall: getscript.vim
 311 7645 grep.vim
 2727 11120 jsbeautify.vim
 2666 13424 Mark
@@ -16,21 +14,19 @@ ScriptID SourceID Filename
 2540 11006 snipMate.vim
 1697 12566 :AutoInstall: surround.vim
 #273 7701 taglist.vim  # exchanged with taglisttoo
-2607 10388 tasklist.vim
-90 13632 vcscommand.vim
-2226 13667 vimwiki.vim
+90 13751 vcscommand.vim
+2226 13756 vimwiki.vim
+2289 0 loremipsum.vim
 1334 6377 vst.vim
 ### colors
 1975 7471 lettuce.vim
 2536 13588 lucius.vim
 1165 3741 tolerable.vim
-2465 13400 wombat256.vim
 # compiler
 891 10365 pylint.vim
 # ftplugin
 2441 13378 pyflakes.vim
 30 9196 python_fn.vim
-1542 10872 pythoncomplete.vim
 ### indent
 1936 7708 javascript.vim
 #   there is also python.vim, which is close to PEP8, but author of 
@@ -38,4 +34,3 @@ ScriptID SourceID Filename
 #   http://monkey.org/~caz/python.vim
 ### syntax
 790 12805 python.vim
-
