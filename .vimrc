@@ -21,8 +21,11 @@ set lazyredraw                      "Don't update screen while executing macros
 
 set listchars=tab:▸⎯,trail:·  "Strings to use in 'list' mode. list is off by default.
 set number                          "show line numbers
-"set ruler                           "Show the cursor position all the time
-set rulerformat=%l,%c%V%=#%n\ %3p%% "Content of the ruler string
+
+" Show ruler and set format of statusline
+set ruler
+set statusline=%<%F\ %h%m%r%=%(%l,%c%V%)\ %3p%%
+
 set scrolloff=5                     "Minimal number of screen lines to keep above and below the cursor
 set selection=exclusive             "Define the behavior of the selection
 
