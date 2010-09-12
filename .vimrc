@@ -74,7 +74,7 @@ set noswapfile
 "}}}
 "COMMON: specific vim behaviour for Python files {{{
 "
-"remove all trailing whitespace for python before write
+"remove all trailing whitespace for specified files before write
 autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.rst :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.wiki :call <SID>StripTrailingWhitespaces()
@@ -164,17 +164,9 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
 "}}}
 "KEYS: User definied keyboard shortcuts {{{
 
-"set <C-F1>=^[[11^
-"set <S-F1> = ^[[23~
-"nmap <TAB> :bnext<CR>
-"nmap <S-F1> :split<CR>
-"nmap <C-F1> :vsplit<CR>
-
 "Cycle through buffers.
 map <C-p> :bp<CR>
 map <C-n> :bn<CR>
-"map <C-PageUp> :bp<CR>
-"map <C-PageDown> :bn<CR>
 
 "Cycle through tabs.
 if $TERM == 'rxvt-unicode'
@@ -182,11 +174,7 @@ if $TERM == 'rxvt-unicode'
     map <C-PageUp> :tabp<CR>
 endif
 
-map <F5> :call <SID>runPyLint()<cr>
-map <F6> :call <SID>PyLintBuf()<cr>
-
-"map ctags plugin to show popup menu in gvim
-"map <F6> :popup Tags<CR>
+map <F5> :call <SID>Make()<cr>
 
 "QuickFix jumps
 map <F9> :cp<CR>
@@ -207,8 +195,6 @@ map ]b :call OpenInFirefox()<cr>
 
 "make displaying tags easy
 nmap <Leader>t :TlistToo<CR>
-"aswell minibufexplorer
-"map <Leader>b :TMiniBufExplorer<CR><CR>
 "eclim Buffer shortcut
 map <Leader>b :Buffers<CR>
 
@@ -221,42 +207,18 @@ nmap ,cs :silent call <SID>CopyFileName(0)<CR>
 map <C-F> :TlistToo!<cr>:FufFile **/<CR>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
-"Sessions
-"autocmd VimEnter * call LoadSession()
-"autocmd VimLeave * call SaveSession()
-"
-"function! SaveSession()
-"    execute 'mksession!'
-"endfunction
-"
-"function! LoadSession()
-"    if argc() == 0
-"        execute 'source Session.vim'
-"    endif
-"endfunction
-
-function <SID>runPyLint()
+" Simple wrapper for :make command
+function <SID>Make()
     echohl Statement
-    echo "Running pylint (ctrl-c to cancel) ..."
+    echo "Running make (ctrl-c to cancel) ..."
     echohl Normal
-    :Pylint
-endfunction
-function <SID>PyLintBuf()
-    echohl Statement
-    echo "Running pylint (ctrl-c to cancel) ..."
-    echohl Normal
-    let file = expand('%:p')
-    let cmd = 'pylint --reports=n --output-format=text "' . file . '"'
-
-    if has('win32') || has('win64')
-        let cmd = 'cmd /c "' . cmd . '"'
+    silent make
+    if getqflist() != []
+        copen
     endif
-    
-    exec "bel silent new " . file . ".lint"
-    exec "silent! read! " . cmd
 endfunction
-
-function! <SID>StripTrailingWhitespaces()
+" Remove trailing whitespace
+function <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
     let l = line(".")
@@ -284,6 +246,7 @@ function <SID>CopyFileName(full)
     echo l:full_fn + " copied to clipboard"
 endfunction
 
+" Toggle QuickFix buffer
 command -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
   if exists("g:qfix_win") && a:forced == 0
@@ -295,6 +258,7 @@ function! QFixToggle(forced)
   endif
 endfunction
 
+" Toggle location buffer
 command -bang -nargs=? LWin call LocationWindowToggle(<bang>0)
 function! LocationWindowToggle(forced)
   if exists("g:loc_win") && a:forced == 0
