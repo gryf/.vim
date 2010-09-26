@@ -1,6 +1,6 @@
 " Vim color file
 " Maintainer:   David Liang (bmdavll at gmail dot com)
-" Last Change:  November 28 2008
+" Last Change:  2010-09-13
 "
 " wombat256.vim - a modified version of Wombat by Lars Nielsen that also
 " works on xterms with 88 or 256 colors. The algorithm for approximating the
@@ -15,7 +15,7 @@ if version > 580
 	endif
 endif
 
-let g:colors_name = "wombat256"
+let g:colors_name = "wombat256grf"
 
 if !has("gui_running") && &t_Co != 88 && &t_Co != 256
 	finish
@@ -251,10 +251,10 @@ call <SID>X("CursorColumn",	"",			"2d2d2d",	"")
 			"CursorIM
 			"Question
 			"IncSearch
-call <SID>X("Search",		"444444",	"af87d7",	"")
+call <SID>X("Search",		"444444",	"ffab4b",	"")
 call <SID>X("MatchParen",	"ecee90",	"857b6f",	"bold")
 call <SID>X("SpecialKey",	"6c6c6c",	"2d2d2d",	"none")
-call <SID>X("Visual",		"ecee90",	"597418",	"none")
+call <SID>X("Visual",		"",	"26512D",	"none")
 call <SID>X("LineNr",		"857b6f",	"121212",	"none")
 call <SID>X("SignColumn",   "",	"121212",	"none")
 call <SID>X("Folded",		"a0a8b0",	"404048",	"none")
@@ -337,7 +337,7 @@ call <SID>X("DiffChange", "", "424242", "bold")
 " DiffText       xxx term=reverse cterm=bold ctermbg=9
 
 " VIm 7.3 features
-call <SID>X("ColorColumn", "", "121212", "")
+call <SID>X("ColorColumn", "", "32322e", "")
 
 if ! has('gui_running')
 	" spell, make it underline, and less bright colors. only for terminal

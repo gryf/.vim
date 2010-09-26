@@ -72,7 +72,7 @@ set noswapfile
 :let html_ignore_folding = 1
 :let html_use_encoding = "utf-8"
 "}}}
-"COMMON: specific vim behaviour for Python files {{{
+"COMMON: specific vim behaviour {{{
 "
 "remove all trailing whitespace for specified files before write
 autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
@@ -183,7 +183,6 @@ map <F11> :lprevious<CR>
 map <F12> :lnext<CR>
 map <S-F9> :QFix<CR>
 map <S-F11> :LWin<CR>
-map <S-F12> :call ToggleQFonValidate()<CR>
 
 "remove trailing whitespaces
 map <C-e> :%s/\s\+$//<CR>

@@ -12,9 +12,14 @@ map <F5> :call <SID>Rst2Blogger()<cr>
 " suitable to copy and paste into blogger post.
 fun <SID>Rst2Blogger()
 python << EOF
+import re
+
 from docutils import core
+from docutils import nodes
 from docutils.writers.html4css1 import Writer, HTMLTranslator
+
 import vim
+
 
 class NoHeaderHTMLTranslator(HTMLTranslator):
     def __init__(self, document):
@@ -40,6 +45,21 @@ class NoHeaderHTMLTranslator(HTMLTranslator):
 
     def depart_section(self, node):
         pass
+
+    def visit_acronym(self, node):
+        node_text = node.children[0].astext()
+        node_text = node_text.replace('\n', ' ')
+        patt = re.compile(r'^(.+)\s<(.+)>')
+
+        if patt.match(node_text):
+            node.children[0] = nodes.Text(patt.match(node_text).groups()[0])
+            self.body.append(\
+                self.starttag(node, 'acronym',
+                              '', title=patt.match(node_text).groups()[1]))
+
+        else:
+            self.body.append(self.starttag(node, 'acronym', ''))
+
 
 _w = Writer()
 _w.translator_class = NoHeaderHTMLTranslator

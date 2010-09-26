@@ -2,6 +2,7 @@
 " Author: Roman 'gryf' Dobosz (gryf73 at gmail.com)
 " Version: 1.0
 " Last Modified: 2010-09-12
+" Description: {{{
 "
 " Overview
 " --------
@@ -42,6 +43,8 @@
 " [2] http://pypi.python.org/pypi/pep8
 " [3] http://www.vim.org/scripts/script.php?script_id=2441
 " [4] http://pypi.python.org/pypi/setuptools
+"
+" }}}
 
 if exists("b:did_pep8_plugin")
     finish " only load once
@@ -53,7 +56,7 @@ if !exists("b:did_pep8_init")
     let b:did_pep8_init = 0
 
     if !has('python')
-        echoerr "Error: the pep8_fn.vim plugin requires Vim to be compiled with +python"
+        echoerr "pep8_fn.vim plugin requires Vim to be compiled with +python"
         finish
     endif
 

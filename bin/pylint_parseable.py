@@ -20,8 +20,11 @@ def parsable_pylint(filename):
     """
     Simple wrapper for pylint checker. Provides nice, parseable output.
     filename - python fileneame to check
-    returns list of dicts of errors, i.e.:
-    [{'lnum': 5, 'col': 10, 'type': 'C0324', text: 'Comma not followed by a space'},
+
+    Returns list of dicts of errors, i.e.:
+    [{'lnum': 5, 'col': 10, 'type': 'C0324',
+      'text': 'Comma not followed by a space'},
+     {'lnum': 12, 'type': 'C0111', 'text': 'Missing docstring'},
      ....
     ]
 
@@ -38,6 +41,7 @@ def parsable_pylint(filename):
     lint.Run(args, reporter=reporter, exit=False)
     sys.stderr = SYS_STDERR
 
+    # see, if we have other errors than 'No config found...' message
     DUMMY_STDERR.seek(0)
     error_list = DUMMY_STDERR.readlines()
     DUMMY_STDERR.truncate(0)
@@ -77,9 +81,8 @@ if __name__ == "__main__":
         for line in parsable_pylint(args[0]):
             line['short'] = line['type'][0]
             line['fname'] = args[0]
-            if 'col' in line:
-                out = "%(fname)s: %(short)s: %(lnum)s: %(col)s: %(type)s %(text)s"
-            else:
+            out = "%(fname)s: %(short)s: %(lnum)s: %(col)s: %(type)s %(text)s"
+            if 'col' not in line:
                 out = "%(fname)s: %(short)s: %(lnum)s: 0: %(type)s %(text)s"
 
             print out % line

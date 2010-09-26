@@ -1,7 +1,9 @@
-" File: pythonlint.vim
+" File: pylint_fn.vim
 " Author: Roman 'gryf' Dobosz (gryf73 at gmail.com)
 " Version: 1.0
 " Last Modified: 2010-09-11
+"
+" Description: " {{{
 "
 " Overview
 " --------
@@ -18,7 +20,7 @@
 "
 " Installation
 " ------------
-" 1. Copy the pythonlint.vim file to the $HOME/.vim/ftplugin/python or
+" 1. Copy the pylint_fn.vim file to the $HOME/.vim/ftplugin/python or
 "    $HOME/vimfiles/ftplugin/python or $VIM/vimfiles/ftplugin/python
 "    directory. If python directory doesn't exists, it should be created.
 "    Refer to the following Vim help topics for more information about Vim
@@ -40,6 +42,7 @@
 " [1] http://www.logilab.org/project/pylint
 " [2] http://www.vim.org/scripts/script.php?script_id=2441
 " [3] http://pypi.python.org/pypi/setuptools
+" }}}
 
 if exists("b:did_pylint_plugin")
     finish " only load once
@@ -51,7 +54,7 @@ if !exists("b:did_pylint_init")
     let b:did_pylint_init = 0
 
     if !has('python')
-        echoerr "Error: the pythonlint.vim plugin requires Vim to be compiled with +python"
+        echoerr "Error: pylint_fn.vim requires Vim to be compiled with +python"
         finish
     endif
 
