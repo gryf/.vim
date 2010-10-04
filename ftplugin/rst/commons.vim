@@ -6,12 +6,19 @@ setlocal smartindent
 setlocal autoindent
 setlocal formatoptions=tcq "set VIms default
 
+if exists("b:did_rst_plugin")
+    finish " only load once
+else
+    let b:did_rst_plugin = 1
+endif
+
 map <F5> :call <SID>Rst2Blogger()<cr>
 
-" Simple function, that translates reSt text into html with specified format, 
-" suitable to copy and paste into blogger post.
-fun <SID>Rst2Blogger()
-python << EOF
+if !exists('*s:Rst2Blogger')
+    " Simple function, that translates reSt text into html with specified format, 
+    " suitable to copy and paste into blogger post.
+    fun <SID>Rst2Blogger()
+    python << EOF
 import re
 
 from docutils import core
@@ -60,6 +67,20 @@ class NoHeaderHTMLTranslator(HTMLTranslator):
         else:
             self.body.append(self.starttag(node, 'acronym', ''))
 
+    def visit_abbreviation(self, node):
+        node_text = node.children[0].astext()
+        node_text = node_text.replace('\n', ' ')
+        patt = re.compile(r'^(.+)\s<(.+)>')
+
+        if patt.match(node_text):
+            node.children[0] = nodes.Text(patt.match(node_text).groups()[0])
+            self.body.append(\
+                self.starttag(node, 'abbr',
+                              '', title=patt.match(node_text).groups()[1]))
+
+        else:
+            self.body.append(self.starttag(node, 'abbr', ''))
+
 
 _w = Writer()
 _w.translator_class = NoHeaderHTMLTranslator
@@ -80,7 +101,7 @@ if name.lower().endswith(".rst"):
     except:
         pass
     try:
-        vim.command(r'silent! %s/<!-- more -->/\r<!-- more -->\r\r/g')
+        vim.command(r'silent! %s/<!-- more -->/\r<!-- more -->\r/g')
     except:
         pass
     vim.command('w %s' % name)
@@ -89,11 +110,13 @@ else:
     print "Ihis is not reSt file. File should have '.rst' extension."
 
 EOF
-endfun
+    endfun
+endif
 
-" This is similar to that above, but creates full html document
-fun <SID>Restify()
-python << EOF
+if !exists('*s:Restify')
+    " This is similar to that above, but creates full html document
+    fun <SID>Restify()
+    python << EOF
 from docutils import core
 from docutils.writers.html4css1 import Writer, HTMLTranslator
 import vim
@@ -119,4 +142,5 @@ else:
     print "It's not reSt file!"
 
 EOF
-endfun
+    endfun
+endif
