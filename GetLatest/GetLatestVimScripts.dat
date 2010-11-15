@@ -18,6 +18,8 @@ ScriptID SourceID Filename
 2226 13756 vimwiki.vim
 2289 0 loremipsum.vim
 1334 6377 vst.vim
+1984 13961 :AutoInstall: FuzzyFinder
+3252 1 :AutoInstall: L9
 ### colors
 1975 7471 lettuce.vim
 2536 13588 lucius.vim
@@ -34,4 +36,6 @@ ScriptID SourceID Filename
 #   http://monkey.org/~caz/python.vim
 ### syntax
 790 14268 python.vim
-1984 13961 :AutoInstall: FuzzyFinder
+### doc
+3277 1 py2stdlib
+
