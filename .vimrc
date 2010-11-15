@@ -15,7 +15,7 @@ set fileformats=unix,dos            "Type of <EOL> in written files
 set formatoptions=croqw             "Automatic formatting settings
 set hidden                          "Keep hidden windows
 set history=1000                    "Keep 1000 lines of command line history
-set ignorecase                      "Ignore case in search patterns
+"set ignorecase                      "Ignore case in search patterns
 set laststatus=2                    "Always show statusbar
 set lazyredraw                      "Don't update screen while executing macros
 

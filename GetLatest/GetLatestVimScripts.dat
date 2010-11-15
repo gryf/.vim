@@ -3,12 +3,12 @@ ScriptID SourceID Filename
 ### plugins
 102 13435 DirDiff.vim
 #2754 13139 :AutoInstall: delimitMate.vim
-1984 11852 fuzzyfinder.vim
+1984 13961 fuzzyfinder.vim
 311 7645 grep.vim
 2727 11120 jsbeautify.vim
 2666 13424 Mark
 2262 8944 occur.vim
-910 13092 pydoc.vim
+910 14079 pydoc.vim
 #2421 9423 pysmell.vim
 152 3342 showmarks.vim
 2540 11006 snipMate.vim
@@ -25,7 +25,7 @@ ScriptID SourceID Filename
 # compiler
 891 10365 pylint.vim
 # ftplugin
-2441 13378 pyflakes.vim
+2441 14215 pyflakes.vim
 30 9196 python_fn.vim
 ### indent
 1936 7708 javascript.vim
@@ -33,4 +33,5 @@ ScriptID SourceID Filename
 #   changes doesn't put it on vim.org scripts. it can be (still) found on
 #   http://monkey.org/~caz/python.vim
 ### syntax
-790 12805 python.vim
+790 14268 python.vim
+1984 13961 :AutoInstall: FuzzyFinder

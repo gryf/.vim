@@ -16,12 +16,15 @@ setlocal colorcolumn=+1
 
 set wildignore+=*.pyc
 
-"inoremap # X<BS>#
+inoremap # X<BS>#
 
 "set ofu=syntaxcomplete#Complete
 
 "autocmd FileType python setlocal omnifunc=pysmell#Complete
 let python_highlight_all=1
+
+"I don't want to have pyflakes errors in qfix, it interfering with Pep8/Pylint
+let g:pyflakes_use_quickfix = 0
 
 "Load views for py files
 autocmd BufWinLeave *.py mkview

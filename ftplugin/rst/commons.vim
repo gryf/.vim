@@ -23,10 +23,37 @@ import re
 
 from docutils import core
 from docutils import nodes
+from docutils.parsers.rst import directives, Directive
 from docutils.writers.html4css1 import Writer, HTMLTranslator
+
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name, TextLexer
+from pygments.formatters import HtmlFormatter
 
 import vim
 
+class Pygments(Directive):
+    """
+    Source code syntax hightlighting.
+    """
+    required_arguments = 1
+    optional_arguments = 0
+    final_argument_whitespace = True
+    has_content = True
+
+    def run(self):
+        self.assert_has_content()
+        try:
+            lexer = get_lexer_by_name(self.arguments[0])
+        except ValueError:
+            # no lexer found - use the text one instead of an exception
+            lexer = TextLexer()
+        # take an arbitrary option if more than one is given
+        formatter = HtmlFormatter(noclasses=True)
+        parsed = highlight(u'\n'.join(self.content), lexer, formatter)
+        return [nodes.raw('', parsed, format='html')]
+
+directives.register_directive('sourcecode', Pygments)
 
 class NoHeaderHTMLTranslator(HTMLTranslator):
     def __init__(self, document):
@@ -104,7 +131,7 @@ if name.lower().endswith(".rst"):
         vim.command(r'silent! %s/<!-- more -->/\r<!-- more -->\r/g')
     except:
         pass
-    vim.command('w %s' % name)
+    vim.command('w %s' % name.replace(' ', '\ '))
     vim.command('bd')
 else:
     print "Ihis is not reSt file. File should have '.rst' extension."
