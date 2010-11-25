@@ -8,7 +8,8 @@ ScriptID SourceID Filename
 2727 11120 jsbeautify.vim
 2666 13424 Mark
 2262 8944 occur.vim
-910 14079 pydoc.vim
+910 14349 pydoc.vim
+1879 11894 AutoComplPop
 #2421 9423 pysmell.vim
 152 3342 showmarks.vim
 2540 11006 snipMate.vim
@@ -27,7 +28,7 @@ ScriptID SourceID Filename
 # compiler
 891 10365 pylint.vim
 # ftplugin
-2441 14215 pyflakes.vim
+2441 14288 pyflakes.vim
 30 9196 python_fn.vim
 ### indent
 1936 7708 javascript.vim
