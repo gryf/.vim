@@ -57,3 +57,12 @@ snippet figure
 		:figclass: ${3:custclass}
 		
 		$2
+snippet article
+	:Title: ${1:Blog post title}
+	:Date: ${2:`strftime("%Y-%m-%d %H:%M:%S")`}
+	:Modified: ${3}
+	:Tags: ${4:blogtag1, blogtag2}
+	
+	${5}
+	
+	.. more
