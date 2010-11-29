@@ -24,8 +24,8 @@ if !exists("g:blogger_pass")
     let g:blogger_pass = ""
 endif
 
-map <F5> :call <SID>Restify()<cr>
-map <F6> :call <SID>Rst2Blogger()<cr>
+map <F6> :call <SID>Restify()<cr>
+map <F7> :call <SID>Rst2Blogger()<cr>
 
 if !exists('*s:Restify')
     python << EOF
@@ -38,9 +38,11 @@ import vim
 
 scriptdir = os.path.dirname(vim.eval('expand("<sfile>")'))
 sys.path.insert(0, scriptdir)
-from bloggervim.rest import blogPreview, blogArticleString
-from bloggervim.blogger import VimBlogger
-
+try:
+    from vimblogger.rest import blogPreview, blogArticleString
+    from vimblogger.blogger import VimBlogger
+except ImportError:
+    print "Plugin blogger cannot be loaded, due to lack of required modules"
 #}}}
 EOF
 
