@@ -14,7 +14,7 @@ class Attrs(object):
 
 class Pygments(Directive):
     """
-    Source code syntax hightlighting.
+    Source code syntax highlighting.
     """
     required_arguments = 1
     optional_arguments = 0
@@ -72,7 +72,7 @@ class CustomHTMLTranslator(HTMLTranslator):
 
     def depart_docinfo(self, node):
         """
-        Reset body, remove unnecesairy content.
+        Reset body, remove unnecessary content.
         """
         self.body = []
 
@@ -165,8 +165,7 @@ class NoHeaderHTMLTranslator(CustomHTMLTranslator):
         Harvest docinfo fields and store it in global dictionary.
         """
         key, val = [n.astext() for n in node]
-        key = key.lower()
-        Attrs.ATTRS[key] = val
+        Attrs.ATTRS[key.lower()] = val.strip()
 
     def visit_date(self, node):
         """
@@ -176,8 +175,9 @@ class NoHeaderHTMLTranslator(CustomHTMLTranslator):
 
 class PreviewHTMLTranslator(CustomHTMLTranslator):
     """
-    Class for dislpay article in the browser as a preview.
+    Class for display article in the browser as a preview.
     """
+    CSS = []
     def __init__(self, document):
         """
         Alter levels for the heading tags, define custom, blog specific
@@ -188,9 +188,7 @@ class PreviewHTMLTranslator(CustomHTMLTranslator):
         self.initial_header_level = 1
         self.section_level = 1
         # order of css files is important
-        self.default_stylesheets = ["css/widget_css_2_bundle.css",
-                                    "css/style_custom.css",
-                                    "css/style_blogger.css"]
+        self.default_stylesheets = PreviewHTMLTranslator.CSS
         self.stylesheet = [self.stylesheet_link % self.encode(css) \
                 for css in self.default_stylesheets]
         self.body_ = []
@@ -230,21 +228,27 @@ class BlogPreviewWriter(Writer):
     """
     Custom Writer class for generating full HTML of the article
     """
-    def __init__(self):
+    def __init__(self, stylesheets=None):
         Writer.__init__(self)
+        if not stylesheets:
+            stylesheets = []
         self.translator_class = PreviewHTMLTranslator
+        self.translator_class.CSS = stylesheets
 
     def translate(self):
         self.document.settings.output_encoding = "utf-8"
         Writer.translate(self)
 
 
-def blogPreview(string):
+def blogPreview(string, stylesheets=None):
     """
-    Returns partial HTML of the article, and attribute dictionary
+    Returns full HTML of the article.
     string argument is an article in reST
     """
-    html_output = core.publish_string(string, writer=BlogPreviewWriter())
+    if not stylesheets:
+        stylesheets = []
+    html_output = core.publish_string(string,
+                                      writer=BlogPreviewWriter(stylesheets))
     html_output = html_output.strip()
     html_output = html_output.replace("<!-- more -->", "\n<!-- more -->\n")
     return html_output
@@ -259,5 +263,10 @@ def blogArticleString(string):
     html_output = core.publish_string(string, writer=BlogBodyWriter())
     html_output = html_output.strip()
     html_output = html_output.replace("<!-- more -->", "\n<!-- more -->\n")
-    return html_output, Attrs.ATTRS
+    attrs = {}
+    for key in Attrs.ATTRS:
+        if Attrs.ATTRS[key]:
+            attrs[key] = Attrs.ATTRS[key]
+
+    return html_output, attrs
 

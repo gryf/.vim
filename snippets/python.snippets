@@ -106,3 +106,11 @@ snippet docmodule
 	"""
 snippet debug
 	LOG.debug(self.${1:method_name}.__doc__.strip())
+snippet edbg
+	import sys
+	pydevdPath = r"/mnt/data/IDE/eclipse/plugins/org.python.pydev.debug_1.6.3.2010100513/pysrc"
+	if not pydevdPath in sys.path:
+		sys.path.append(pydevdPath)
+	import pydevd
+	pydevd.settrace()
+

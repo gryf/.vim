@@ -1,0 +1,198 @@
+*vimblogger_ft.txt*   reStructuredText to Blogger Interface
+                    Author: Roman Dobosz, gryf73 at gmail com
+
+Simple interface to create blog articles in rsST format. It provides
+commands for preview in browser, post and delete articles.
+
+-----------------------------------------------------------------------
+Requirements~
+
+Module for communication was written in Python. So, VIm has to be
+compiled with +python.
+
+Other requirements:
+
+- Python (tested with version 2.6, should work also in others)
+  - gdata http://code.google.com/p/gdata-python-client
+  - docutils http://docutils.sourceforge.net
+  - pygments http://pygments.org
+- Blogger account
+
+-----------------------------------------------------------------------
+Install~
+
+Extract zip file into your ~/.vim.
+
+========================================================================
+Usage~
+
+This plugin is targeting for people, who has blogger account, want to 
+use vim for creating blog articles and don't really likes to manually do 
+this in html.
+
+Unfortunately it has several limitations, like you cannot use multiple 
+blogs or edit existing articles without reST source files. You have to 
+somehow convert it reStructuredText, add *Id* and then update it.
+
+-----------------------------------------------------------------------
+Options~
+                                                     *g:blogger_browser*
+g:blogger_browser       (default: 0)
+
+    If set to 1 output file from :PreviewBlogArticle will be opened in 
+    browser (used webbrowser Python module)
+
+                                                        *g:blogger_name*
+g:blogger_name          (default: "")
+    
+    This is blog name, which is part of the URL, and you was obligated 
+    to enter it during blog creation. If you don't remember it, just 
+    check first part od the URL of your blog, just after 'http://'. 
+    Don't be confused with the blog title. 
+
+                                                       *g:blogger_login*
+g:blogger_login         (default: "")
+
+    Google login name, usually gmail address.
+                                                        *g:blogger_pass*
+g:blogger_pass          (default: "")
+
+    Password. If set to empty string, You'll be asked for it every time 
+    you do any blogger activity.
+                                                       *g:blogger_draft*
+g:blogger_draft         (default: 1)
+
+    By default, don't publish articles immediately, just save it on the 
+    service. If set to 0, article will be published.
+
+                                                 *g:blogger_maxarticles*
+g:blogger_maxarticles   (default: 0)
+    
+    Number of displayed articles during deletion. 0 means all. Any 
+    positive number will display only that numbers of articles on list.
+
+                                                 *g:blogger_confirm_del*
+g:blogger_confirm_del   (default: 1)
+    
+    Confirm every deletion. If set to 0, suppress the confirmation.
+
+                                                 *g:blogger_stylesheets*
+g:blogger_stylesheets   (default: [])
+
+    List of relative paths (relative to generated HTML document) of CSS 
+    stylesheets, used only for article preview in HTML document. Usually 
+    one wanted to save stylesheets from his own blog, so that article 
+    can be displayed almost in the same way as in blog.
+
+========================================================================
+Commands~
+
+*:PreviewBlogArticle*
+
+    Generate article in HTML format, save it to the file with te same 
+    name as a reST source with .html extension in the same directory, 
+    and optionally opens it in browser. No connection to the blogger is 
+    performed.
+
+*:SendBlogArticle*
+
+    Generate partial HTML document, which holds article, from current
+    reST buffer and send it to the blog.
+
+    See reST document structure below for further description.
+
+*:DeleteBlogArticle*
+
+    Display list of articles, and lets user choose one (or none) of them 
+    to perform deletions.
+
+========================================================================
+reST document structure~
+
+It is assumed, that following template will be used:
+
+-----8<-----
+:Id:
+:Title: Title for the blog
+:Date:
+:Modified:
+:Tags: some, tags
+
+Penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla 
+facilisis massa ut massa. Sed nisi purus, malesuada eu, porta vulputate, 
+suscipit auctor, nunc. Vestibulum convallis, augue eu luctus malesuada, 
+mi ante mattis odio, ac venenatis neque sem vitae nisi.
+
+.. more
+
+
+heading
+-------
+
+**Congue** mi, quis posuere augue nulla a augue. Pellentesque sed est. 
+Mauris cursus urna id lectus. Integer dignissim feugiat eros. Sed tempor 
+volutpat dolor. Vestibulum vel lectus nec mauris semper adipiscing.
+
+Aliquam tincidunt enim sit amet tellus. Sed mauris nulla, semper 
+tincidunt, luctus a, sodales eget, leo. Sed ligula augue, cursus et. 
+----->8-----
+
+reST document (optionally) starts with *docinfo* section (first several 
+lines, that are starting from *:* character) separaded from other 
+content with one empty line.
+
+Docinfo items holds article attributes, and are updated automatically 
+every each of upload to blogger, which is triggered by 
+*:SendBlogArticle* command.
+
+*:Id:*
+    Holds article id on blogger side. If not defined, new article will 
+    be created (even if there is already existing one with the very same 
+    content). If wrong id is entered (or an Id of deleted article), 
+    exception will be raised, and no action on blogger side will be 
+    performed.
+
+*:Title:*
+    Holds article title. Can be changed when *:Id:* is obtained.
+
+*:Date:*
+    This is published date in RFC 3339 
+    http://www.ietf.org/rfc/rfc3339.txt format. If empty on first 
+    upload, it will be set to current date. Can be set/changed to 
+    desired date.
+
+*:Modified:*
+    This is read-only item, which store modification date which happens 
+    on blogger side.
+
+*:Tags:*
+    Comma separated list of tags (Labels). Can be empty.
+
+All other items are ignored.
+
+After docinfo block, article body should be placed using markup for 
+reStructuredText.
+
+Additionally, there is sourcecode directive, simple syntax highlighter 
+using Pygments module. Very simple usage could be as follows:
+
+-----8<-----
+.. sourcecode:: python
+
+    import vim
+    print vim.current.buffer.name
+
+----->8-----
+
+Note: All headings for generated HTML by *:SendBlogArticle* will be 
+shifted by 3, so the first heading will become <h3>, second <h4> and so 
+on, to fit into blogger template (well, most of them). Remember, that 
+HTML allow up to 6 level of headings, while reST doesn't have this 
+limitation. 
+
+========================================================================
+Changelog~
+
+0.1 First release
+
+vim:tw=72:fo=tcq2:isk=!-~,^*,^|,^":ts=8:ft=help:norl:
