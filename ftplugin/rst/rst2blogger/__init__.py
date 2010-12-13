@@ -1,1 +1,1 @@
-# module vimblogger
+# module rst2blogger

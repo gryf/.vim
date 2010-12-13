@@ -25,7 +25,7 @@ if !exists("g:blogger_login")
 endif
 
 if !exists("g:blogger_pass")
-    let g:blogger_pass = "Kurcz4czek"
+    let g:blogger_pass = ""
 endif
 
 if !exists("g:blogger_draft")

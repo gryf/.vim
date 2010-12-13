@@ -1,46 +1,12 @@
-# vim: fileencoding=utf8
-#
-# Blogger interface to make easy way to create/update articles for specified
-# blog.
-#
-# It is assumed one way communication only, so you may create or update an
-# article from reST source files. There is no way to recreate article from
-# html to reST format.
-#
-# requirements:
-#
-# - Vim compiled with +python
-# - python 2.x (tested with 2.6)
-# - modules
-#   - gdata (http://code.google.com/p/gdata-python-client)
-#   - docutils (http://docutils.sourceforge.net)
-#
-# USE CASES:
-# 1. Create new post
-#
-# use reST template:
-#                       ===8<---
-# :Title: Blog post title
-# :Date: optional publish date (for example: 2010-11-28 18:47:05),
-#        default: now()
-# :Modified: optional, default: None
-# :Tags: comma separated blog tags
-#
-# .. more
-#
-#                       --->8===
-#
-# All four docinfo are optional, however it is nice to give at least a title
-# to the article :)
-#
-#
-#
-# which is provided under templates directory or as a
-# snipMate shoortcut (see .vim/snippets/rst.snippets)
-#
+"""
+File: blogger.py
+Author: Roman 'gryf' Dobosz
+Description: This is blogger activity connected module. It is using gdata[1]
+             blogger module to provide add/modify/delete articles interface.
 
-#-----------------------------------------------------------------------------
-#
+             [1] http://code.google.com/p/gdata-python-client
+"""
+
 import datetime
 import re
 
@@ -51,6 +17,7 @@ from gdata.blogger.data import BlogPost
 
 class VimBlogger(object):
     """
+    Communicate with blogger through gdata.blogger modules
     """
     DATE_PATTERN = re.compile(r"^(\d{4}-\d{2}-\d{2})"
                               "T(\d{2}:\d{2}:\d{2})(\.\d{3})?[+-]"
@@ -59,12 +26,9 @@ class VimBlogger(object):
     TIME_FORMAT = "%H:%M:%S"
     TZ_FORMAT = "%H:%M"
 
-    # TODO: dodać usuwanie artykułów (prosta lista, wybieramy art,
-    #       potwierdzamy)
-    # TODO: Dokumentacja jako vimdoc!
-
     def __init__(self, blogname, login, password):
         """
+        Initialization.
         """
         self.draft = True
         self.blog_id = None
@@ -79,7 +43,6 @@ class VimBlogger(object):
         """
         Return list of articles
         """
-
         feed = self.client.get_posts(self.blog_id)
         posts = []
 
@@ -90,7 +53,6 @@ class VimBlogger(object):
                           entry.title.text,
                           self._extract_date(entry.published.text)))
         return posts
-
 
     def create_article(self, html_doc, attrs=None):
         """
@@ -118,7 +80,7 @@ class VimBlogger(object):
             new_post.published = atom.data.Published(text=attrs['date'])
 
         if self.draft:
-          new_post.control = atom.data.Control(\
+            new_post.control = atom.data.Control(\
                   draft=atom.data.Draft(text='yes'))
 
         return self.client.post(new_post, BLOG_POST_URL % self.blog_id)
@@ -137,7 +99,7 @@ class VimBlogger(object):
         post = self._get_post(attrs['id'])
         post.content = atom.data.Content(text=html_doc, type="html")
 
-        # update publish date
+        # update published date
         if 'date' in attrs and attrs['date'] and \
                 self._check_date(attrs['date']):
             post.published = atom.data.Published(text=attrs['date'])
@@ -168,9 +130,9 @@ class VimBlogger(object):
         self.client.delete(post)
         return None
 
-
     def _get_post(self, post_id):
         """
+        Return post with specified ID
         """
         post_href = self.blog.get_post_link().href
         return self.client.get_feed(post_href + "/%s" % post_id,
@@ -227,18 +189,13 @@ class VimBlogger(object):
 
         return True
 
-    def _update_date(self, post, attrs):
-        """
-        Update articles published date
-        """
-
     def _authorize(self, login, password):
         """
         Try to authorize in Google service.
         Authorization is kept in client object. In case of wrong credentials,
         exception is thrown.
         """
-        source = 'Blogger_Python_Sample-2.0'
+        source = 'Vim rst2blogger interface'
         service = 'blogger'
 
         self.client.client_login(login,
@@ -255,4 +212,3 @@ class VimBlogger(object):
                 self.blog_id = blog.get_blog_id()
                 self.blog = blog
                 break
-

@@ -1,4 +1,11 @@
 # vim: fileencoding=utf8
+"""
+File: main.py
+Author: Roman 'gryf' Dobosz
+Description: main file to provide fuctionality between vim and moudles rest
+             and blogger
+"""
+
 import webbrowser
 from xml.dom import minidom
 from xml.parsers.expat import ExpatError
@@ -35,7 +42,7 @@ class Rst2Blogger(object):
         systems' web browser
         """
         bufcontent = "\n".join(self.buff)
-        name = vim.current.buffer.name
+        name = self.buff.name
 
         name = name[:-4] + ".html"
         html = blogPreview(bufcontent, self.stylesheets)
@@ -51,7 +58,10 @@ class Rst2Blogger(object):
             return "Generated HTML has been written to %s" % name
 
     def post(self):
-        bufcontent = "\n".join(vim.current.buffer)
+        """
+        Do post article
+        """
+        bufcontent = "\n".join(self.buff)
         html, attrs = blogArticleString(bufcontent)
 
         parse_msg = self._check_html(html, True)
@@ -60,7 +70,8 @@ class Rst2Blogger(object):
             return "There are errors in generated document"
 
         if not self.password:
-            self.password = vim.eval('inputsecret("Enter your gmail password: ")')
+            self.password = \
+                    vim.eval('inputsecret("Enter your gmail password: ")')
 
         blog = VimBlogger(self.blogname, self.login, self.password)
         blog.draft = self.draft > 0
@@ -73,9 +84,6 @@ class Rst2Blogger(object):
             post = blog.create_article(html, attrs=attrs)
             msg = "New article with id %s has been created" % \
                     post.get_post_id()
-
-        if not post:
-            return "There is something fishy with creating new article."
 
         for item, value in (('id', post.get_post_id()),
                             ('date', post.published.text),
@@ -92,14 +100,15 @@ class Rst2Blogger(object):
         delete
         """
         if not self.password:
-            self.password = vim.eval('inputsecret("Enter your gmail password: ")')
+            self.password = \
+                    vim.eval('inputsecret("Enter your gmail password: ")')
         blog = VimBlogger(self.blogname, self.login, self.password)
 
         posts = blog.get_articles(self.maxarticles)
 
         msg = u"inputlist(["
         for index, entries in enumerate(posts):
-            line = "%2d %s  %s" % (index+1,
+            line = "%2d %s  %s" % (index + 1,
                                    entries[1],
                                    entries[2])
             msg += u'"' + line.replace('"', '\\"') + u'",'
@@ -109,8 +118,9 @@ class Rst2Blogger(object):
 
         choice = int(vim.eval(msg))
         if choice:
-            art = posts[choice-1]
-            msg = 'confirm("You are about to delete article \'%s\'. Are you sure?"'
+            art = posts[choice - 1]
+            msg = 'confirm("You are about to delete article \'%s\'. '
+            msg += 'Are you sure?"'
             msg = unicode(msg % art[1]).encode(self.vim_encoding)
             msg += ', "&No\n&Yes")'
 
@@ -120,13 +130,9 @@ class Rst2Blogger(object):
                 choice = 2
 
             if choice == 2:
-                result = blog.delete_article(art[0])
-                if result is None:
-                    return "Article deleted"
-                else:
-                    return result
+                blog.delete_article(art[0])
+                return "Article deleted"
         return "No articles deleted"
-
 
     def _update_docinfo(self, attr, val):
         """
@@ -183,6 +189,9 @@ class Rst2Blogger(object):
         returns empty string if parses succeed, else exception message.
         """
 
+        # minidom doesn't understand html entities like '&nbsp;' For checking
+        # purpose it is perfectly ok, to switch them with '&amp;'
+        html = html.replace("&nbsp;", "&amp;")
         if add_container:
             html = "<div>" + html + "</div>"
 
@@ -193,5 +202,3 @@ class Rst2Blogger(object):
             message = str(ex)
 
         return message
-
-

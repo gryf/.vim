@@ -1,3 +1,10 @@
+"""
+File: rest.py
+Author: Roman 'gryf' Dobosz
+Description: This module is responsible for conversion between reST and HTML
+             with some goods added.
+"""
+
 import re
 
 from docutils import core
@@ -5,35 +12,40 @@ from docutils import nodes
 from docutils.parsers.rst import directives, Directive
 from docutils.writers.html4css1 import Writer, HTMLTranslator
 
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name, TextLexer
-from pygments.formatters import HtmlFormatter
+try:
+    from pygments import highlight
+    from pygments.lexers import get_lexer_by_name, TextLexer
+    from pygments.formatters import HtmlFormatter
+
+    class Pygments(Directive):
+        """
+        Source code syntax highlighting.
+        """
+        required_arguments = 1
+        optional_arguments = 0
+        final_argument_whitespace = True
+        has_content = True
+
+        def run(self):
+            self.assert_has_content()
+            try:
+                lexer = get_lexer_by_name(self.arguments[0])
+            except ValueError:
+                # no lexer found - use the text one instead of an exception
+                lexer = TextLexer()
+            # take an arbitrary option if more than one is given
+            formatter = HtmlFormatter(noclasses=True)
+            parsed = highlight(u'\n'.join(self.content), lexer, formatter)
+            return [nodes.raw('', parsed, format='html')]
+
+    directives.register_directive('sourcecode', Pygments)
+except ImportError:
+    pass
+
 
 class Attrs(object):
     ATTRS = {}
 
-class Pygments(Directive):
-    """
-    Source code syntax highlighting.
-    """
-    required_arguments = 1
-    optional_arguments = 0
-    final_argument_whitespace = True
-    has_content = True
-
-    def run(self):
-        self.assert_has_content()
-        try:
-            lexer = get_lexer_by_name(self.arguments[0])
-        except ValueError:
-            # no lexer found - use the text one instead of an exception
-            lexer = TextLexer()
-        # take an arbitrary option if more than one is given
-        formatter = HtmlFormatter(noclasses=True)
-        parsed = highlight(u'\n'.join(self.content), lexer, formatter)
-        return [nodes.raw('', parsed, format='html')]
-
-directives.register_directive('sourcecode', Pygments)
 
 class CustomHTMLTranslator(HTMLTranslator):
     """
@@ -41,7 +53,6 @@ class CustomHTMLTranslator(HTMLTranslator):
     There are couple of customizations for docinfo fields behaviour and
     abbreviations and acronyms.
     """
-
     def __init__(self, document):
         """
         Set some nice defaults for articles translations
@@ -143,6 +154,7 @@ class CustomHTMLTranslator(HTMLTranslator):
         else:
             self.body.append(self.starttag(node, 'abbr', ''))
 
+
 class NoHeaderHTMLTranslator(CustomHTMLTranslator):
     """
     Special subclass for generating only body of an article
@@ -154,7 +166,7 @@ class NoHeaderHTMLTranslator(CustomHTMLTranslator):
         CustomHTMLTranslator.__init__(self, document)
         self.head = []
         self.meta = []
-        self.head_prefix = ['','','','','']
+        self.head_prefix = ['', '', '', '', '']
         self.body_prefix = []
         self.body_suffix = []
         self.stylesheet = []
@@ -173,11 +185,13 @@ class NoHeaderHTMLTranslator(CustomHTMLTranslator):
         """
         Attrs.ATTRS['date'] = node.astext()
 
+
 class PreviewHTMLTranslator(CustomHTMLTranslator):
     """
     Class for display article in the browser as a preview.
     """
     CSS = []
+
     def __init__(self, document):
         """
         Alter levels for the heading tags, define custom, blog specific
@@ -193,7 +207,6 @@ class PreviewHTMLTranslator(CustomHTMLTranslator):
                 for css in self.default_stylesheets]
         self.body_ = []
 
-
     def depart_docinfo(self, node):
         """
         Overwrite body with some custom one. body_ will hold the first heading
@@ -203,7 +216,7 @@ class PreviewHTMLTranslator(CustomHTMLTranslator):
 
     def visit_field(self, node):
         """
-        Additional 'keyword' for the ODF metadata
+        Make title visible as a heading
         """
         key, node_ = [n.astext() for n in node]
         key = key.lower()
@@ -211,6 +224,7 @@ class PreviewHTMLTranslator(CustomHTMLTranslator):
             self.head.append('<title>%s</title>\n' % self.encode(node_))
             self.body_.append('<h1 class="post-title entry-title">'
                              '<a href="#">%s</a></h1>\n' % self.encode(node_))
+
 
 class BlogBodyWriter(Writer):
     """
@@ -223,6 +237,7 @@ class BlogBodyWriter(Writer):
     def translate(self):
         self.document.settings.output_encoding = "utf-8"
         Writer.translate(self)
+
 
 class BlogPreviewWriter(Writer):
     """
@@ -253,6 +268,7 @@ def blogPreview(string, stylesheets=None):
     html_output = html_output.replace("<!-- more -->", "\n<!-- more -->\n")
     return html_output
 
+
 def blogArticleString(string):
     """
     Returns partial HTML of the article, and attribute dictionary
@@ -269,4 +285,3 @@ def blogArticleString(string):
             attrs[key] = Attrs.ATTRS[key]
 
     return html_output, attrs
-

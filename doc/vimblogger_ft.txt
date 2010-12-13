@@ -15,7 +15,7 @@ Other requirements:
 - Python (tested with version 2.6, should work also in others)
   - gdata http://code.google.com/p/gdata-python-client
   - docutils http://docutils.sourceforge.net
-  - pygments http://pygments.org
+  - pygments http://pygments.org (optional)
 - Blogger account
 
 -----------------------------------------------------------------------
@@ -138,22 +138,22 @@ tincidunt, luctus a, sodales eget, leo. Sed ligula augue, cursus et.
 ----->8-----
 
 reST document (optionally) starts with *docinfo* section (first several 
-lines, that are starting from *:* character) separaded from other 
+lines, that are starting from ":" character) separaded from other 
 content with one empty line.
 
 Docinfo items holds article attributes, and are updated automatically 
 every each of upload to blogger, which is triggered by 
-*:SendBlogArticle* command.
+":SendBlogArticle" command.
 
 *:Id:*
     Holds article id on blogger side. If not defined, new article will 
     be created (even if there is already existing one with the very same 
-    content). If wrong id is entered (or an Id of deleted article), 
+    content). If wrong Id is entered (or an Id of deleted article), 
     exception will be raised, and no action on blogger side will be 
     performed.
 
 *:Title:*
-    Holds article title. Can be changed when *:Id:* is obtained.
+    Holds article title. Can be changed when |:Id:| is obtained.
 
 *:Date:*
     This is published date in RFC 3339 
@@ -173,8 +173,9 @@ All other items are ignored.
 After docinfo block, article body should be placed using markup for 
 reStructuredText.
 
-Additionally, there is sourcecode directive, simple syntax highlighter 
-using Pygments module. Very simple usage could be as follows:
+Additionally, if pytgments is installed, there is sourcecode directive, simple
+syntax highlighter using Pygments module. Very simple usage could be as
+follows:
 
 -----8<-----
 .. sourcecode:: python
@@ -184,7 +185,7 @@ using Pygments module. Very simple usage could be as follows:
 
 ----->8-----
 
-Note: All headings for generated HTML by *:SendBlogArticle* will be 
+Note: All headings for generated HTML by |:SendBlogArticle| will be 
 shifted by 3, so the first heading will become <h3>, second <h4> and so 
 on, to fit into blogger template (well, most of them). Remember, that 
 HTML allow up to 6 level of headings, while reST doesn't have this 
