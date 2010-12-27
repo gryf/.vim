@@ -1,6 +1,7 @@
 " reST to blogger vim interface.
 " Provide some convinient commands for creating preview from the reST file 
 " and to send articles to blog.
+" VERSION: 0.2
 
 if exists("b:did_rst_plugin")
     finish " load only once
@@ -44,6 +45,10 @@ if !exists("g:blogger_stylesheets")
     let g:blogger_stylesheets = []
 endif
 
+if !exists("g:blogger_pygments_class")
+    let g:blogger_pygments_class = ""
+endif
+
 python << EOF
 import os
 import sys
@@ -53,10 +58,8 @@ import vim
 scriptdir = os.path.dirname(vim.eval('expand("<sfile>")'))
 sys.path.insert(0, scriptdir)
 
-try:
-    from rst2blogger.main import Rst2Blogger
-except ImportError:
-    print "Plugin vimblogger cannot be loaded, due to lack of required modules"
+# Will raise exception, if one of required moudles is missing
+from rst2blogger.main import Rst2Blogger
 EOF
 
 if !exists(":PreviewBlogArticle")

@@ -13,6 +13,8 @@ setlocal softtabstop=4
 setlocal tabstop=4
 setlocal textwidth=78
 setlocal colorcolumn=+1
+" overwrite status line
+setlocal statusline=%<%F\ %{TagInStatusLine()}\ %h%m%r%=%(%l,%c%V%)\ %3p%%
 
 set wildignore+=*.pyc
 

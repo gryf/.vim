@@ -11,6 +11,69 @@ sys.path.insert(0, this_dir)
 from rst2blogger.rest import blogArticleString, blogPreview
 from rst2blogger.tests.shared import REST_ARTICLE
 
+LINENOS1 = """
+    .. sourcecode:: python
+        :linenos:
+
+        import vim
+        print vim.current.buffer.name
+
+"""
+
+LINENOS2 = """
+    .. sourcecode:: python
+        :linenos: -1
+
+        import vim
+        print vim.current.buffer.name
+
+"""
+
+LINENOS3 = """
+    .. sourcecode:: python
+        :linenos: 0
+
+        import vim
+        print vim.current.buffer.name
+
+"""
+
+LINENOS4 = """
+    .. sourcecode:: python
+        :linenos: 12
+
+        import vim
+        print vim.current.buffer.name
+
+"""
+
+LINENOS5 = """
+    .. sourcecode:: python
+        :linenos: this is wrong
+
+        import vim
+        print vim.current.buffer.name
+
+"""
+
+CSSCLASS1 = """
+    .. sourcecode:: python
+        :cssclass:
+
+        import vim
+        print vim.current.buffer.name
+
+"""
+
+CSSCLASS2 = """
+    .. sourcecode:: python
+        :cssclass: Dessert256
+
+        import vim
+        print vim.current.buffer.name
+
+"""
+
 
 class TestBlogPreview(unittest.TestCase):
     """
@@ -74,6 +137,65 @@ class TestBlogArticleString(unittest.TestCase):
         self.assertEqual(attrs['title'], u"Title — This is a test")
         self.assertEqual(attrs['date'], "2010-12-12T12:36:36+01:00")
         self.assertEqual(attrs['tags'], "this is a test, Blogger, rest")
+
+
+class TestBlogArticlePytgments(unittest.TestCase):
+    """
+    Test cases for sourcecode directive
+    """
+    def test_linenos_no_args(self):
+        """
+        Test linenos option with no additional arguments
+        """
+        html_out, _ = blogArticleString(LINENOS1)
+        self.assertTrue('<pre><span class="lineno">1</span>' in html_out)
+
+    def test_linenos_with_arg1(self):
+        """
+        Test linenos option with correct argument type but wrong value.
+        Should count from 1 in this case.
+        """
+        html_out, _ = blogArticleString(LINENOS2)
+        self.assertTrue('<pre><span class="lineno">1</span>' in html_out)
+
+    def test_linenos_with_arg2(self):
+        """
+        Test linenos option with correct argument type but wrong value.
+        Should count from 1 in this case.
+        """
+        html_out, _ = blogArticleString(LINENOS3)
+        self.assertTrue('<pre><span class="lineno">1</span>' in html_out)
+
+    def test_linenos_with_arg3(self):
+        """
+        Test linenos option with correct argument type and correct value.
+        Should count from 1 in this case.
+        """
+        html_out, _ = blogArticleString(LINENOS4)
+        self.assertTrue('<pre><span class="lineno">12</span>' in html_out)
+
+    def test_linenos_with_wrong_arg(self):
+        """
+        Test linenos option with wrong argument type. Should count from 1.
+        """
+        html_out, _ = blogArticleString(LINENOS5)
+        self.assertTrue('<pre><span class="lineno">1</span>' in html_out)
+
+    def test_cssclass_failure(self):
+        """
+        Test cssclass option with no arguments. Should complain with system
+        message.
+        """
+        html_out, _ = blogArticleString(CSSCLASS1)
+        self.assertTrue('System Message: ERROR/3' in html_out)
+
+    def test_cssclass_correct(self):
+        """
+        Test cssclass option with Dessert256 as an argument. Should be used as
+        a main div CSS class.
+        """
+        html_out, _ = blogArticleString(CSSCLASS2)
+        self.assertTrue('<div class="Dessert256">' in html_out)
 
 if __name__ == "__main__":
     unittest.main()

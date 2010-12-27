@@ -13,6 +13,11 @@ from xml.parsers.expat import ExpatError
 import vim
 
 from rst2blogger.rest import blogPreview, blogArticleString
+try:
+    from rst2blogger.rest import register
+except ImportError:
+    pass
+
 from rst2blogger.blogger import VimBlogger
 
 
@@ -35,6 +40,11 @@ class Rst2Blogger(object):
         self.maxarticles = int(vim.eval("g:blogger_maxarticles"))
         self.confirm_del = int(vim.eval("g:blogger_confirm_del"))
         self.stylesheets = vim.eval("g:blogger_stylesheets")
+        self.pygments_class = vim.eval("g:blogger_pygments_class")
+        try:
+            register(self.pygments_class)
+        except NameError:
+            pass
 
     def preview(self):
         """

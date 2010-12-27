@@ -126,16 +126,9 @@
 :VimwikiToggleListItem	vimwiki.txt	/*:VimwikiToggleListItem*
 :VimwikiUISelect	vimwiki.txt	/*:VimwikiUISelect*
 :VimwikiVSplitLink	vimwiki.txt	/*:VimwikiVSplitLink*
-AnsiEsc	AnsiEsc.txt	/*AnsiEsc*
-AnsiEsc-contents	AnsiEsc.txt	/*AnsiEsc-contents*
-AnsiEsc-copyright	AnsiEsc.txt	/*AnsiEsc-copyright*
-AnsiEsc-history	AnsiEsc.txt	/*AnsiEsc-history*
-AnsiEsc-manual	AnsiEsc.txt	/*AnsiEsc-manual*
-AnsiEsc.txt	AnsiEsc.txt	/*AnsiEsc.txt*
 ExtractSnips()	snipMate.txt	/*ExtractSnips()*
 ExtractSnipsFile()	snipMate.txt	/*ExtractSnipsFile()*
 Filename()	snipMate.txt	/*Filename()*
-Id	vimblogger_ft.txt	/*Id*
 ResetSnippets()	snipMate.txt	/*ResetSnippets()*
 ShowMarksClearAll	showmarks.txt	/*ShowMarksClearAll*
 ShowMarksClearMark	showmarks.txt	/*ShowMarksClearMark*
@@ -276,6 +269,7 @@ g:blogger_login	vimblogger_ft.txt	/*g:blogger_login*
 g:blogger_maxarticles	vimblogger_ft.txt	/*g:blogger_maxarticles*
 g:blogger_name	vimblogger_ft.txt	/*g:blogger_name*
 g:blogger_pass	vimblogger_ft.txt	/*g:blogger_pass*
+g:blogger_pygments_class	vimblogger_ft.txt	/*g:blogger_pygments_class*
 g:blogger_stylesheets	vimblogger_ft.txt	/*g:blogger_stylesheets*
 g:fuf_abbrevMap	fuf.txt	/*g:fuf_abbrevMap*
 g:fuf_autoPreview	fuf.txt	/*g:fuf_autoPreview*

@@ -278,7 +278,8 @@ class TestRst2BloggerPreview(unittest.TestCase):
         Try to post not well formed html
         """
         Eval.value = 1
-        print self.obj.preview()
+        self.assertEqual(self.obj.preview(),
+                         'Generated HTML has been opened in browser')
 
     def test_preview_save_to_file(self):
         """
