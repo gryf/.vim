@@ -89,14 +89,14 @@ autocmd BufRead *.tmux.conf set filetype=tmux
 "}}}
 "TERMINAL: options for terminal emulators {{{
 if $TERM == 'rxvt-unicode' || $TERM == 'xterm'
-    set t_Co=256                    "Enable 256 colors support
     set term=rxvt-unicode256        "Set terminal type
+    set t_Co=256                    "Enable 256 colors support
     "repair urxvt ctrl+pgup/down behaviour
     map [5^ <C-PageUp>
     map [6^ <C-PageDown>
 elseif $TERM == 'screen' || $TERM == 'screen-256color'
-    set t_Co=256                    "Enable 256 colors support
     set term=screen-256color        "Set terminal type
+    set t_Co=256                    "Enable 256 colors support
     set t_kN=[6;*~
     set t_kP=[5;*~
 endif

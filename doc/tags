@@ -126,6 +126,13 @@
 :VimwikiToggleListItem	vimwiki.txt	/*:VimwikiToggleListItem*
 :VimwikiUISelect	vimwiki.txt	/*:VimwikiUISelect*
 :VimwikiVSplitLink	vimwiki.txt	/*:VimwikiVSplitLink*
+<Leader>#	mark.txt	/*<Leader>#*
+<Leader>/	mark.txt	/*<Leader>\/*
+<Leader>?	mark.txt	/*<Leader>?*
+<Leader>m	mark.txt	/*<Leader>m*
+<Leader>n	mark.txt	/*<Leader>n*
+<Leader>r	mark.txt	/*<Leader>r*
+<Leader>star	mark.txt	/*<Leader>star*
 ExtractSnips()	snipMate.txt	/*ExtractSnips()*
 ExtractSnipsFile()	snipMate.txt	/*ExtractSnipsFile()*
 Filename()	snipMate.txt	/*Filename()*
@@ -404,7 +411,6 @@ mark-highlighting	mark.txt	/*mark-highlighting*
 mark-history	mark.txt	/*mark-history*
 mark-ideas	mark.txt	/*mark-ideas*
 mark-installation	mark.txt	/*mark-installation*
-mark-integration	mark.txt	/*mark-integration*
 mark-known-problems	mark.txt	/*mark-known-problems*
 mark-limitations	mark.txt	/*mark-limitations*
 mark-searching	mark.txt	/*mark-searching*
@@ -840,6 +846,8 @@ surround-replacements	surround.txt	/*surround-replacements*
 surround-targets	surround.txt	/*surround-targets*
 surround.txt	surround.txt	/*surround.txt*
 vS	surround.txt	/*vS*
+v_<Leader>m	mark.txt	/*v_<Leader>m*
+v_<Leader>r	mark.txt	/*v_<Leader>r*
 vcscommand	vcscommand.txt	/*vcscommand*
 vcscommand-buffer-management	vcscommand.txt	/*vcscommand-buffer-management*
 vcscommand-buffer-variables	vcscommand.txt	/*vcscommand-buffer-variables*
