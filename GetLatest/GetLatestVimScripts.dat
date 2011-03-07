@@ -23,7 +23,7 @@ ScriptID SourceID Filename
 3252 13948 :AutoInstall: L9
 ### colors
 1975 7471 lettuce.vim
-2536 15100 lucius.vim
+2536 15158 lucius.vim
 1165 3741 tolerable.vim
 # compiler
 891 10365 pylint.vim

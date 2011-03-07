@@ -29,16 +29,16 @@ def parsable_pylint(filename):
     ]
 
     """
-    # args
-    args = ['-rn',  # display only the messages instead of full report
-            '-iy',  # Include message's id in output
-            filename]
+    # module args
+    margs = ['-rn',  # display only the messages instead of full report
+             '-iy',  # Include message's id in output
+             filename]
 
     buf = StringIO()  # file-like buffer, instead of stdout
     reporter = TextReporter(buf)
 
     sys.stderr = DUMMY_STDERR
-    lint.Run(args, reporter=reporter, exit=False)
+    lint.Run(margs, reporter=reporter, exit=False)
     sys.stderr = SYS_STDERR
 
     # see, if we have other errors than 'No config found...' message
@@ -58,25 +58,25 @@ def parsable_pylint(filename):
     carriage_re = re.compile(r'\s*\^+$')
     error_re = re.compile(r'^([C,R,W,E,F].+):\s+?([0-9]+):?.*:\s(.*)$')
 
-    for line in buf:
-        line = line.rstrip()  # remove trailing newline character
+    for bufline in buf:
+        bufline = bufline.rstrip()  # remove trailing newline character
 
-        if error_re.match(line):
+        if error_re.match(bufline):
             if code_line:
                 error_list.append(code_line)
                 code_line = {}
 
             code_line['type'], code_line['lnum'], code_line['text'] = \
-                    error_re.match(line).groups()
+                    error_re.match(bufline).groups()
 
-        if carriage_re.match(line) and code_line:
-            code_line['col'] = carriage_re.match(line).group().find('^') + 1
+        if carriage_re.match(bufline) and code_line:
+            code_line['col'] = carriage_re.match(bufline).group().find('^') + 1
 
     return error_list
 
 if __name__ == "__main__":
-    parser = OptionParser("usage: %prog python_file")
-    (options, args) = parser.parse_args()
+    PARSER = OptionParser("usage: %prog python_file")
+    (OPTIONS, args) = PARSER.parse_args()
     if len(args) == 1:
         for line in parsable_pylint(args[0]):
             line['short'] = line['type'][0]
