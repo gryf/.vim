@@ -5,7 +5,7 @@ ScriptID SourceID Filename
 #2754 13139 :AutoInstall: delimitMate.vim
 1984 13961 fuzzyfinder.vim
 311 7645 grep.vim
-3304 14226 gundo.vim
+3304 15184 gundo.vim
 2727 11120 jsbeautify.vim
 2666 14741 Mark
 2262 8944 occur.vim
@@ -15,6 +15,8 @@ ScriptID SourceID Filename
 2540 11006 snipMate.vim
 1697 12566 :AutoInstall: surround.vim
 #273 7701 taglist.vim  # exchanged with taglisttoo
+#and taglisttoo was exchanged by tagbar
+3465 15165 Tagbar
 90 13751 vcscommand.vim
 2226 13756 vimwiki.vim
 2289 0 loremipsum.vim
@@ -23,7 +25,7 @@ ScriptID SourceID Filename
 3252 13948 :AutoInstall: L9
 ### colors
 1975 7471 lettuce.vim
-2536 15158 lucius.vim
+2536 15197 lucius.vim
 1165 3741 tolerable.vim
 # compiler
 891 10365 pylint.vim

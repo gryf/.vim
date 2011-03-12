@@ -148,6 +148,9 @@ let g:pydiction_location = '/home/gryf/.vim/after/ftplugin/pytdiction/complete-d
 "TagListToo {{{2
 let g:VerticalToolWindowSide = 'right'
 "}}}
+"Tagbar {{{2
+let g:tagbar_autoclose = 1
+"}}}
 "{{{ Pydoc
 let g:pydoc_cmd = "/usr/bin/pydoc"
 "}}}
@@ -193,7 +196,8 @@ map <Leader>wp <Plug>VimwikiPrevWord
 map ]b :call OpenInFirefox()<cr>
 
 "make displaying tags easy
-nmap <Leader>t :TlistToo<CR>
+"nmap <Leader>t :TlistToo<CR>
+nmap <Leader>t :TagbarToggle<CR>
 "eclim Buffer shortcut
 map <Leader>b :Buffers<CR>
 
