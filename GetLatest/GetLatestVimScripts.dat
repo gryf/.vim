@@ -5,7 +5,7 @@ ScriptID SourceID Filename
 #2754 13139 :AutoInstall: delimitMate.vim
 1984 13961 fuzzyfinder.vim
 311 7645 grep.vim
-3304 15184 gundo.vim
+3304 15211 gundo.vim
 2727 11120 jsbeautify.vim
 2666 14741 Mark
 2262 8944 occur.vim

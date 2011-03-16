@@ -310,8 +310,10 @@ if has('gui_running')
     "set guifont=Consolas\ 12  "I like this font, but it looks like crap on linux
     set guifont=Fixed\ 14      "I like this font better.
     set mouse=a                "Enable mouse support
-    set guioptions-=T          "No toolbar
-    set guioptions-=m          "Nor menu
+    "No toolbar, menu, scrollbars, draw simple text tabs. This would keep 
+    "window in one place, and also this will conserve space. Tabs are huge 
+    "under GTK.
+    set guioptions=agit
     "add menuitem OpenInFirefox
     nmenu 666 PopUp.&Open\ in\ browser :call OpenInFirefox()<cr>
     "Turn off annoying beep
