@@ -1,5 +1,5 @@
 "Basic setup for all files {{{
-set nocompatible "VIM over VI
+set nocompatible                    "VIM over VI
 
 filetype plugin indent on           "turn plugins/indent on
 syntax on                           "Turn syntax highlighting on
@@ -19,7 +19,7 @@ set history=1000                    "Keep 1000 lines of command line history
 set laststatus=2                    "Always show statusbar
 set lazyredraw                      "Don't update screen while executing macros
 
-set listchars=tab:▸⎯,trail:·  "Strings to use in 'list' mode. list is off by default.
+set listchars=tab:▸―,trail:·        "Strings to use in 'list' mode. list is off by default.
 set number                          "show line numbers
 
 " Show ruler and set format of statusline
@@ -308,7 +308,8 @@ endfunction
 " GUI: here goes all the gvim customizations {{{
 if has('gui_running')
     "set guifont=Consolas\ 12  "I like this font, but it looks like crap on linux
-    set guifont=Fixed\ 14      "I like this font better.
+    set guifont=Consolas\ 13  "Let's try again
+    "set guifont=Fixed\ 14      "I like this font better.
     set mouse=a                "Enable mouse support
     "No toolbar, menu, scrollbars, draw simple text tabs. This would keep 
     "window in one place, and also this will conserve space. Tabs are huge 
