@@ -1027,6 +1027,9 @@ endfunction
 " Multiple inexact matches is currently considered an error.
 
 function! VCSCommandGetVCSType(buffer)
+	if exists("g:VCSTypeOverride")
+        return g:VCSTypeOverride
+    endif
 	let vcsType = getbufvar(a:buffer, 'VCSCommandVCSType')
 	if strlen(vcsType) > 0
 		return vcsType

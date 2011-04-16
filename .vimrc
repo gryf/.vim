@@ -9,6 +9,7 @@ set background=dark                 "Hint Vim that I use dark colorscheme
 
 set confirm                         "Ask for confirmation rather then refuse certain commands
 set cursorline                      "Turn on current line highlight
+set nohlsearch                      "Turn off highlighting text by default
 set expandtab                       "I want spaces instead of tabs
 set fileencodings=ucs-bom,utf-8,latin2,default,latin1,default
 set fileformats=unix,dos            "Type of <EOL> in written files
@@ -196,8 +197,8 @@ map <Leader>wp <Plug>VimwikiPrevWord
 map ]b :call OpenInFirefox()<cr>
 
 "make displaying tags easy
-"nmap <Leader>t :TlistToo<CR>
-nmap <Leader>t :TagbarToggle<CR>
+nmap <Leader>t :TlistToo<CR>
+nmap <Leader>T :TagbarToggle<CR>
 "eclim Buffer shortcut
 map <Leader>b :Buffers<CR>
 
@@ -308,8 +309,8 @@ endfunction
 " GUI: here goes all the gvim customizations {{{
 if has('gui_running')
     "set guifont=Consolas\ 12  "I like this font, but it looks like crap on linux
-    set guifont=Consolas\ 13  "Let's try again
-    "set guifont=Fixed\ 14      "I like this font better.
+    "set guifont=Consolas\ 13  "Let's try again
+    set guifont=Fixed\ 14      "I like this font better.
     set mouse=a                "Enable mouse support
     "No toolbar, menu, scrollbars, draw simple text tabs. This would keep 
     "window in one place, and also this will conserve space. Tabs are huge 
