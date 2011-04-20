@@ -365,6 +365,7 @@ g:loremipsum_files	loremipsum.txt	/*g:loremipsum_files*
 g:loremipsum_marker	loremipsum.txt	/*g:loremipsum_marker*
 g:loremipsum_paragraph_template	loremipsum.txt	/*g:loremipsum_paragraph_template*
 g:loremipsum_words	loremipsum.txt	/*g:loremipsum_words*
+g:mwHistAdd	mark.txt	/*g:mwHistAdd*
 g:snippets_dir	snipMate.txt	/*g:snippets_dir*
 g:snips_author	snipMate.txt	/*g:snips_author*
 g:tagbar_autoclose	tagbar.txt	/*g:tagbar_autoclose*
