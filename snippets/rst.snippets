@@ -48,8 +48,10 @@ snippet subject
 	:Subject: ${1}
 snippet code
 	.. sourcecode:: ${1:python}
+	    :cssclass: ${2:wombat}
+	    ${3::linenos:} ${4:1}
 	
-	    ${2}
+	    ${5}
 snippet figure
 	.. figure:: ${1:image.png}
 		:target: $1
@@ -66,3 +68,7 @@ snippet article
 	${5}
 	
 	.. more
+snippet raw
+	.. raw:: html
+	
+	    ${1}

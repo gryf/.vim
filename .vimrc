@@ -157,10 +157,14 @@ let g:pydoc_cmd = "/usr/bin/pydoc"
 "}}}
 "mark {{{
 " addidtional colors -- 
-highlight def MarkWord7 ctermbg=White ctermfg=Black guibg=#E8E8E8 guifg=Black
-highlight def MarkWord8 ctermbg=LightGray ctermfg=Black guibg=#C0C0C0 guifg=Black
-highlight def MarkWord9 ctermbg=DarkYellow ctermfg=Black guibg=#FFC299 guifg=Black
-highlight def MarkWord10 ctermbg=DarkGreen ctermfg=Black guibg=#6E9954 guifg=Black
+fun! s:CustomHighlightings()
+    highlight def MarkWord7 ctermbg=White ctermfg=Black guibg=#E8E8E8 guifg=Black
+    highlight def MarkWord8 ctermbg=LightGray ctermfg=Black guibg=#C0C0C0 guifg=Black
+    highlight def MarkWord9 ctermbg=DarkYellow ctermfg=Black guibg=#FFC299 guifg=Black
+    highlight def MarkWord10 ctermbg=DarkGreen ctermfg=Black guibg=#6E9954 guifg=Black
+endfun
+autocmd ColorScheme * call <SID>CustomHighlightings()
+
 "}}}
 " DirDiff{{{
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"

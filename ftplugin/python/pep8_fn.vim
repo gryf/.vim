@@ -46,10 +46,15 @@
 "
 " }}}
 
+
 if exists("b:did_pep8_plugin")
     finish " only load once
 else
     let b:did_pep8_plugin = 1
+endif
+
+if !exists("g:pep8_exclude")
+    let g:pep8_exclude = []
 endif
 
 if !exists("b:did_pep8_init")
@@ -76,6 +81,7 @@ class VImPep8(object):
         self.fname = vim.current.buffer.name
         self.bufnr = vim.current.buffer.number
         self.output = []
+        self.exclude_list = vim.eval("g:pep8_exclude")
 
     def reporter(self, lnum, col, text, check):
         self.output.append([lnum, col, text])
@@ -93,6 +99,13 @@ class VImPep8(object):
         qf_dict = {}
 
         for line in self.output:
+            skip = False
+            for exclude_pattern in self.exclude_list:
+                if exclude_pattern in line[2]:
+                    skip = True
+                    break
+            if skip:
+                continue
             qf_dict['bufnr'] = self.bufnr
             qf_dict['lnum'] = line[0]
             qf_dict['col'] = line[1]
