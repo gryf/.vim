@@ -442,6 +442,7 @@ loremipsum.txt	loremipsum.txt	/*loremipsum.txt*
 mark-configuration	mark.txt	/*mark-configuration*
 mark-dependencies	mark.txt	/*mark-dependencies*
 mark-description	mark.txt	/*mark-description*
+mark-highlight-colors	mark.txt	/*mark-highlight-colors*
 mark-highlighting	mark.txt	/*mark-highlighting*
 mark-history	mark.txt	/*mark-history*
 mark-ideas	mark.txt	/*mark-ideas*
@@ -453,6 +454,7 @@ mark-persistence	mark.txt	/*mark-persistence*
 mark-searching	mark.txt	/*mark-searching*
 mark-todo	mark.txt	/*mark-todo*
 mark-usage	mark.txt	/*mark-usage*
+mark-whitespace-indifferent	mark.txt	/*mark-whitespace-indifferent*
 mark.txt	mark.txt	/*mark.txt*
 mark.vim	mark.txt	/*mark.vim*
 multi_snip	snipMate.txt	/*multi_snip*
