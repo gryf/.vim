@@ -1031,6 +1031,7 @@ endfunction
 " Multiple inexact matches is currently considered an error.
 
 function! VCSCommandGetVCSType(buffer)
+    " gryf: if there is such variable, use defined VCS type
 	if exists("g:VCSTypeOverride")
         return g:VCSTypeOverride
     endif

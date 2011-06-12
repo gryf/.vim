@@ -26,6 +26,7 @@ hi Normal       guifg=#000000 guibg=#F8F8FF
 hi Cursor		guibg=#444454 guifg=#F8F8FF
 hi CursorLine	guibg=#D8D8DD
 hi CursorColumn	guibg=#E8E8EE
+" gryf: added colorcolumn highlight
 hi ColorColumn	guibg=#E8E8EE
 " }}}
 

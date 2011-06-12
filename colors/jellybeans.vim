@@ -293,6 +293,7 @@ set background=dark
 if version >= 700
   call s:X("CursorLine","","1c1c1c","","","Black")
   call s:X("CursorColumn","","1c1c1c","","","Black")
+  " gryf: added colorcolumn highlight
   call s:X("ColorColumn","","1c1c1c","","","")
   call s:X("MatchParen","ffffff","80a090","bold","","DarkCyan")
 

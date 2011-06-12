@@ -168,6 +168,11 @@ autocmd ColorScheme * call <SID>CustomHighlightings()
 "}}}
 " DirDiff{{{
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
+" Make use of cursor keys
+nmap <M-Up> [c
+nmap <M-Down> ]c
+nmap <C-Up> \dk
+nmap <C-Down> \d
 " }}}
 "}}}
 "KEYS: User definied keyboard shortcuts {{{

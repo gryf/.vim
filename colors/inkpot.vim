@@ -54,6 +54,7 @@ if has("gui_running")
     endif
 
     hi CursorLine         guibg=#2e2e37
+    " gryf: added colorcolumn highlight
     hi ColorColumn         guibg=#2e2e37
 
     hi IncSearch      gui=BOLD   guifg=#303030   guibg=#cd8b60

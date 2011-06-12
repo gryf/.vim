@@ -15,22 +15,40 @@ command! -narg=0 ZoomOut   :call s:ZoomOut()
 command! -narg=0 ZoomReset :call s:ZoomReset()
 
 " map
+"gryf: I like keypad mappings
 nmap <kPlus> :ZoomIn<CR>
 nmap <kMinus> :ZoomOut<CR>
 nmap <kDivide> :ZoomReset<CR>
 
 " guifont size + 1
 function! s:ZoomIn()
-  let l:font = split(&guifont)
-  let l:size = l:font[1] + 1
-  let &guifont = l:font[0] . " " . l:size
+  " gryf: Let's check, what system we are dealing with
+  if has("win32")
+    let l:fsize = substitute(&guifont, '^.*:h\([^:]*\).*$', '\1', '')
+    let l:fsize += 1
+    let l:guifont = substitute(&guifont, ':h\([^:]*\)', ':h' . l:fsize, '')
+    let &guifont = l:guifont
+  elseif has('unix')
+    " gryf: might not work on os x though
+    let l:font = split(&guifont)
+    let l:font[-1] = l:font[-1] + 1
+    let &guifont = join(l:font, " ")
+  endif
 endfunction
 
 " guifont size - 1
 function! s:ZoomOut()
-  let l:font = split(&guifont)
-  let l:size = l:font[1] - 1
-  let &guifont = l:font[0] . " " . l:size
+  " gryf: same as above
+  if has("win32")
+    let l:fsize = substitute(&guifont, '^.*:h\([^:]*\).*$', '\1', '')
+    let l:fsize -= 1
+    let l:guifont = substitute(&guifont, ':h\([^:]*\)', ':h' . l:fsize, '')
+    let &guifont = l:guifont
+  elseif has('unix')
+    let l:font = split(&guifont)
+    let l:font[-1] = l:font[-1] - 1
+    let &guifont = join(l:font, " ")
+  endif
 endfunction
 
 " reset guifont size

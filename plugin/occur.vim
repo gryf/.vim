@@ -21,7 +21,9 @@ endif
 
 " Key bind
 nnoremap <silent> <unique> <Leader>oc :Occur<CR>
+" gryf: Changed followin mapping due to confilct with showmarks plugin
 nnoremap <silent> <unique> <Leader>om :Moccur<CR>
+" gryf: Changed followin mapping due to confilct with marks plugin
 nnoremap <silent> <unique> <Leader>8 *<C-o>:Moccur<CR>
 
 " Create commands
