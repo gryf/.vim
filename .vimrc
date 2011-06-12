@@ -129,9 +129,16 @@ let Tlist_WinWidth = 40
 "NERDTree {{{2
 let NERDTreeWinSize = 40
 " }}}
+" eclim buffers {{{
+map <Leader>b :Buffers<CR>
+" }}}
 "VimWIKI {{{2
 let g:vimwiki_list = [{'html_header': '~/vimwiki/vimwiki_head.tpl',
                       \ 'html_footer': '~/vimwiki/vimwiki_foot.tpl'}]
+"redefine tab key for vimwiki
+map <Leader>wn <Plug>VimwikiNextWord
+map <Leader>wp <Plug>VimwikiPrevWord
+map ]b :call OpenInFirefox()<cr>
 " }}}
 "FuzzyFinder {{{2
 let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
@@ -148,15 +155,17 @@ let g:pydiction_location = '/home/gryf/.vim/after/ftplugin/pytdiction/complete-d
 "}}}
 "TagListToo {{{2
 let g:VerticalToolWindowSide = 'right'
+nmap <Leader>t :TlistToo<CR>
 "}}}
 "Tagbar {{{2
 let g:tagbar_autoclose = 1
+nmap <Leader>T :TagbarToggle<CR>
 "}}}
 "{{{ Pydoc
 let g:pydoc_cmd = "/usr/bin/pydoc"
 "}}}
 "mark {{{
-" addidtional colors -- 
+" addidtional colors --
 fun! s:CustomHighlightings()
     highlight def MarkWord7 ctermbg=White ctermfg=Black guibg=#E8E8E8 guifg=Black
     highlight def MarkWord8 ctermbg=LightGray ctermfg=Black guibg=#C0C0C0 guifg=Black
@@ -172,7 +181,14 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
 nmap <M-Up> [c
 nmap <M-Down> ]c
 nmap <C-Up> \dk
-nmap <C-Down> \d
+nmap <C-Down> \dj
+" }}}
+" Buffergator {{{
+let g:buffergator_split_size=10
+let g:buffergator_viewport_split_policy='B'
+let g:buffergator_suppress_keymaps=1
+"map <Leader>b :BuffergatorToggle<CR>
+map <C-b> :BuffergatorToggle<CR>
 " }}}
 "}}}
 "KEYS: User definied keyboard shortcuts {{{
@@ -200,17 +216,6 @@ map <S-F11> :LWin<CR>
 "remove trailing whitespaces
 map <C-e> :%s/\s\+$//<CR>
 
-"redefine tab key for vimwiki
-map <Leader>wn <Plug>VimwikiNextWord
-map <Leader>wp <Plug>VimwikiPrevWord
-map ]b :call OpenInFirefox()<cr>
-
-"make displaying tags easy
-nmap <Leader>t :TlistToo<CR>
-nmap <Leader>T :TagbarToggle<CR>
-"eclim Buffer shortcut
-map <Leader>b :Buffers<CR>
-
 " copy current buffer filename (full path)
 nmap ,cn :silent call <SID>CopyFileName(1)<CR>
 " copy current buffer filename (filename only)
@@ -220,6 +225,7 @@ nmap ,cs :silent call <SID>CopyFileName(0)<CR>
 map <C-F> :TlistToo!<cr>:FufFile **/<CR>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
+
 " Simple wrapper for :make command
 function <SID>Make()
     echohl Statement
@@ -230,6 +236,7 @@ function <SID>Make()
         copen
     endif
 endfunction
+
 " Remove trailing whitespace
 function <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
@@ -321,8 +328,8 @@ if has('gui_running')
     "set guifont=Consolas\ 13  "Let's try again
     set guifont=Fixed\ 14      "I like this font better.
     set mouse=a                "Enable mouse support
-    "No toolbar, menu, scrollbars, draw simple text tabs. This would keep 
-    "window in one place, and also this will conserve space. Tabs are huge 
+    "No toolbar, menu, scrollbars, draw simple text tabs. This would keep
+    "window in one place, and also this will conserve space. Tabs are huge
     "under GTK.
     set guioptions=agit
     "add menuitem OpenInFirefox

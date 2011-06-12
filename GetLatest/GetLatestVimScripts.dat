@@ -10,6 +10,7 @@ ScriptID SourceID Filename
 3252 13948 :AutoInstall: L9
 2289 8922 loremipsum
 2666 15663 Mark
+1218 14455 nerdcommenter
 2262 8944 occur.vim
 2136 8206 repeat.vim
 152 3342 showmarks.vim
