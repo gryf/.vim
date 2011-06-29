@@ -89,9 +89,9 @@ autocmd BufRead *.tmux.conf set filetype=tmux
 
 "}}}
 "TERMINAL: options for terminal emulators {{{
-if $TERM == 'rxvt-unicode' || $TERM == 'xterm'
-    set term=rxvt-unicode256        "Set terminal type
-    set t_Co=256                    "Enable 256 colors support
+if $TERM == 'rxvt-unicode-256color' || $TERM == 'xterm'
+    "Enable 256 colors support
+    set t_Co=256
     "repair urxvt ctrl+pgup/down behaviour
     map [5^ <C-PageUp>
     map [6^ <C-PageDown>
@@ -196,12 +196,6 @@ map <C-b> :BuffergatorToggle<CR>
 "Cycle through buffers.
 map <C-p> :bp<CR>
 map <C-n> :bn<CR>
-
-"Cycle through tabs.
-if $TERM == 'rxvt-unicode'
-    map <C-PageDown> :tabn<CR>
-    map <C-PageUp> :tabp<CR>
-endif
 
 map <F5> :call <SID>Make()<cr>
 
@@ -322,7 +316,8 @@ function! OpenInFirefox()
 endfunction
 
 "}}}
-" GUI: here goes all the gvim customizations {{{
+" GUI: detect graphics mode, set colorscheme {{{
+colorscheme wombat256grf
 if has('gui_running')
     "set guifont=Consolas\ 12  "I like this font, but it looks like crap on linux
     "set guifont=Consolas\ 13  "Let's try again
@@ -336,14 +331,9 @@ if has('gui_running')
     nmenu 666 PopUp.&Open\ in\ browser :call OpenInFirefox()<cr>
     "Turn off annoying beep
     au GUIEnter * set vb t_vb=
-endif
-"}}}
-" HIGHLIGHT: colorscheme and highlight, which should be applied on after {{{
-" some vim initialization
-if $TERM == 'linux'
+elseif $TERM == 'linux'
+    " fallback to basic 8-color colorscheme
     colorscheme pablo
-else
-    colorscheme wombat256grf
 endif
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:
