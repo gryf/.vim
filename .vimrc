@@ -101,7 +101,7 @@ elseif $TERM == 'screen' || $TERM == 'screen-256color'
     set t_kN=[6;*~
     set t_kP=[5;*~
 endif
-if $TERM == 'linux'
+if $TERM == 'linux' && !has("gui_running")
     "For term like linux terminal keep interface simple
     set nolist
     set nocursorline
@@ -317,7 +317,6 @@ endfunction
 
 "}}}
 " GUI: detect graphics mode, set colorscheme {{{
-colorscheme wombat256grf
 if has('gui_running')
     "set guifont=Consolas\ 12  "I like this font, but it looks like crap on linux
     "set guifont=Consolas\ 13  "Let's try again
@@ -331,7 +330,9 @@ if has('gui_running')
     nmenu 666 PopUp.&Open\ in\ browser :call OpenInFirefox()<cr>
     "Turn off annoying beep
     au GUIEnter * set vb t_vb=
-elseif $TERM == 'linux'
+endif
+colorscheme wombat256grf
+if $TERM == 'linux' && !has('gui_running')
     " fallback to basic 8-color colorscheme
     colorscheme pablo
 endif
