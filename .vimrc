@@ -133,8 +133,10 @@ let NERDTreeWinSize = 40
 map <Leader>b :Buffers<CR>
 " }}}
 "VimWIKI {{{2
-let g:vimwiki_list = [{'html_header': '~/vimwiki/vimwiki_head.tpl',
-                      \ 'html_footer': '~/vimwiki/vimwiki_foot.tpl'}]
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+          \ 'template_path': '~/vimwiki/',
+          \ 'template_default': 'default',
+          \ 'template_ext': '.tpl'}]
 "redefine tab key for vimwiki
 map <Leader>wn <Plug>VimwikiNextWord
 map <Leader>wp <Plug>VimwikiPrevWord
