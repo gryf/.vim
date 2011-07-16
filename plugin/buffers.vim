@@ -3,7 +3,7 @@
 " Description: vim plugin that provides buffers helpers. Almost all of parts
 "              are taken from Eclim project <http://eclim.sourceforge.net>
 " Maintainer:  Roman 'gryf' Dobosz <gryf73@gmail.com>
-" Last Change: 2010-08-28
+" Last Change: 2011-07-16
 " License:     This program is free software: you can redistribute it and/or
 "              modify it under the terms of the GNU General Public License as
 "              published by the Free Software Foundation, either version 3 of
@@ -18,7 +18,7 @@
 "              License along with this program.  If not, see
 "              <http://www.gnu.org/licenses/>.
 " ============================================================================
-let s:Eclim_ver = '1.6.0'
+let s:Eclim_ver = '1.7.1'
 
 " Eclim: {{{1
 " files:
@@ -98,10 +98,6 @@ endif
 if !exists('g:EclimBuffersDefaultAction')
   let g:EclimBuffersDefaultAction = 'edit'
 endif
-if !exists('g:EclimOnlyExclude')
-  let g:EclimOnlyExclude =
-    \ '\(NERD_tree_*\|__Tag_List__\|command-line\)'
-endif
 " }}}
 
 " Buffers() eclim/autoload/eclim/common/buffers.vim {{{2
@@ -140,7 +136,6 @@ function! s:Buffers()
   endfor
 
   call TempWindow('[buffers]', lines)
-  let b:eclim_buffers = buffers
 
   setlocal modifiable noreadonly
   call append(line('$'), ['', '" use ? to view help'])
@@ -162,6 +157,7 @@ function! s:Buffers()
   nnoremap <silent> <buffer> S :call <SID>BufferOpen2('split')<cr>
   nnoremap <silent> <buffer> T :call <SID>BufferOpen('tablast \| tabnew')<cr>
   nnoremap <silent> <buffer> D :call <SID>BufferDelete()<cr>
+  nnoremap <silent> <buffer> R :Buffers<cr>
 
   " assign to buffer var to get around weird vim issue passing list containing
   " a string w/ a '<' in it on execution of mapping.
@@ -171,6 +167,7 @@ function! s:Buffers()
       \ 'S - open in a new split window',
       \ 'T - open in a new tab',
       \ 'D - delete the buffer',
+      \ 'R - refresh the buffer list',
     \ ]
   nnoremap <buffer> <silent> ?
     \ :call BufferHelp(b:buffers_help, 'vertical', 40)<cr>
@@ -209,7 +206,19 @@ function! s:BufferDelete()
   setlocal readonly
   let buffer = b:eclim_buffers[index]
   call remove(b:eclim_buffers, index)
-  exec 'bd ' . buffer.bufnr
+
+  let winnr = bufwinnr(buffer.bufnr)
+  if winnr != -1
+    " if active in a window, go to the window to delete the buffer since that
+    " keeps eclim's prevention of closing the last non-utility window working
+    " properly.
+    let curwin = winnr()
+    exec winnr . 'winc w'
+    bdelete
+    exec curwin . 'winc w'
+  else
+    exec 'bd ' . buffer.bufnr
+  endif
 endfunction " }}}
 
 " s:BufferEntryToLine(buffer, filelength) eclim/autoload/eclim/common/buffers.vim {{{2
@@ -307,7 +316,7 @@ function! GoToBufferWindow(buf)
     let winnr = bufwinnr(a:buf)
   else
     let name = EscapeBufferName(a:buf)
-    let winnr = bufwinnr(bufnr('^' . name))
+    let winnr = bufwinnr(bufnr('^' . name . '$'))
   endif
   if winnr != -1
     exec winnr . "winc w"
@@ -383,17 +392,20 @@ function! TempWindow(name, lines, ...)
   let name = EscapeBufferName(a:name)
 
   if bufwinnr(name) == -1
-    silent! noautocmd exec "botright 10sview " . escape(a:name, ' ')
-    let b:eclim_temp_window = 1
-
+    silent! noautocmd exec "botright 10sview " . escape(a:name, ' []')
     setlocal nowrap
     setlocal winfixheight
     setlocal noswapfile
     setlocal nobuflisted
     setlocal buftype=nofile
     setlocal bufhidden=delete
+    silent doautocmd WinEnter
   else
-    exec bufwinnr(name) . "winc w"
+    let temp_winnr = bufwinnr(name)
+    if temp_winnr != winnr()
+      exec temp_winnr . 'winc w'
+      silent doautocmd WinEnter
+    endif
   endif
 
   setlocal modifiable
@@ -460,11 +472,16 @@ function! BufferHelp(lines, orientation, size)
   endif
 
   silent! noautocmd exec a:size . orient . "new " . escape(name, ' ')
-  let b:eclim_temp_window = 1
-  setlocal nowrap winfixheight
+  if a:orientation == 'vertical'
+    setlocal winfixwidth
+  else
+    setlocal winfixheight
+  endif
+  setlocal nowrap
   setlocal noswapfile nobuflisted nonumber
   setlocal buftype=nofile bufhidden=delete
   nnoremap <buffer> <silent> ? :bd<cr>
+  nnoremap <buffer> <silent> q :bd<cr>
 
   setlocal modifiable noreadonly
   silent 1,$delete _

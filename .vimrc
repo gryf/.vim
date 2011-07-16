@@ -156,7 +156,7 @@ nnoremap <silent> <leader>ff :call g:Jsbeautify()<cr>:retab!<cr>
 let g:pydiction_location = '/home/gryf/.vim/after/ftplugin/pytdiction/complete-dict'
 "}}}
 "TagListToo {{{2
-let g:VerticalToolWindowSide = 'right'
+let g:TaglistTooPosition = "right"
 nmap <Leader>t :TlistToo<CR>
 "}}}
 "Tagbar {{{2

@@ -81,6 +81,7 @@
 :SendBlogArticle	vimblogger_ft.txt	/*:SendBlogArticle*
 :Tags:	vimblogger_ft.txt	/*:Tags:*
 :Title:	vimblogger_ft.txt	/*:Title:*
+:TlistToo	taglisttoo.txt	/*:TlistToo*
 :VCSAdd	vcscommand.txt	/*:VCSAdd*
 :VCSAnnotate	vcscommand.txt	/*:VCSAnnotate*
 :VCSBlame	vcscommand.txt	/*:VCSBlame*
@@ -185,6 +186,7 @@ ShowMarksClearMark	showmarks.txt	/*ShowMarksClearMark*
 ShowMarksOn	showmarks.txt	/*ShowMarksOn*
 ShowMarksPlaceMark	showmarks.txt	/*ShowMarksPlaceMark*
 ShowMarksToggle	showmarks.txt	/*ShowMarksToggle*
+TaglistToo	taglisttoo.txt	/*TaglistToo*
 VCSCommandCVSDiffOpt	vcscommand.txt	/*VCSCommandCVSDiffOpt*
 VCSCommandCVSExec	vcscommand.txt	/*VCSCommandCVSExec*
 VCSCommandCommitOnWrite	vcscommand.txt	/*VCSCommandCommitOnWrite*
@@ -294,6 +296,14 @@ fuf-usage	fuf.txt	/*fuf-usage*
 fuf-vimrc-example	fuf.txt	/*fuf-vimrc-example*
 fuf.txt	fuf.txt	/*fuf.txt*
 fuzzyfinder	fuf.txt	/*fuzzyfinder*
+g:TagList_title	taglisttoo.txt	/*g:TagList_title*
+g:TaglistTooEnabled	taglisttoo.txt	/*g:TaglistTooEnabled*
+g:TaglistTooPosition	taglisttoo.txt	/*g:TaglistTooPosition*
+g:TaglistTooTagEcho	taglisttoo.txt	/*g:TaglistTooTagEcho*
+g:Tlist_Auto_Open	taglisttoo.txt	/*g:Tlist_Auto_Open*
+g:Tlist_Ctags_Cmd	taglisttoo.txt	/*g:Tlist_Ctags_Cmd*
+g:Tlist_Sort_Type	taglisttoo.txt	/*g:Tlist_Sort_Type*
+g:Tlist_WinWidth	taglisttoo.txt	/*g:Tlist_WinWidth*
 g:blogger_browser	vimblogger_ft.txt	/*g:blogger_browser*
 g:blogger_confirm_del	vimblogger_ft.txt	/*g:blogger_confirm_del*
 g:blogger_draft	vimblogger_ft.txt	/*g:blogger_draft*
@@ -920,6 +930,15 @@ tagbar-requirements	tagbar.txt	/*tagbar-requirements*
 tagbar-todo	tagbar.txt	/*tagbar-todo*
 tagbar-usage	tagbar.txt	/*tagbar-usage*
 tagbar.txt	tagbar.txt	/*tagbar.txt*
+taglisttoo	taglisttoo.txt	/*taglisttoo*
+taglisttoo-configuration	taglisttoo.txt	/*taglisttoo-configuration*
+taglisttoo-customization	taglisttoo.txt	/*taglisttoo-customization*
+taglisttoo-format	taglisttoo.txt	/*taglisttoo-format*
+taglisttoo-overview	taglisttoo.txt	/*taglisttoo-overview*
+taglisttoo-parse	taglisttoo.txt	/*taglisttoo-parse*
+taglisttoo-prerequisites	taglisttoo.txt	/*taglisttoo-prerequisites*
+taglisttoo-usage	taglisttoo.txt	/*taglisttoo-usage*
+taglisttoo.txt	taglisttoo.txt	/*taglisttoo.txt*
 vS	surround.txt	/*vS*
 v_<Leader>m	mark.txt	/*v_<Leader>m*
 v_<Leader>r	mark.txt	/*v_<Leader>r*
