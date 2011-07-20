@@ -16,10 +16,8 @@ set fileformats=unix,dos            "Type of <EOL> in written files
 set formatoptions=croqw             "Automatic formatting settings
 set hidden                          "Keep hidden windows
 set history=1000                    "Keep 1000 lines of command line history
-"set ignorecase                      "Ignore case in search patterns
 set laststatus=2                    "Always show statusbar
 set lazyredraw                      "Don't update screen while executing macros
-
 set listchars=tab:▸―,trail:·        "Strings to use in 'list' mode. list is off by default.
 set number                          "show line numbers
 
@@ -39,7 +37,6 @@ set shortmess=atToOI                "Abbreviate some messages
 set showbreak=>                     "String to put at the start of lines that have been wrapped
 set showcmd                         "Show (partial) command in status line
 set showmatch                       "When a bracket is inserted, briefly jump to the matching one
-"set smartindent                     "Do smart autoindenting when starting a new line
 filetype indent on                  "Indenting per filetype rather then smartindent.
 set smarttab                        "Do the smart tab/backspace behaviour
 set softtabstop=4
@@ -60,6 +57,9 @@ set wildchar=<TAB>                  "Character to start wildcard expansion in th
 set wildmenu                        "Put command-line completion in an enhanced mode
 set wrapmargin=1                    "Number of characters from the right window border where wrapping starts
 
+set textwidth=78
+set cc=+1
+
 "backup/writeback/swapfile
 set nobackup
 set nowb
@@ -68,10 +68,13 @@ set noswapfile
 "set dir=~/tmp/
 
 " TOhtml options
-:let html_number_lines = 1
-:let html_use_css = 1
-:let html_ignore_folding = 1
-:let html_use_encoding = "utf-8"
+let html_number_lines = 1
+let html_use_css = 1
+let html_ignore_folding = 1
+let html_use_encoding = "utf-8"
+
+"Set the browser executable
+let g:browser = 'firefox'
 "}}}
 "COMMON: specific vim behaviour {{{
 "
@@ -82,12 +85,9 @@ autocmd BufWritePre *.wiki :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.css :call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre *.xml :call <SID>StripTrailingWhitespaces()
-
-" }}}
-" OTHER FILES: {{{
+"set correct filetype for tmux
 autocmd BufRead *.tmux.conf set filetype=tmux
-
-"}}}
+" }}}
 "TERMINAL: options for terminal emulators {{{
 if $TERM == 'rxvt-unicode-256color' || $TERM == 'xterm'
     "Enable 256 colors support
@@ -109,10 +109,31 @@ if $TERM == 'linux' && !has("gui_running")
 endif
 "}}}
 "PLUGINS: {{{
-"getscriptPlugin {{{2
-"let g:GetLatestVimScripts_allowautoinstall=1  "allow autoinstall scripts
+" eclim buffers {{{
+map <Leader>b :Buffers<CR>
+" }}}
+"VimWIKI {{{2
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+          \ 'template_path': '~/vimwiki/',
+          \ 'template_default': 'default',
+          \ 'template_ext': '.tpl'}]
+"redefine tab key for vimwiki
+map <Leader>wn <Plug>VimwikiNextWord
+map <Leader>wp <Plug>VimwikiPrevWord
+" }}}
+"FuzzyFinder {{{2
+let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
 "}}}
-"TagList{{{2
+"ShowMarks {{{2
+let g:showmarks_ignore_type = "hqprm"
+let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"}}}
+"jsbeautify {{{3
+nnoremap <silent> <leader>ff :call g:Jsbeautify()<cr>:retab!<cr>
+"}}}
+"TagListToo {{{2
+nmap <Leader>t :TlistToo<CR>
+"inherited from TagList
 let Tlist_Use_Right_Window = 1
 "show menu in gvim. usefull to pop it up from kbd
 let Tlist_Show_Menu = 1
@@ -126,44 +147,11 @@ let Tlist_Sort_Type = "name"
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_WinWidth = 40
 "}}}
-"NERDTree {{{2
-let NERDTreeWinSize = 40
-" }}}
-" eclim buffers {{{
-map <Leader>b :Buffers<CR>
-" }}}
-"VimWIKI {{{2
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-          \ 'template_path': '~/vimwiki/',
-          \ 'template_default': 'default',
-          \ 'template_ext': '.tpl'}]
-"redefine tab key for vimwiki
-map <Leader>wn <Plug>VimwikiNextWord
-map <Leader>wp <Plug>VimwikiPrevWord
-map ]b :call OpenInFirefox()<cr>
-" }}}
-"FuzzyFinder {{{2
-let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
-"}}}
-"ShowMarks {{{2
-let g:showmarks_ignore_type = "hqprm"
-let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-"}}}
-"jsbeautify {{{3
-nnoremap <silent> <leader>ff :call g:Jsbeautify()<cr>:retab!<cr>
-"}}}
-" pydiction {{{2
-let g:pydiction_location = '/home/gryf/.vim/after/ftplugin/pytdiction/complete-dict'
-"}}}
-"TagListToo {{{2
-let g:TaglistTooPosition = "right"
-nmap <Leader>t :TlistToo<CR>
-"}}}
 "Tagbar {{{2
 let g:tagbar_autoclose = 1
 nmap <Leader>T :TagbarToggle<CR>
 "}}}
-"{{{ Pydoc
+"Pydoc {{{2
 let g:pydoc_cmd = "/usr/bin/pydoc"
 "}}}
 "mark {{{
@@ -189,11 +177,13 @@ nmap <C-Down> \dj
 let g:buffergator_split_size=10
 let g:buffergator_viewport_split_policy='B'
 let g:buffergator_suppress_keymaps=1
-"map <Leader>b :BuffergatorToggle<CR>
-map <C-b> :BuffergatorToggle<CR>
+map <Leader>B :BuffergatorToggle<CR>
 " }}}
+"Gundo {{{2
+map <Leader>u :GundoToggle<cr>
 "}}}
-"KEYS: User definied keyboard shortcuts {{{
+"}}}
+"KEYS: User defined keyboard shortcuts {{{
 
 "Cycle through buffers.
 map <C-p> :bp<CR>
@@ -210,7 +200,7 @@ map <S-F9> :QFix<CR>
 map <S-F11> :LWin<CR>
 
 "remove trailing whitespaces
-map <C-e> :%s/\s\+$//<CR>
+map <C-e> :StripTrailingWhitespaces<CR>
 
 " copy current buffer filename (full path)
 nmap ,cn :silent call <SID>CopyFileName(1)<CR>
@@ -218,7 +208,10 @@ nmap ,cn :silent call <SID>CopyFileName(1)<CR>
 nmap ,cs :silent call <SID>CopyFileName(0)<CR>
 
 "FuzzyFinder plugin. Keys for file fuf
-map <C-F> :TlistToo!<cr>:FufFile **/<CR>
+map <C-F> :FufFile **/<CR>
+
+"open link under cursor in Firefox
+map ]b :call OpenInWebBrowser()<cr>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
 
@@ -231,6 +224,7 @@ function <SID>Make()
     if getqflist() != []
         copen
     endif
+    redraw
 endfunction
 
 " Remove trailing whitespace
@@ -245,6 +239,7 @@ function <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
+command StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 
 function <SID>CopyFileName(full)
     if a:full
@@ -264,7 +259,7 @@ endfunction
 
 " Toggle QuickFix buffer
 command -bang -nargs=? QFix call QFixToggle(<bang>0)
-function! QFixToggle(forced)
+function QFixToggle(forced)
   if exists("g:qfix_win") && a:forced == 0
     cclose
     unlet g:qfix_win
@@ -276,7 +271,7 @@ endfunction
 
 " Toggle location buffer
 command -bang -nargs=? LWin call LocationWindowToggle(<bang>0)
-function! LocationWindowToggle(forced)
+function LocationWindowToggle(forced)
   if exists("g:loc_win") && a:forced == 0
     lclose
     unlet g:loc_win
@@ -286,9 +281,9 @@ function! LocationWindowToggle(forced)
   endif
 endfunction
 
-" OpenInFirefox
-" try to open url in Firefox
-function! OpenInFirefox()
+" OpenInWebBrowser
+" try to open url in selected web browser
+function OpenInWebBrowser()
     let l:line = getline(".")
     let l:cursor_position = getpos(".")[2]
     let l:url = ""
@@ -307,9 +302,9 @@ function! OpenInFirefox()
     endfor
 
     if len(l:url) > 0
-        call system("firefox " . l:url)
+        call system(g:browser . " " . l:url)
         echohl Statement
-        echo "Opened '" . l:url ."' in firefox."
+        echo "Opened '" . l:url ."' in " . g:browser
     else
         echohl WarningMsg
         echo "Not an URL under cursor."
@@ -328,8 +323,8 @@ if has('gui_running')
     "window in one place, and also this will conserve space. Tabs are huge
     "under GTK.
     set guioptions=agit
-    "add menuitem OpenInFirefox
-    nmenu 666 PopUp.&Open\ in\ browser :call OpenInFirefox()<cr>
+    "add menuitem OpenInWebBrowser
+    nmenu 666 PopUp.&Open\ in\ browser :call OpenInWebBrowser()<cr>
     "Turn off annoying beep
     au GUIEnter * set vb t_vb=
 endif
