@@ -61,7 +61,8 @@ vmap ]#   :call PythonCommentSelection()<CR>
 map  ]u   :call PythonUncommentSelection()<CR>
 vmap ]u   :call PythonUncommentSelection()<CR>
 
-map  ]c   :call PythonSelectObject("class")<CR>
+" gryf: change mapping for class selection
+map  ]C   :call PythonSelectObject("class")<CR>
 map  ]d   :call PythonSelectObject("function")<CR>
 
 map  ]<up>    :call PythonNextLine(-1)<CR>

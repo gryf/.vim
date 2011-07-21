@@ -18,7 +18,9 @@ set hidden                          "Keep hidden windows
 set history=1000                    "Keep 1000 lines of command line history
 set laststatus=2                    "Always show statusbar
 set lazyredraw                      "Don't update screen while executing macros
-set listchars=tab:▸―,trail:·        "Strings to use in 'list' mode. list is off by default.
+if !has('win32')
+    set listchars=tab:▸―,trail:·    "Strings to use in 'list' mode. list is off by default.
+endif
 set number                          "show line numbers
 
 " Show ruler and set format of statusline
@@ -43,7 +45,7 @@ set softtabstop=4
 
 "spell options
 set spelllang=pl,en
-set spellfile=/home/gryf/.vim/pol.utf8.add
+let &spellfile=expand('$HOME/.vim/pol.utf8.add')
 
 set splitbelow                      "Create new window below current one
 set swapfile                        "Use swap file
@@ -109,7 +111,7 @@ if $TERM == 'linux' && !has("gui_running")
 endif
 "}}}
 "PLUGINS: {{{
-" eclim buffers {{{
+" eclim buffers {{{2
 map <Leader>b :Buffers<CR>
 " }}}
 "VimWIKI {{{2
@@ -128,7 +130,7 @@ let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bz
 let g:showmarks_ignore_type = "hqprm"
 let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 "}}}
-"jsbeautify {{{3
+"jsbeautify {{{2
 nnoremap <silent> <leader>ff :call g:Jsbeautify()<cr>:retab!<cr>
 "}}}
 "TagListToo {{{2
@@ -154,7 +156,7 @@ nmap <Leader>T :TagbarToggle<CR>
 "Pydoc {{{2
 let g:pydoc_cmd = "/usr/bin/pydoc"
 "}}}
-"mark {{{
+"mark {{{2
 " addidtional colors --
 fun! s:CustomHighlightings()
     highlight def MarkWord7 ctermbg=White ctermfg=Black guibg=#E8E8E8 guifg=Black
@@ -165,7 +167,7 @@ endfun
 autocmd ColorScheme * call <SID>CustomHighlightings()
 
 "}}}
-" DirDiff{{{
+" DirDiff {{{2
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
 " Make use of cursor keys
 nmap <M-Up> [c
@@ -173,7 +175,7 @@ nmap <M-Down> ]c
 nmap <C-Up> \dk
 nmap <C-Down> \dj
 " }}}
-" Buffergator {{{
+" Buffergator {{{2
 let g:buffergator_split_size=10
 let g:buffergator_viewport_split_policy='B'
 let g:buffergator_suppress_keymaps=1
