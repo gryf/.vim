@@ -25,7 +25,7 @@ ScriptID SourceID Filename
 2855 12456 github.vim
 1143 11833 inkpot.vim
 2555 15432 jellybeans.vim
-2536 16179 lucius.vim
+2536 16288 lucius.vim
 3299 14475 sorcerer.vim
 1165 3741 tolerable.vim
 3309 15759 vydark
@@ -38,12 +38,15 @@ ScriptID SourceID Filename
 435 12010 pythonhelper.vim
 2527 10034 jpythonfold.vim
 ### indent
-1936 7708 javascript.vim
+2663 12560 mako.vim
+3081 15645 JavaScript indent
 #   there is also python.vim, which is close to PEP8, but author of 
 #   changes doesn't put it on vim.org scripts. it can be (still) found on
 #   http://monkey.org/~caz/python.vim
 ### syntax
 790 14268 python.vim
 2651 10658 fitnesse.vim
+1858 9244 mako.vim
+2539 9949 css.vim
 ### doc
 3277 14056 py2stdlib
