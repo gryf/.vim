@@ -9,7 +9,7 @@ set background=dark                 "Hint Vim that I use dark colorscheme
 
 set confirm                         "Ask for confirmation rather then refuse certain commands
 set cursorline                      "Turn on current line highlight
-set nohlsearch                      "Turn off highlighting text by default
+set hlsearch                        "Turn on highlighting search text by default
 set expandtab                       "I want spaces instead of tabs
 set fileencodings=ucs-bom,utf-8,latin2,default,latin1,default
 set fileformats=unix,dos            "Type of <EOL> in written files
@@ -126,6 +126,7 @@ map <Leader>wp <Plug>VimwikiPrevWord
 " }}}
 "FuzzyFinder {{{2
 let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
+map <C-F> :FufFile **/<CR>
 "}}}
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
@@ -169,7 +170,7 @@ autocmd ColorScheme * call <SID>CustomHighlightings()
 
 "}}}
 " DirDiff {{{2
-let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
+let g:DirDiffExcludes = ".svn,CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
 " Make use of cursor keys
 nmap <M-Up> [c
 nmap <M-Down> ]c
@@ -210,11 +211,11 @@ nmap ,cn :silent call <SID>CopyFileName(1)<CR>
 " copy current buffer filename (filename only)
 nmap ,cs :silent call <SID>CopyFileName(0)<CR>
 
-"FuzzyFinder plugin. Keys for file fuf
-map <C-F> :FufFile **/<CR>
-
 "open link under cursor in Firefox
 map ]b :call OpenInWebBrowser()<cr>
+
+"remove search highlight and refresh
+nnoremap <silent> <C-l> :nohl<CR><C-l>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
 
