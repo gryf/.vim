@@ -215,7 +215,7 @@ nmap ,cs :silent call <SID>CopyFileName(0)<CR>
 map ]b :call OpenInWebBrowser()<cr>
 
 "remove search highlight and refresh
-nnoremap <silent> <C-l> :nohl<CR><C-l>
+nnoremap <silent> <C-l> :nohl<CR>:syn sync fromstart<CR><C-l>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
 
