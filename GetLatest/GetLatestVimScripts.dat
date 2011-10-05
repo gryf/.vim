@@ -17,7 +17,7 @@ ScriptID SourceID Filename
 2540 11006 snipMate.vim
 1697 12566 :AutoInstall: surround.vim
 3465 15751 Tagbar
-90 15797 vcscommand.vim
+90 16616 vcscommand.vim
 2226 15854 vimwiki.vim
 1334 6377 vst.vim
 2321 9055 zoom.vim
@@ -25,7 +25,7 @@ ScriptID SourceID Filename
 2855 12456 github.vim
 1143 11833 inkpot.vim
 2555 15432 jellybeans.vim
-2536 16288 lucius.vim
+2536 16615 lucius.vim
 3299 14475 sorcerer.vim
 1165 3741 tolerable.vim
 3309 15759 vydark

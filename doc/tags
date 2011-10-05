@@ -210,6 +210,7 @@ VCSCommandSVNDiffOpt	vcscommand.txt	/*VCSCommandSVNDiffOpt*
 VCSCommandSVNExec	vcscommand.txt	/*VCSCommandSVNExec*
 VCSCommandSplit	vcscommand.txt	/*VCSCommandSplit*
 VCSCommandVCSTypeOverride	vcscommand.txt	/*VCSCommandVCSTypeOverride*
+VCSCommandVCSTypePreference	vcscommand.txt	/*VCSCommandVCSTypePreference*
 VimwikiWeblinkHandler	vimwiki.txt	/*VimwikiWeblinkHandler*
 abc	fuf.txt	/*abc*
 b:VCSCommandCommand	vcscommand.txt	/*b:VCSCommandCommand*
