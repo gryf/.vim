@@ -12,7 +12,10 @@ endif
 
 let colors_name = "sorcerer"
 
-hi Normal       guifg=#c2c2b0 guibg=#202020 gui=NONE
+" GUI Colors {{{1
+" ============================================================================
+
+hi Normal       guifg=#c2c2b0 guibg=#222222 gui=NONE
 hi ColorColumn  guifg=NONE    guibg=#1c1c1c
 hi Cursor       guifg=NONE    guibg=#626262 gui=NONE
 hi CursorColumn guibg=#2d2d2d
@@ -95,3 +98,98 @@ hi pythonExClass    guifg=#996666 guibg=NONE gui=NONE
 hi pythonDecorator  guifg=#888555 guibg=NONE gui=NONE
 hi link pythonDecoratorFunction pythonDecorator
 
+" 1}}}
+
+" 256 Colors {{{1
+" ============================================================================
+hi Normal                 cterm=NONE             ctermbg=235   ctermfg=145
+hi ColorColumn            cterm=NONE             ctermbg=234   ctermfg=fg
+hi Cursor                 cterm=NONE             ctermbg=241   ctermfg=fg
+hi CursorColumn           cterm=NONE             ctermbg=236   ctermfg=fg
+hi DiffAdd                cterm=NONE             ctermbg=71    ctermfg=16
+hi DiffChange             cterm=NONE             ctermbg=68    ctermfg=16
+hi DiffDelete             cterm=NONE             ctermbg=94    ctermfg=16
+hi DiffText               cterm=NONE             ctermbg=117   ctermfg=16
+hi Directory              cterm=NONE             ctermbg=234   ctermfg=33
+hi ErrorMsg               cterm=bold             ctermbg=bg    ctermfg=203
+hi FoldColumn             cterm=bold             ctermbg=239   ctermfg=66
+hi Folded                 cterm=NONE             ctermbg=16    ctermfg=60
+hi IncSearch              cterm=bold             ctermbg=202   ctermfg=231
+hi LineNr                 cterm=NONE             ctermbg=16    ctermfg=59
+hi MatchParen             cterm=bold             ctermbg=16    ctermfg=226
+hi ModeMsg                cterm=bold             ctermbg=46    ctermfg=16
+hi MoreMsg                cterm=bold             ctermbg=234   ctermfg=29
+hi NonText                cterm=NONE             ctermbg=234   ctermfg=59
+hi Pmenu                  cterm=NONE             ctermbg=238   ctermfg=231
+hi PmenuSbar              cterm=NONE             ctermbg=250   ctermfg=fg
+hi PmenuSel               cterm=NONE             ctermbg=149   ctermfg=16
+hi Question               cterm=bold             ctermbg=bg    ctermfg=46
+hi Search                 cterm=bold             ctermbg=185   ctermfg=16
+hi SignColumn             cterm=NONE             ctermbg=187   ctermfg=231
+hi SpecialKey             cterm=NONE             ctermbg=bg    ctermfg=59
+hi SpellBad               cterm=undercurl        ctermbg=bg    ctermfg=196
+hi SpellCap               cterm=undercurl        ctermbg=bg    ctermfg=21
+hi SpellLocal             cterm=undercurl        ctermbg=bg    ctermfg=30
+hi SpellRare              cterm=undercurl        ctermbg=bg    ctermfg=201
+hi StatusLine             cterm=bold             ctermbg=101   ctermfg=16
+hi StatusLineNC           cterm=NONE             ctermbg=102   ctermfg=16
+hi VertSplit              cterm=NONE             ctermbg=102   ctermfg=102
+hi TabLine                cterm=bold             ctermbg=102   ctermfg=16
+hi TabLineFill            cterm=NONE             ctermbg=102   ctermfg=16
+hi TabLineSel             cterm=bold             ctermbg=16    ctermfg=59
+hi Title                  cterm=bold             ctermbg=bg    ctermfg=66
+hi Visual                 cterm=NONE             ctermbg=67    ctermfg=16
+hi WarningMsg             cterm=NONE             ctermbg=234   ctermfg=208
+hi WildMenu               cterm=NONE             ctermbg=116   ctermfg=16
+
+hi Comment                cterm=NONE             ctermbg=bg    ctermfg=65
+hi Boolean                cterm=NONE             ctermbg=bg    ctermfg=208
+hi String                 cterm=NONE             ctermbg=bg    ctermfg=101
+hi Identifier             cterm=NONE             ctermbg=bg    ctermfg=145
+hi Function               cterm=NONE             ctermbg=bg    ctermfg=230
+hi Type                   cterm=NONE             ctermbg=bg    ctermfg=103
+hi Statement              cterm=NONE             ctermbg=bg    ctermfg=110
+hi Keyword                cterm=NONE             ctermbg=bg    ctermfg=110
+hi Constant               cterm=NONE             ctermbg=bg    ctermfg=208
+hi Number                 cterm=NONE             ctermbg=bg    ctermfg=172
+hi Special                cterm=NONE             ctermbg=bg    ctermfg=64
+hi PreProc                cterm=NONE             ctermbg=bg    ctermfg=66
+hi Todo                   cterm=bold,underline   ctermbg=234   ctermfg=96
+
+hi diffAdded              cterm=NONE             ctermbg=bg    ctermfg=40
+hi diffChanged            cterm=NONE             ctermbg=bg    ctermfg=68
+hi diffFile               cterm=NONE             ctermbg=bg    ctermfg=214
+hi diffLine               cterm=NONE             ctermbg=bg    ctermfg=201
+hi diffNewFile            cterm=NONE             ctermbg=bg    ctermfg=226
+hi diffOldFile            cterm=NONE             ctermbg=bg    ctermfg=170
+hi diffRemoved            cterm=NONE             ctermbg=bg    ctermfg=167
+
+hi pythonClass            cterm=NONE             ctermbg=bg    ctermfg=fg
+hi pythonDecorator        cterm=NONE             ctermbg=bg    ctermfg=101
+hi pythonExClass          cterm=NONE             ctermbg=bg    ctermfg=95
+hi pythonException        cterm=NONE             ctermbg=bg    ctermfg=110
+hi pythonFunc             cterm=NONE             ctermbg=bg    ctermfg=fg
+hi pythonFuncParams       cterm=NONE             ctermbg=bg    ctermfg=fg
+hi pythonKeyword          cterm=NONE             ctermbg=bg    ctermfg=fg
+hi pythonParam            cterm=NONE             ctermbg=bg    ctermfg=fg
+hi pythonRawEscape        cterm=NONE             ctermbg=bg    ctermfg=fg
+hi pythonSuperclasses     cterm=NONE             ctermbg=bg    ctermfg=fg
+hi pythonSync             cterm=NONE             ctermbg=bg    ctermfg=fg
+
+hi Conceal                cterm=NONE             ctermbg=248   ctermfg=252
+hi Error                  cterm=NONE             ctermbg=196   ctermfg=231
+hi Ignore                 cterm=NONE             ctermbg=bg    ctermfg=234
+hi InsertModeCursorLine   cterm=NONE             ctermbg=16    ctermfg=fg
+hi NormalModeCursorLine   cterm=NONE             ctermbg=235   ctermfg=fg
+hi PmenuThumb             cterm=reverse          ctermbg=bg    ctermfg=fg
+hi StatusLineAlert        cterm=NONE             ctermbg=160   ctermfg=231
+hi StatusLineUnalert      cterm=NONE             ctermbg=238   ctermfg=144
+hi Test                   cterm=NONE             ctermbg=bg    ctermfg=fg
+hi Underlined             cterm=underline        ctermbg=bg    ctermfg=111
+hi VisualNOS              cterm=bold,underline   ctermbg=bg    ctermfg=fg
+hi cCursor                cterm=reverse          ctermbg=bg    ctermfg=fg
+hi iCursor                cterm=NONE             ctermbg=210   ctermfg=16
+hi lCursor                cterm=NONE             ctermbg=145   ctermfg=234
+hi nCursor                cterm=NONE             ctermbg=46    ctermfg=16
+hi vCursor                cterm=NONE             ctermbg=201   ctermfg=16
+" 1}}}
