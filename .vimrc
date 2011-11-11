@@ -113,7 +113,7 @@ endif
 "}}}
 "PLUGINS: {{{
 " eclim buffers {{{2
-map <Leader>b :Buffers<CR>
+map <Leader>B :Buffers<CR>
 " }}}
 "VimWIKI {{{2
 let g:vimwiki_list = [{'path': '~/vimwiki/',
@@ -152,8 +152,8 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_WinWidth = 40
 "}}}
 "Tagbar {{{2
-let g:tagbar_autoclose = 1
-nmap <Leader>T :TagbarToggle<CR>
+"let g:tagbar_autoclose = 1
+"nmap <Leader>T :TagbarToggle<CR>
 "}}}
 "Pydoc {{{2
 let g:pydoc_cmd = "/usr/bin/pydoc"
@@ -181,7 +181,7 @@ nmap <C-Down> \dj
 let g:buffergator_split_size=10
 let g:buffergator_viewport_split_policy='B'
 let g:buffergator_suppress_keymaps=1
-map <Leader>B :BuffergatorToggle<CR>
+map <Leader>b :BuffergatorToggle<CR>
 " }}}
 "Gundo {{{2
 map <Leader>u :GundoToggle<cr>
