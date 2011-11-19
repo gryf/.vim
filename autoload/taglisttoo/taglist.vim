@@ -37,6 +37,8 @@
 
 " Global Variables {{{
 let g:TagListToo = 1
+"gryf: add autoclose functionality
+let g:TagListTooAutoClose = 1
 " }}}
 
 " Script Variables {{{
@@ -948,6 +950,10 @@ endfunction " }}}
 function! s:JumpToTag() " {{{
   let tag_info = s:GetTagInfo()
   if !len(tag_info)
+    "gryf: autoclose feature
+    if g:TagListTooAutoClose
+      call taglisttoo#taglist#Taglist()
+    endif
     return
   endif
 
@@ -1006,6 +1012,10 @@ function! s:JumpToTag() " {{{
       call cursor(line, 1)
       call s:ShowCurrentTag()
     endif
+  endif
+  "gryf: autoclose feature
+  if g:TagListTooAutoClose
+    call taglisttoo#taglist#Taglist()
   endif
 endfunction " }}}
 
