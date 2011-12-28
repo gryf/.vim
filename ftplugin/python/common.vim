@@ -1,18 +1,12 @@
 setlocal cinkeys-=0#
 setlocal indentkeys-=0#
-setlocal expandtab
 setlocal foldlevel=100
 setlocal foldmethod=indent
 setlocal list
 setlocal noautoindent
-setlocal shiftwidth=4
 setlocal smartindent
 setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 setlocal smarttab
-setlocal softtabstop=4
-setlocal tabstop=4
-setlocal textwidth=78
-setlocal colorcolumn=+1
 
 set wildignore+=*.pyc
 

@@ -181,6 +181,8 @@ nmap <C-Down> \dj
 let g:buffergator_split_size=10
 let g:buffergator_viewport_split_policy='B'
 let g:buffergator_suppress_keymaps=1
+let g:buffergator_sort_regime="filepath"
+let g:buffergator_display_regime="filepath"
 map <Leader>b :BuffergatorToggle<CR>
 " }}}
 "Gundo {{{2
@@ -386,7 +388,7 @@ endfunction
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
     "set guifont=Consolas\ 12  "I like this font, but it looks like crap on linux
-    "set guifont=Consolas\ 13  "Let's try again
+    "set guifont=DejaVu\ Sans\ Mono\ 12  "at least, some ttf font that looks good
     set guifont=Fixed\ 14      "I like this font better.
     set mouse=a                "Enable mouse support
     "No toolbar, menu, scrollbars, draw simple text tabs. This would keep
