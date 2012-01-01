@@ -206,7 +206,7 @@ map <S-F9> :QFix<CR>
 map <S-F11> :LWin<CR>
 
 "remove trailing whitespaces
-map <C-e> :StripTrailingWhitespaces<CR>
+nnoremap <leader>e :StripTrailingWhitespaces<CR>
 
 " copy current buffer filename (full path)
 nmap ,cn :silent call <SID>CopyFileName(1)<CR>
@@ -220,6 +220,26 @@ map ]b :call OpenInWebBrowser()<cr>
 nnoremap <silent> <C-l> :nohl<CR>:syn sync fromstart<CR><C-l>
 map <F3> :call <SID>ChangeVCS()<cr>
 map <F4> :call <SID>ToggleHex()<cr>
+
+"Let me learn hjkl more in normal and visual modes. Leave insert mode alone
+"(for now).
+nnoremap <Up> ""
+nnoremap <Up> <Esc>
+nnoremap <Down> ""
+nnoremap <Down> <Esc>
+nnoremap <Left> ""
+nnoremap <Left> <Esc>
+nnoremap <Right> ""
+nnoremap <Right> <Esc>
+
+vnoremap <Up> ""
+vnoremap <Up> <Esc>
+vnoremap <Down> ""
+vnoremap <Down> <Esc>
+vnoremap <Left> ""
+vnoremap <Left> <Esc>
+vnoremap <Right> ""
+vnoremap <Right> <Esc>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
 
@@ -383,7 +403,7 @@ function <SID>ToggleHex()
     let &modifiable=l:oldmodifiable
 endfunction
 
-"Toggle 
+"Toggle
 "}}}
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
