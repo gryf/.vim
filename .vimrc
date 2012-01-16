@@ -220,26 +220,6 @@ map ]b :call OpenInWebBrowser()<cr>
 nnoremap <silent> <C-l> :nohl<CR>:syn sync fromstart<CR><C-l>
 map <F3> :call <SID>ChangeVCS()<cr>
 map <F4> :call <SID>ToggleHex()<cr>
-
-"Let me learn hjkl more in normal and visual modes. Leave insert mode alone
-"(for now).
-nnoremap <Up> ""
-nnoremap <Up> <Esc>
-nnoremap <Down> ""
-nnoremap <Down> <Esc>
-nnoremap <Left> ""
-nnoremap <Left> <Esc>
-nnoremap <Right> ""
-nnoremap <Right> <Esc>
-
-vnoremap <Up> ""
-vnoremap <Up> <Esc>
-vnoremap <Down> ""
-vnoremap <Down> <Esc>
-vnoremap <Left> ""
-vnoremap <Left> <Esc>
-vnoremap <Right> ""
-vnoremap <Right> <Esc>
 " }}}
 " FUNCTIONS: usefull functions for all of th files {{{
 
