@@ -1,4 +1,5 @@
 "Basic setup for all files {{{
+call pathogen#infect()              "infect path for boundles
 set nocompatible                    "VIM over VI
 
 filetype plugin indent on           "turn plugins/indent on
