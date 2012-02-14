@@ -126,8 +126,8 @@ map <Leader>wn <Plug>VimwikiNextWord
 map <Leader>wp <Plug>VimwikiPrevWord
 " }}}
 "FuzzyFinder {{{2
-let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
-map <C-F> :FufFile **/<CR>
+"let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
+"map <C-F> :FufFile **/<CR>
 "}}}
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
@@ -179,15 +179,20 @@ nmap <C-Up> \dk
 nmap <C-Down> \dj
 " }}}
 " Buffergator {{{2
-let g:buffergator_split_size=10
-let g:buffergator_viewport_split_policy='B'
-let g:buffergator_suppress_keymaps=1
-let g:buffergator_sort_regime="filepath"
-let g:buffergator_display_regime="filepath"
-map <Leader>b :BuffergatorToggle<CR>
+"let g:buffergator_split_size=10
+"let g:buffergator_viewport_split_policy='B'
+"let g:buffergator_suppress_keymaps=1
+"let g:buffergator_sort_regime="filepath"
+"let g:buffergator_display_regime="filepath"
+"map <Leader>b :BuffergatorToggle<CR>
 " }}}
 "Gundo {{{2
 map <Leader>u :GundoToggle<cr>
+"}}}
+"CtrlP {{{2
+let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$||\.pyo||\.pyc||\.pyd||CVS$'
+let g:ctrlp_map = '<c-f>'
+map <Leader>b :CtrlPBuffer<CR>
 "}}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
