@@ -2,13 +2,10 @@ ScriptID SourceID Filename
 --------------------------
 ### plugins
 2572 10433 ack.vim
-3619 16816 buffergator
 102 16171 DirDiff.vim
-1984 13961 FuzzyFinder
 311 7645 grep.vim
 3304 17406 gundo.vim
 2727 11120 jsbeautify.vim
-3252 13948 L9
 2289 8922 loremipsum
 2666 16840 Mark
 1218 14455 nerdcommenter
@@ -36,6 +33,7 @@ ScriptID SourceID Filename
 415 15531 zenburn
 #3597 1 ColorV
 # ftplugin
+3818 1 MatchTag
 910 14691 pydoc.vim
 2441 14403 pyflakes.vim
 30 9196 python_fn.vim
