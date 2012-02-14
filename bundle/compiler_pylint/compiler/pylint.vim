@@ -8,5 +8,5 @@ if exists("current_compiler")
 endif
 
 let current_compiler = "pylint"
-CompilerSet makeprg=$HOME/.vim/bin/pylint_parseable.py\ %
+CompilerSet makeprg=pylint_parseable.py\ %
 CompilerSet efm=%f:\ %t:\ %l:\ %c:\ %m,%f:\ %t:\ %l:\ %m

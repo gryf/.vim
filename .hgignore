@@ -5,3 +5,5 @@ syntax: glob
 
 view/*
 **/doc/tags
+
+.netrwhist
