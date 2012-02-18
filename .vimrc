@@ -190,7 +190,10 @@ nmap <C-Down> \dj
 map <Leader>u :GundoToggle<cr>
 "}}}
 "CtrlP {{{2
-let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$||\.pyo||\.pyc||\.pyd||CVS$'
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\.git$\|\.hg$\|\.svn$',
+    \ 'file': '\.pyo$\|\.pyc$\|\.pyd$',
+    \ }
 let g:ctrlp_map = '<c-f>'
 map <Leader>b :CtrlPBuffer<CR>
 "}}}
