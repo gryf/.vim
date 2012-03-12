@@ -7,7 +7,7 @@ ScriptID SourceID Filename
 3304 17406 gundo.vim
 2727 11120 jsbeautify.vim
 2289 8922 loremipsum
-2666 16840 Mark
+2666 17554 Mark
 1218 14455 nerdcommenter
 2262 8944 occur.vim
 2136 8206 repeat.vim
@@ -21,19 +21,8 @@ ScriptID SourceID Filename
 2321 9055 zoom.vim
 52 14880 calendar.vim
 3736 17319 ctrlp.vim
-### colors
-2855 12456 github.vim
-1143 11833 inkpot.vim
-2555 17225 jellybeans.vim
-2536 16615 lucius.vim
-3299 16882 sorcerer.vim
-1165 3741 tolerable.vim
-3309 15759 vydark
-2589 15760 vylight
-415 15531 zenburn
-#3597 1 ColorV
-# ftplugin
-3818 1 MatchTag
+### ftplugin
+3818 16921 MatchTag
 910 14691 pydoc.vim
 2441 14403 pyflakes.vim
 30 9196 python_fn.vim
