@@ -1,0 +1,4 @@
+	if getline(1) =~ '^#fitnesse'
+	  setfiletype fitnesse
+	endif
+f

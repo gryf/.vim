@@ -1,4 +1,5 @@
 "Basic setup for all files {{{
+call pathogen#infect()              "infect path for boundles
 set nocompatible                    "VIM over VI
 
 filetype plugin indent on           "turn plugins/indent on
@@ -125,8 +126,8 @@ map <Leader>wn <Plug>VimwikiNextWord
 map <Leader>wp <Plug>VimwikiPrevWord
 " }}}
 "FuzzyFinder {{{2
-let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
-map <C-F> :FufFile **/<CR>
+"let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
+"map <C-F> :FufFile **/<CR>
 "}}}
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
@@ -178,15 +179,26 @@ nmap <C-Up> \dk
 nmap <C-Down> \dj
 " }}}
 " Buffergator {{{2
-let g:buffergator_split_size=10
-let g:buffergator_viewport_split_policy='B'
-let g:buffergator_suppress_keymaps=1
-let g:buffergator_sort_regime="filepath"
-let g:buffergator_display_regime="filepath"
-map <Leader>b :BuffergatorToggle<CR>
+"let g:buffergator_split_size=10
+"let g:buffergator_viewport_split_policy='B'
+"let g:buffergator_suppress_keymaps=1
+"let g:buffergator_sort_regime="filepath"
+"let g:buffergator_display_regime="filepath"
+"map <Leader>b :BuffergatorToggle<CR>
 " }}}
 "Gundo {{{2
 map <Leader>u :GundoToggle<cr>
+"}}}
+"CtrlP {{{2
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\.git$\|\.hg$\|\.svn$',
+    \ 'file': '\.pyo$\|\.pyc$\|\.pyd$',
+    \ }
+let g:ctrlp_map = '<c-f>'
+map <Leader>b :CtrlPBuffer<CR>
+"}}}
+"NERDCommenter {{{2
+let g:NERDSpaceDelims=1
 "}}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
@@ -387,13 +399,20 @@ endfunction
 "}}}
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
-    "set guifont=Consolas\ 12  "I like this font, but it looks like crap on linux
-    "set guifont=DejaVu\ Sans\ Mono\ 12  "at least, some ttf font that looks good
-    set guifont=Fixed\ 14      "I like this font better.
+    " I like this font, but it looks like crap on linux
+    "set guifont=Consolas\ 12  
+    " at least, some ttf font that looks good
+    "set guifont=DejaVu\ Sans\ Mono\ 12
+    " Unfortunately there is a problem with TTF fonts in my gvim instance.  
+    " After editing a while there are some leaving trash appearing on the
+    " buffer. Refreshing the screen helps, but is kinda annoying. It is 
+    " probably my X11 setup, because on other similar workstations and setup I 
+    " didn't noticed such behavior. Fallback to fixed-misc for a while.
+    set guifont=Fixed\ 14
     set mouse=a                "Enable mouse support
-    "No toolbar, menu, scrollbars, draw simple text tabs. This would keep
-    "window in one place, and also this will conserve space. Tabs are huge
-    "under GTK.
+    " No toolbar, menu, scrollbars, draw simple text tabs. This would keep
+    " window in one place, and also this will conserve space. Tabs are huge
+    " under GTK.
     set guioptions=agit
     "add menuitem OpenInWebBrowser
     nmenu 666 PopUp.&Open\ in\ browser :call OpenInWebBrowser()<cr>
@@ -404,6 +423,10 @@ colorscheme wombat256grf
 if $TERM == 'linux' && !has('gui_running')
     " fallback to basic 8-color colorscheme
     colorscheme pablo
+endif
+
+if has('win32') && $_PMX == '1'
+    source $VIM/vimfiles/pmxrc.vim
 endif
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:

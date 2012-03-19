@@ -1,0 +1,9 @@
+syntax: glob
+
+*.pyc
+*.pyo
+
+view/*
+**/doc/tags
+
+.netrwhist
