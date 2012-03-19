@@ -424,5 +424,9 @@ if $TERM == 'linux' && !has('gui_running')
     " fallback to basic 8-color colorscheme
     colorscheme pablo
 endif
+
+if has('win32') && $_PMX == '1'
+    source $VIM/vimfiles/pmxrc.vim
+endif
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:

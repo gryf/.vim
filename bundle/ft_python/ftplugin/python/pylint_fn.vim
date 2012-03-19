@@ -50,6 +50,24 @@ else
     let b:did_pylint_plugin = 1
 endif
 
+if !exists('*s:CheckPylint')
+    function s:CheckPylint()
+        python << EOF
+try:
+    import vim
+    from pylint import lint
+    from pylint.reporters.text import TextReporter
+except ImportError:
+    vim.command("return 0")
+vim.command("return 1")
+EOF
+    endfunction
+endif
+
+if s:CheckPylint() == 0
+    finish
+endif
+
 if !exists("b:did_pylint_init")
     let b:did_pylint_init = 0
 
@@ -59,15 +77,8 @@ if !exists("b:did_pylint_init")
     endif
 
     python << EOF
-import vim
 import sys
 from StringIO import StringIO
-
-try:
-    from pylint import lint
-    from pylint.reporters.text import TextReporter
-except ImportError:
-    raise AssertionError('Pylint is required for this plugin')
 
 class VImPylint(object):
 

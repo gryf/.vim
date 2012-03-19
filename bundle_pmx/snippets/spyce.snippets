@@ -1,15 +1,15 @@
 snippet #!
-	#!/usr/bin/env python
+	#!/usr/bin/python
 
 snippet imp
 	import ${1:module}
 # Module Docstring
 snippet docs
-	"""
+	'''
 	File: ${1:`Filename('$1.py', 'foo.py')`}
 	Author: ${2:`g:snips_author`}
 	Description: ${3}
-	"""
+	'''
 snippet wh
 	while ${1:condition}:
 		${2:# code...}
@@ -19,9 +19,7 @@ snippet for
 # New Class
 snippet cl
 	class ${1:ClassName}(${2:object}):
-		"""
-		${3:docstring for $1}
-		"""
+		"""${3:docstring for $1}"""
 		def __init__(self, ${4:arg}):
 			${5:super($1, self).__init__()}
 			self.$4 = $4
@@ -29,9 +27,7 @@ snippet cl
 # New Function
 snippet def
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
-		"""
-		${3:docstring for $1}
-		"""
+		"""${3:docstring for $1}"""
 		${4:pass}
 snippet deff
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
@@ -88,35 +84,5 @@ snippet ifmain
 # __magic__
 snippet _
 	__${1:init}__${2}
-
-# gryf stuff. Debuggers
 snippet dbg
-	import ipdb; ipdb.set_trace()
-snippet pdb
-	import pdb; pdb.set_trace()
-snippet winpdb
-	import rpdb2; rpdb2.start_embedded_debugger('password')
-snippet pupdb
-	from pudb import set_trace; set_trace()
-snippet vimpdb
-	import vimpdb; vimpdb.set_trace()
-snippet docmodule
-	"""
-	Project: ${1:pyGTKtalog}
-	Description: ${2:Tests for DataBase class.}
-	Type: ${3:test}
-	Author: ${4:Roman 'gryf' Dobosz, gryf73@gmail.com}
-	Created: ${5:`strftime("%Y-%m-%d %H:%M:%S")`}
-	"""
-snippet debug
-	LOG.debug(self.${1:method_name}.__doc__.strip())
-snippet pywin
 	import pywin.debugger; pywin.debugger.set_trace()
-snippet edbg
-	import sys
-	pydevdPath = r"/home/share/data/IDE/eclipse/plugins/org.python.pydev.debug_1.6.5.2011020317/pysrc"
-	if not pydevdPath in sys.path:
-		sys.path.append(pydevdPath)
-	import pydevd
-	pydevd.settrace()
-
