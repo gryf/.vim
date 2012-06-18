@@ -91,6 +91,7 @@ autocmd BufWritePre *.xml :call <SID>StripTrailingWhitespaces()
 "set correct filetype for tmux
 autocmd BufRead *.tmux.conf set filetype=tmux
 autocmd BufRead *.mako set filetype=mako
+autocmd BufRead *.ass set filetype=kickass
 " }}}
 "TERMINAL: options for terminal emulators {{{
 if $TERM == 'rxvt-unicode-256color' || $TERM == 'xterm'
