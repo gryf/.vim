@@ -1,10 +1,12 @@
 " Vim syntax file
 " Language:     Assembler, KickAssembler
 " Maintainer:   Roman 'gryf' Dobosz <gryf_esm@o2.pl>
-" Last Change:  2012-07-09
-" Version:      1.1
+" Last Change:  2012-07-22
+" Version:      1.2
 "
 " Changelog:
+"   1.2 Updated to KickAssembler 3.25 changes
+"
 "   1.1 Since in assembly languages 'everything is a label' there pretty hard
 "   to distinguish labels from variables and structures, so I decided to
 "   remove highlighting labels at all. Instead numbers are highlighted, so that
@@ -50,7 +52,7 @@ syn match kickAssMnemonic "\<axs\(\.imm\?\)\?\>"
 syn match kickAssJump "\<bcc\(\.r\(el\)\?\)\?\>"
 syn match kickAssJump "\<bcs\(\.r\(el\)\?\)\?\>"
 syn match kickAssJump "\<beq\(\.r\(el\)\?\)\?\>"
-syn match kickAssMnemonic "\<bit\(\.\(zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssMnemonic "\<bit\(\.\(zp\?\|a\(bs\)\?\)\)\?\>"
 syn match kickAssJump "\<bmi\(\.r\(el\)\?\)\?\>"
 syn match kickAssJump "\<bne\(\.r\(el\)\?\)\?\>"
 syn match kickAssJump "\<bpl\(\.r\(el\)\?\)\?\>"
@@ -127,6 +129,10 @@ syn match kickAssDirective /\.\<dword\>/
 syn match kickAssDirective /\.\<text\>/
 syn match kickAssDirective /\.\<fill\>/
 syn match kickAssDirective /\.\<pseudopc\>/
+
+" modifiers
+syn match kickAssDirective /\.\<modify\>/
+syn match kickAssDirective /\.\<filemodify\>/
 
 " import directive
 syn match kickAssDirective "\.\<importonce\>"
