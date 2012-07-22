@@ -1,8 +1,8 @@
 " Vim syntax file
 " Language:     Assembler, KickAssembler
 " Maintainer:   Roman 'gryf' Dobosz <gryf_esm@o2.pl>
-" Last Change:  2012-06-03
-" Version:      0.1
+" Last Change:  2012-07-05
+" Version:      1.0
 "
 " To install this file place it in ~/.vim/syntax (*nix/Mac) or in
 " $VIMRUNTIME/syntax on Windows and issue command:
@@ -19,225 +19,325 @@
 " Enjoy.
 
 syn clear
-syn case ignore
 
-syn region asmString start=+"+ end=+"+
-syn region asmSString start=+'+ end=+'+ contains=@Spell
+" 6502 mnemonics
+syn keyword kickAssMnemonic brk clc cld cli clv dex dey inx iny nop pha php pla
+syn keyword kickAssMnemonic plp sec sed sei tax tay tsx txa txs tya
+syn keyword kickAssJump rti rts nextgroup=kickAssLabels
 
-syn keyword asm6502Mnemonics    adc and asl bit brk clc cld cli clv cmp cpx cpy
-syn keyword asm6502Mnemonics    dec dex dey eor inc inx iny lda ldx ldy lsr nop
-syn keyword asm6502Mnemonics    ora pha php pla plp rol ror sbc sec sed sei sta 
-syn keyword asm6502Mnemonics    stx sty tax tay tsx txa txs tya
+syn match kickAssMnemonic "\<adc\(\.\(imm\?\|zp\?x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<ahx\(\.\(izp\?y\|a\(bs\)\?y\)\)\?\>"
+syn match kickAssMnemonic "\<alr\(\.imm\?\)\?\>"
+syn match kickAssMnemonic "\<anc\(\.imm\?\)\?\>"
+syn match kickAssMnemonic "\<anc2\(\.imm\?\)\?\>"
+syn match kickAssMnemonic "\<and\(\.\(imm\?\|zp\?x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<arr\(\.imm\?\)\?\>"
+syn match kickAssMnemonic "\<asl\(\.\(zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssMnemonic "\<axs\(\.imm\?\)\?\>"
+syn match kickAssJump "\<bcc\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssJump "\<bcs\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssJump "\<beq\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssMnemonic "\<bit\(\.\(zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssJump "\<bmi\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssJump "\<bne\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssJump "\<bpl\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssJump "\<bvc\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssJump "\<bvs\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssMnemonic "\<cmp\(\.\(imm\?\|zp\?x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<cpx\(\.\(imm\?\|zp\?\|a\(bs\)\?\)\)\?\>"
+syn match kickAssMnemonic "\<cpy\(\.\(imm\?\|zp\?\|a\(bs\)\?\)\)\?\>"
+syn match kickAssMnemonic "\<dcp\(\.\(zp\?\x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<dec\(\.\(zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssMnemonic "\<eor\(\.\(imm\?\|zp\?x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<inc\(\.\(zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssMnemonic "\<isc\(\.\(zp\?\x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssJump "\<jmp\(\.\(a\(bs\)\?\|i\(nd\)\?\)\)\?\>" nextgroup=kickAssLabels
+syn match kickAssJump "\<jsr\(\.a\(bs\)\?\)\?\>" nextgroup=kickAssLabels
+syn match kickAssMnemonic "\<las\(\.a\(bs\)\?y\)\?\>"
+syn match kickAssMnemonic "\<lax\(\.\(imm\?\|zp\?y\?\|izp\?[xy]\|a\(bs\)\?y\?\)\)\?\>"
+syn match kickAssMnemonic "\<lda\(\.\(imm\?\|zp\?x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<ldx\(\.\(imm\?\|zp\?y\?\|a\(bs\)\?y\?\)\)\?\>"
+syn match kickAssMnemonic "\<ldy\(\.\(imm\?\|zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssMnemonic "\<lsr\(\.\(zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssMnemonic "\<ora\(\.\(imm\?\|zp\?x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<rla\(\.\(zp\?\x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<rol\(\.\(zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssMnemonic "\<ror\(\.\(zp\?x\?\|a\(bs\)\?x\?\)\)\?\>"
+syn match kickAssMnemonic "\<rra\(\.\(zp\?\x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<sax\(\.\(zp\?[xy]\?\|a\(bs\)\?\)\)\?\>"
+syn match kickAssMnemonic "\<sbc\(\.\(imm\?\|zp\?x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<sbc2\(\.imm\?\)\?\>"
+syn match kickAssMnemonic "\<shx\(\.a\(bs\)\?y\)\?\>"
+syn match kickAssMnemonic "\<shy\(\.a\(bs\)\?x\)\?\>"
+syn match kickAssMnemonic "\<slo\(\.\(zp\?\x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<sre\(\.\(zp\?\x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<sta\(\.\(zp\?\x\?\|izp\?[xy]\|a\(bs\)\?[xy]\?\)\)\?\>"
+syn match kickAssMnemonic "\<stx\(\.\(zp\?y\?\|a\(bs\)\?\)\)\?\>"
+syn match kickAssMnemonic "\<sty\(\.\(zp\?x\?\|a\(bs\)\?\)\)\?\>"
+syn match kickAssMnemonic "\<tas\(\.a\(bs\)\?y\)\?\>"
+syn match kickAssMnemonic "\<xaa\(\.imm\?\)\?\>"
 
-syn keyword asmDtvMnemonics     bra sac sir
+" DTV mnemonics
+syn match kickAssJump "\<bra\(\.r\(el\)\?\)\?\>" nextgroup=kickAssLabels 
+syn match kickAssMnemonic "\<sac\(\.imm\?\)\?\>"
+syn match kickAssMnemonic "\<sir\(\.imm\?\)\?\>"
 
-syn match asm6502Index  ",\s*[xy]" contains=asm6502Mnemonics,asmDtvMnemonics
+" indexes
+syn match kickAssIndex ",\s*[xy]"
 
-syn keyword asm6502Jumps    bcc bcs beq bmi bne bpl bvc bvs jmp jsr rti rts
+" Strings/chars
+syn region kickAssString start=+"+ skip=+\\"+ end=+"+ contains=@Spell oneline
+syn region kickAssString start=+'+ skip=+\\'+ end=+'+ contains=@Spell oneline
 
-syn keyword asm6510Illegal  slo rla sre rra sax lax dcp isc anc asr arr sbx
-syn keyword asm6510Illegal  dop top jam
+" Comments
+syn keyword kickAssTodo TODO FIXME XXX TBD NOTE WARNING BUG contained 
+syn match kickAssLineComment "\/\/.*" contains=@Spell,kickAssTodo 
+syn region kickAssComment start="/\*" end="\*/" contains=@Spell,kickAssTodo oneline
 
-syn match asmMacroCall  ":[a-z_][a-z0-9_]*"
-
-syn region asmString    start=+"+ skip=+\\"+ end=+"+ contains=@Spell
-syn region asmSString   start=+'+ skip=+\\'+ end=+'+ contains=@Spell
-
-"syn match asmLabel  "[\^\s]\!\?\<[a-z0-9_]*\>[:+-]\?[\s$]" kurwa!!!!!!!!
-syn match asmLabel  "^\!\?\<[a-z0-9_]*\>:"
-"syn match line "asmLabel2  
-
-syn keyword asmTodo         TODO FIXME XXX TBD NOTE WARNING BUG
-syn match   asmLineComment  "\/\/.*" contains=@Spell,asmTodo
-syn region  asmComment      start="/\*" end="\*/" contains=@Spell,asmTodo
-
-syn match decNumber     "\<\d\+\>"
-syn match hexNumber     "\$\x\+\>"
-syn match binNumber     "%[01]\+\>"
-syn match asmImmediate  "#\$\x\+\>"
-syn match asmImmediate  "#\d\+\>"
-syn match asmImmediate  "<\$\x\+\>"
-syn match asmImmediate  "<\d\+\>"
-syn match asmImmediate  ">\$\x\+\>"
-syn match asmImmediate  ">\d\+\>"
-syn match asmImmediate  "#<\$\x\+\>"
-syn match asmImmediate  "#<\d\+\>"
-syn match asmImmediate  "#>\$\x\+\>"
-syn match asmImmediate  "#>\d\+\>"
+" Numbers
+syn match kickAssDecNumber "\<\d\+\>"
+syn match kickAssHexNumber "\$\x\+\>"
+syn match kickAssBinNumber "%[01]\+\>"
+syn match kickAssImmediate "#\$\x\+\>"
+syn match kickAssImmediate "#\d\+\>"
+syn match kickAssImmediate "<\$\x\+\>"
+syn match kickAssImmediate "<\d\+\>"
+syn match kickAssImmediate ">\$\x\+\>"
+syn match kickAssImmediate ">\d\+\>"
+syn match kickAssImmediate "#<\$\x\+\>"
+syn match kickAssImmediate "#<\d\+\>"
+syn match kickAssImmediate "#>\$\x\+\>"
+syn match kickAssImmediate "#>\d\+\>"
 
 " memory and data directives
-syn match kickAssDirectives   "\.\<pc\>"
-syn match kickAssDirectives   "\.\<align\>"
-syn match kickAssDirectives   "\.\<byte\>"
-syn match kickAssDirectives   "\.\<word\>"
-syn match kickAssDirectives   "\.\<dword\>"
-syn match kickAssDirectives   "\.\<text\>"
-syn match kickAssDirectives   "\.\<fill\>"
-syn match kickAssDirectives   "\.\<pseudopc\>"
+syn match kickAssDirective /\.\<pc\>/
+syn match kickAssDirective /\.\<align\>/
+syn match kickAssDirective /\.\<byte\>/
+syn match kickAssDirective /\.\<word\>/
+syn match kickAssDirective /\.\<dword\>/
+syn match kickAssDirective /\.\<text\>/
+syn match kickAssDirective /\.\<fill\>/
+syn match kickAssDirective /\.\<pseudopc\>/
 
 " import directive
-syn match kickAssDirectives   "\.\<import\>"
+syn match kickAssDirective "\.\<importonce\>"
+syn match kickAssDirective "\.\<import\>" nextgroup=kickAssImportType skipwhite
+syn keyword kickAssImportType source binary c64 text contained
 
 " console output
-syn match kickAssDirectives   "\.\<print\>"
-syn match kickAssDirectives   "\.\<printnow\>"
-syn match kickAssDirectives   "\.\<error\>"
+syn match kickAssDirective "\.\<print\>"
+syn match kickAssDirective "\.\<printnow\>"
+syn match kickAssDirective "\.\<error\>"
 
 " elements of script language
-syn match kickAssDirectives   "\.\<eval\>"
+syn match kickAssDirective "\.\<eval\>"
+syn match kickAssDirective "\.\<var\>"
+syn match kickAssDirective "\.\<const\>"
+syn match kickAssDirective "\.\<enum\>"
+syn match kickAssDirective "\.\<label\>"
+syn match kickAssDirective "\.\<lock\>"
+syn match kickAssDirective "\.\<define\>"
+syn match kickAssDirective "\.\<if\>"
+syn keyword kickAssDirective else
+syn match kickAssDirective "\.\<for\>"
+syn match kickAssDirective "\.\<macro\>" nextgroup=kickAssDefName skipwhite
+syn match kickAssDirective "\.\<function\>" nextgroup=kickAssDefName skipwhite
+syn match kickAssDirective "\.\<return\>"
+syn match kickAssDirective "\.\<namespace\>" nextgroup=kickAssDefName skipwhite
+syn match kickAssDirective "\.\<filenamespace\>" nextgroup=kickAssDefName skipwhite
 
-syn match kickAssDirectives   "\.\<var\>"
-syn match kickAssDirectives   "\.\<const\>"
-syn match kickAssDirectives   "\.\<enum\>"
-syn match kickAssDirectives   "\.\<label\>"
+" special macros
+syn match kickAssMacroCall ":\<BasicUpstart2\?\>"
 
+" string methods and functions
+syn match kickAssMethod "\<string\>" display contained
+syn match kickAssMethod "\<size\>" display contained
+syn match kickAssMethod "\<charAt\>" display contained
+syn match kickAssMethod "\<substring\>" display contained
+syn match kickAssMethod "\<asBoolean\>" display contained
+syn match kickAssMethod "\<asNumber\>" display contained
 
-syn match kickAssDirectives   ":\<BasicUpstart\>"
-syn match kickAssDirectives   "\.\<add\>"
-syn match kickAssDirectives   "\.\<assert\>"
-syn match kickAssDirectives   "\.\<asserterror\>"
-syn match kickAssDirectives   "\.\<define\>"
-syn match kickAssDirectives   "\.\<filenamespace\>"
-syn match kickAssDirectives   "\.\<for\>"
-syn match kickAssDirectives   "\.\<function\>" nextgroup=asmDefName skipwhite
-syn match kickAssDirectives   "\.\<if\>"
-syn match kickAssDirectives   "\.\<macro\>" nextgroup=asmDefName skipwhite
-syn match kickAssDirectives   "\.\<namespace\>"
-syn match kickAssDirectives   "\.\<pseudocommand\>"
-syn match kickAssDirectives   "\.\<return\>"
-syn match kickAssDirectives   "\.\<struct\>"
-syn match kickAssDirectives   "\<else\>"
-syn match kickAssDirectives   "\<LoadSid\>"
-syn match kickAssDirectives   "\<LoadPicture\>"
-syn match kickAssDirectives   "\<createFile\>"
+syn match kickAssFunction "\<toIntString\>("he=e-1
+syn match kickAssFunction "\<toBinaryString\>("he=e-1
+syn match kickAssFunction "\<toOctalString\>("he=e-1
+syn match kickAssFunction "\<toHexString\>("he=e-1
 
-syn keyword kickAssColors BLACK WHITE RED CYAN PURPLE GREEN BLUE YELLOW ORANGE
-syn keyword kickAssColors BROWN LIGHT_RED DARK_GRAY GRAY LIGHT_GREEN LIGHT_BLUE
-syn keyword kickAssColors LIGHT_GRAY
+" Math library
+syn keyword kickAssConstant PI E
 
-syn keyword kickAssConstants BD_C64FILE BF_BITMAP_SINGLECOLOR BF_KOALA BF_FLI
+syn match kickAssFunction "\<abs\>("he=e-1
+syn match kickAssFunction "\<acos\>("he=e-1
+syn match kickAssFunction "\<asin\>("he=e-1
+syn match kickAssFunction "\<atan\>("he=e-1
+syn match kickAssFunction "\<atan2\>("he=e-1
+syn match kickAssFunction "\<cbrt\>("he=e-1
+syn match kickAssFunction "\<ceil\>("he=e-1
+syn match kickAssFunction "\<cos\>("he=e-1
+syn match kickAssFunction "\<cosh\>("he=e-1
+syn match kickAssFunction "\<exp\>("he=e-1
+syn match kickAssFunction "\<expml\>("he=e-1
+syn match kickAssFunction "\<floor\>("he=e-1
+syn match kickAssFunction "\<hypot\>("he=e-1
+syn match kickAssFunction "\<IEEEremainder\>("he=e-1
+syn match kickAssFunction "\<log\>("he=e-1
+syn match kickAssFunction "\<log10\>("he=e-1
+syn match kickAssFunction "\<log1p\>("he=e-1
+syn match kickAssFunction "\<max\>("he=e-1
+syn match kickAssFunction "\<min\>("he=e-1
+syn match kickAssFunction "\<mod\>("he=e-1
+syn match kickAssFunction "\<pow\>("he=e-1
+syn match kickAssFunction "\<random\>("he=e-1
+syn match kickAssFunction "\<round\>("he=e-1
+syn match kickAssFunction "\<signum\>("he=e-1
+syn match kickAssFunction "\<sin\>("he=e-1
+syn match kickAssFunction "\<sinh\>("he=e-1
+syn match kickAssFunction "\<sqrt\>("he=e-1
+syn match kickAssFunction "\<tan\>("he=e-1
+syn match kickAssFunction "\<tanh\>("he=e-1
+syn match kickAssFunction "\<toDegrees\>("he=e-1
+syn match kickAssFunction "\<toRadians\>("he=e-1
 
-syn match   asmDefName  "[a-zA-Z_][a-zA-Z0-9_]*" display contained
+" List already defined: size
+syn match kickAssFunction /\<List\>(/he=e-1
+syn match kickAssMethod "\<get\>" display contained
+syn match kickAssMethod "\<set\>" display contained
+syn match kickAssMethod "\<add\>" display contained
+syn match kickAssMethod "\<remove\>" display contained
+syn match kickAssMethod "\<shuffle\>" display contained
+syn match kickAssMethod "\<reverse\>" display contained
+syn match kickAssMethod "\<sort\>" display contained
+" READY.
 
-syn match kickAssFunctions  "\<LoadBinary\>" display contained
-syn match kickAssFunctions  "\<LoadPicture\>" display contained
-syn match kickAssFunctions  "\<LoadSid\>" display contained
-syn match kickAssFunctions  "\<Matrix\>" display contained
-syn match kickAssFunctions  "\<RotationMatrix\>" display contained
-syn match kickAssFunctions  "\<ScaleMatrix\>" display contained
-syn match kickAssFunctions  "\<PerspectiveMatrix\>" display contained
-syn match kickAssFunctions  "\<MoveMatrix\>" display contained
-syn match kickAssFunctions  "\<writeln\>" display contained
+" Hash - already defined names: get, remove
+syn match kickAssFunction /\<Hashtable\>(/he=e-1
+syn match kickAssMethod "\<put\>" display contained
+syn match kickAssMethod "\<keys\>" display contained
+syn match kickAssMethod "\<containsKey\>" display contained
 
-" generic/common methods (same name, different but similar behaviour - 
-" depending on context)
-syn match kickAssFunctions  "\.\<size\>" display contained
-syn match kickAssFunctions  "\.\<get\>" display contained
-syn match kickAssFunctions  "\.\<remove\>" display contained
+" Vector/Matrix - already defined: get, set
+syn match kickAssFunction "\<Vector\>("he=e-1
+syn match kickAssFunction "\<getX\>" display contained
+syn match kickAssFunction "\<getY\>" display contained
+syn match kickAssFunction "\<getZ\>" display contained
+syn match kickAssFunction "\<\X\>" display contained
 
-" string methods
-syn match kickAssFunctions  "\.\<string\>" display contained
+syn match kickAssFunction "\<Matrix\>" display contained
+syn match kickAssFunction "\<RotationMatrix\>" display contained
+syn match kickAssFunction "\<ScaleMatrix\>" display contained
+syn match kickAssFunction "\<PerspectiveMatrix\>" display contained
+syn match kickAssFunction "\<MoveMatrix\>" display contained
 
-syn match kickAssFunctions  "\.\<charAt\>" display contained
-syn match kickAssFunctions  "\.\<substring\>" display contained
-syn match kickAssFunctions  "\.\<asBoolean\>" display contained
-syn match kickAssFunctions  "\.\<asNumber\>" display contained
+" Structures - already defined names: get, set
+syn match kickAssDirective "\.\<struct\>" nextgroup=kickAssDefName skipwhite
+syn match kickAssMethod "\<getStructName\>" display contained
+syn match kickAssMethod "\<getNoOfFields\>" display contained
+syn match kickAssMethod "\<getFieldNames\>" display contained
 
-syn match kickAssFunctions  "\<toBinaryString\>" display contained
-syn match kickAssFunctions  "\<toHexString\>" display contained
-syn match kickAssFunctions  "\<toIntString\>" display contained
-syn match kickAssFunctions  "\<toOctalString\>" display contained
+" pseudocommand
+syn match kickAssDirective "\.\<pseudocommand\>" nextgroup=kickAssDefName skipwhite
+syn match kickAssFunction "\<CmdArgument\>("he=e-1
+syn match kickAssFunction "\<getType\>("he=e-1
+syn match kickAssFunction "\<getValue\>("he=e-1
+syn keyword kickAssConstant AT_ABSOLUTE AT_ABSOLUTEX AT_ABSOLUTEY AT_IMMEDIATE 
+syn keyword kickAssConstant AT_INDIRECT AT_IZEROPAGEX AT_IZEROPAGEY AT_NONE
 
-" Math 
-syn keyword kickAssConstants PI E
+" Opcode constants
+syn match kickAssFunction "\<asmCommandSize\>("he=e-1
+syn keyword kickAssConstant RTS
+syn match kickAssConstant "\<[A-Z]\{3}2\?_\(IMM\|I\?ZP[XY]\?\|ABS[XY]\?\|IND\|REL\)\>"
 
-syn match kickAssFunName    "\<abs\>" contained
-syn match kickAssFunName    "\<acos\>" display contained
-syn match kickAssFunName    "\<asin\>" display contained
-syn match kickAssFunName    "\<atan\>" display contained
-syn match kickAssFunName    "\<atan2\>" display contained
-syn match kickAssFunName    "\<cbrt\>" display contained
-syn match kickAssFunName    "\<ceil\>" display contained
-syn match kickAssFunName    "\<cos\>" display contained
-syn match kickAssFunName    "\<cosh\>" display contained
-syn match kickAssFunName    "\<exp\>" display contained
-syn match kickAssFunName    "\<expml\>" display contained
-syn match kickAssFunName    "\<floor\>" display contained
-syn match kickAssFunName    "\<hypot\>" display contained
-syn match kickAssFunName    "\<IEEEremainder\>" display contained
-syn match kickAssFunName    "\<log\>" display contained
-syn match kickAssFunName    "\<log10\>" display contained
-syn match kickAssFunName    "\<log1p\>" display contained
-syn match kickAssFunName    "\<max\>" display contained
-syn match kickAssFunName    "\<min\>" display contained
-syn match kickAssFunName    "\<mod\>" display contained
-syn match kickAssFunName    "\<pow\>" display contained
-syn match kickAssFunName    "\<random\>" display contained
-syn match kickAssFunName    "\<round\>" display contained
-syn match kickAssFunName    "\<signum\>" display contained
-syn match kickAssFunName    "\<sin\>" display contained
-syn match kickAssFunName    "\<sinh\>" display contained
-syn match kickAssFunName    "\<sqrt\>" display contained
-syn match kickAssFunName    "\<tan\>" display contained
-syn match kickAssFunName    "\<tanh\>" display contained
-syn match kickAssFunName    "\<toDegrees\>" display contained
-syn match kickAssFunName    "\<toRadians\>" display contained
+" READY.
+" Colour constants
+syn keyword kickAssColor BLACK WHITE RED CYAN PURPLE GREEN BLUE YELLOW ORANGE
+syn keyword kickAssColor BROWN LIGHT_RED DARK_GRAY GRAY LIGHT_GREEN LIGHT_BLUE
+syn keyword kickAssColor LIGHT_GRAY DARK_GREY GREY LIGHT_GREY
 
-" List
-syn match kickAssFunctions  "\<List\>" display contained
-" get
-syn match kickAssFunctions  "\.\<set\>" display contained
-syn match kickAssFunctions  "\.\<add\>" display contained
-syn match kickAssFunctions  "\.\<shuffle\>" display contained
-syn match kickAssFunctions  "\.\<reverse\>" display contained
-syn match kickAssFunctions  "\.\<sort\>" display contained
+syn keyword kickAssConstant C64FILE
+syn keyword kickAssConstant BD_C64FILE BF_BITMAP_SINGLECOLOR BF_KOALA BF_FLI
 
-" Dictionaries (hash tables)
-syn keyword kickAssFunctions  Hashtable contained
+" Binary import
+syn match kickAssFunction "\<LoadBinary\>("he=e-1
+syn match kickAssMethod "\<getSize\>" display contained
+syn match kickAssFunction "\<LoadBinary\>("he=e-1
 
-" get
-syn match kickAssFunctions  "\.\<put\>" display contained
-syn match kickAssFunctions  "\.\<keys\>" display contained
-syn match kickAssFunctions  "\.\<containsKey\>" display contained
+" PSID files
+syn match kickAssFunction "\<LoadSid\>("he=e-1
+syn match kickAssAttr "\<header\>"
+syn match kickAssAttr "\<version\>"
+syn match kickAssAttr "\<location\>"
+syn match kickAssAttr "\<init\>"
+syn match kickAssAttr "\<play\>"
+syn match kickAssAttr "\<size\>"
+syn match kickAssAttr "\<songs\>"
+syn match kickAssAttr "\<startSong\>"
+syn match kickAssAttr "\<name\>"
+syn match kickAssAttr "\<author\>"
+syn match kickAssAttr "\<copyright\>"
+syn match kickAssAttr "\<speed\>"
+syn match kickAssAttr "\<flags\>"
+syn match kickAssAttr "\<startpage\>"
+syn match kickAssAttr "\<pagelength\>"
+syn match kickAssMethod "\<getData\>" display contained
 
-" Vector/matrix
-syn match kickAssFunctions  /\<Vector\>(/he=e-1
-" get
-syn match kickAssFunName    "\<getX\>" display contained
-syn match kickAssFunName    "\<getY\>" display contained
-syn match kickAssFunName    "\<getZ\>" display contained
-syn match kickAssFunName    "\<\X\>" display contained
+" Graphics files
+syn match kickAssFunction "\<LoadPicture\>("he=e-1
+syn match kickAssAttr "\<width\>"
+syn match kickAssAttr "\<height\>"
+syn match kickAssMethod "\<getPixel\>" display contained
+syn match kickAssMethod "\<getSinglecolorByte\>" display contained
+syn match kickAssMethod "\<getMulticolorByte\>" display contained
 
-syn region kickAssFunctionsCall  start="[a-z0-9_]\." end="(" contains=kickAssFunName
+" User defined files
+syn match kickAssFunction "\<createFile\>("he=e-1
+syn match kickAssMethod "\<writeln\>" display contained
+
+" Testing
+syn match kickAssDirective "\.\<kickAssert\>"
+syn match kickAssDirective "\.\<kickAsserterror\>"
+
+syn region kickAssMethodCall start="[A-Za-z0-9_)]\." end="("
+            \ contains=kickAssMethod oneline
+
+syn match kickAssDefName "[a-zA-Z_][a-zA-Z0-9_]*" display contained
+
+"Labels and macro names. All case insensitive
+syn case ignore
+syn match kickAssMacroCall  ":[a-z_][a-z0-9_]*"
+syn match kickAssLabels "^\!\?\<[a-z0-9_]*\>:"
+syn match kickAssLabels "\s\!\<[a-z0-9_]*\>[-+]\?"hs=s+1 contained
+syn match kickAssLabels "\s\<[a-z0-9_]*\>[-+]\?"hs=s+1 contained
+syn case match
 
 if !exists("did_kickasm_syntax_inits")
   let did_kickasm_syntax_inits = 1
 
-    hi def link kickAssDirectives   Special
-    hi def link asm6510Illegal      Debug
-    hi def link asm6502Mnemonics    Type
-    hi def link asmDtvMnemonics     Type
-    hi def link asm6502Index        None
-    hi def link asm6502Jumps        PreCondit
-    hi def link asmString           String
-    hi def link asmSString          String
-    hi def link asmComment          Comment
-    hi def link asmLineComment      Comment
-    hi def link asmMacroCall        Function
-    hi def link asmLabel            Label
-    hi def link asmTodo             Todo
+    hi def link kickAssDirective Special
+    hi def link kickAssMnemonic Type
 
-    hi def link asmDefName          Function
-    hi def link kickAssFunctions    Function
-    hi def link kickAssFunName      Function
-    hi def link kickAssColors       Constant
-    hi def link kickAssConstants    Constant
+    hi def link kickAssIndex None
+    hi def link kickAssJump PreCondit
+    hi def link kickAssString String
+    hi def link kickAssString String
+    hi def link kickAssComment Comment
+    hi def link kickAssLineComment Comment
+    hi def link kickAssMacroCall Function
+    hi def link kickAssTodo Todo
 
-    hi def link asmImmediate        None
-    hi def link hexNumber           None
-    hi def link binNumber           None
-    hi def link decNumber           None
+    hi def link kickAssImportType Operator
 
+    hi def link kickAssDefName Function
+    hi def link kickAssFunction Function
+    hi def link kickAssMethod Function
+    hi def link kickAssAttr Special
+    hi def link kickAssColor Constant
+    hi def link kickAssConstant Constant
+
+    hi def link kickAssImmediate None
+    hi def link kickAssHexNumber None
+    hi def link kickAssBinNumber None
+    hi def link kickAssDecNumber None
+
+    hi def link kickAssLabels Label
 endif
 
 let b:current_syntax = "kickasm"
