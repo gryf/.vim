@@ -5,7 +5,7 @@ a "make" command for VIm
 """
 import sys
 import re
-from StringIO import StringIO
+from cStringIO import StringIO
 from optparse import OptionParser
 
 from pylint import lint
@@ -56,7 +56,7 @@ def parsable_pylint(filename):
     error_list = []
 
     carriage_re = re.compile(r'\s*\^+$')
-    error_re = re.compile(r'^([C,R,W,E,F].+):\s+?([0-9]+):?.*:\s(.*)$')
+    error_re = re.compile(r'^([C,R,W,E,F].+):(\s+)?([0-9]+):?.*:\s(.*)$')
 
     for bufline in buf:
         bufline = bufline.rstrip()  # remove trailing newline character
@@ -66,8 +66,8 @@ def parsable_pylint(filename):
                 error_list.append(code_line)
                 code_line = {}
 
-            code_line['type'], code_line['lnum'], code_line['text'] = \
-                    error_re.match(bufline).groups()
+            (code_line['type'], _unused, code_line['lnum'],
+             code_line['text']) = error_re.match(bufline).groups()
 
         if carriage_re.match(bufline) and code_line:
             code_line['col'] = carriage_re.match(bufline).group().find('^') + 1
