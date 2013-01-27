@@ -121,7 +121,8 @@ function! SyntaxCheckers_java_GetLocList()
     " add classpathes to javac_classpath
     for path in split(g:syntastic_java_javac_classpath,"\n")
         if path != ''
-            let ps = glob(path,0,1)
+            "let ps = glob(path,0,1)
+            let ps = glob(path)
             if type(ps) == type([])
                 for p in ps
                     if p != '' | let javac_classpath = s:AddToClasspath(javac_classpath,p) | endif
