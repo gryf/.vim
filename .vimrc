@@ -201,6 +201,9 @@ map <Leader>b :CtrlPBuffer<CR>
 "NERDCommenter {{{2
 let g:NERDSpaceDelims=1
 "}}}
+"Python indent{{{2
+let g:python_version_2=1
+"}}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
 
