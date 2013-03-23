@@ -1,0 +1,29 @@
+snippet li "Item in itemize list"
+\item ${VISUAL}$0
+endsnippet
+
+snippet lst "Code Listing for listings package" !b
+\begin{lstlisting}
+${VISUAL}$0
+\end{lstlisting}
+endsnippet
+
+snippet hrefoot "Make hyper ref with footnote"
+\href{$2}{${VISUAL}${1:name}}\footnote{\url{${2:url}}}.$0
+endsnippet
+
+snippet href "Make hyperlink"
+\href{$2}{${VISUAL}${1:name}}.$0
+endsnippet
+
+snippet subsec "Subsection" !b
+\subsection{${VISUAL}${1:name}}$0
+endsnippet
+
+snippet sss "Sub subsection" !b
+\subsubsection{${VISUAL}${1:name}}$0
+endsnippet
+
+snippet tt "Make text monospaced"
+\texttt{${VISUAL}}$0
+endsnippet

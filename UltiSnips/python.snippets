@@ -1,0 +1,45 @@
+snippet dbg "IPython Debugger abbrv" !b
+import ipdb; ipdb.set_trace()
+endsnippet
+
+snippet pdb "pdb abbrv" !b
+import pdb; pdb.set_trace()
+endsnippet
+
+snippet docmodule "Doc module" !b
+"""
+Project: ${1:pyGTKtalog}
+Description: ${2:Tests for DataBase class.}
+Type: ${3:test}
+Author: ${4:Roman 'gryf' Dobosz, gryf73@gmail.com}
+Created: ${5:`strftime("%Y-%m-%d %H:%M:%S")`}
+"""
+endsnippet docmodule
+
+snippet debug "Logging debug message"
+LOG.debug(self.${1:method_name}.__doc__.strip())
+endsnippet
+
+snippet pywin "PyWin debugger"
+import pywin.debugger; pywin.debugger.set_trace()
+endsnippet
+
+snippet edbg "Eclipse debbuger"
+import sys
+pydevdPath = r"/home/share/data/IDE/eclipse/plugins/org.python.pydev.debug_1.6.5.2011020317/pysrc"
+if not pydevdPath in sys.path:
+    sys.path.append(pydevdPath)
+import pydevd
+pydevd.settrace()
+endsnippet
+
+snippet msg "Tk graphical message"
+from Tkinter import Tk
+import ttk
+import tkMessageBox
+window = Tk()
+window.wm_withdraw()  # make window invisible. we only want message boxes
+ttk.Style().theme_use('clam')
+tkMessageBox.showinfo(title="${1:title}", message="${2:msg}", parent=window)
+endsnippet
+# vim:ft=snippets:
