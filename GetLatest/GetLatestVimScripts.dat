@@ -5,6 +5,7 @@ ScriptID SourceID Filename
 311 7645 grep.vim
 2727 11120 jsbeautify.vim
 2289 8922 loremipsum
+3223 1 LanguageTool
 2666 18811 Mark
 2262 8944 occur.vim
 152 3342 showmarks.vim

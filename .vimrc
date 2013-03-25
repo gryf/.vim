@@ -204,6 +204,10 @@ let g:NERDSpaceDelims=1
 "Python indent{{{2
 let g:python_version_2=1
 "}}}
+"LanguageTool {{{
+let g:languagetool_jar='/opt/LanguageTool/LanguageTool.jar'
+"let g:languagetool_lang=pl
+"}}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
 
