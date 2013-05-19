@@ -42,4 +42,8 @@ window.wm_withdraw()  # make window invisible. we only want message boxes
 ttk.Style().theme_use('clam')
 tkMessageBox.showinfo(title="${1:title}", message="${2:msg}", parent=window)
 endsnippet
+
+snippet _ "Dunder completion"
+__${1:init}__$0
+endsnippet
 # vim:ft=snippets:
