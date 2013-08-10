@@ -19,3 +19,4 @@ bundle/git_vim-javascript = [git]https://github.com/pangloss/vim-javascript.git
 bundle/git_vim-nodejs-complete = [git]https://github.com/myhere/vim-nodejs-complete.git 
 bundle/git_fugitive = [git]https://github.com/tpope/vim-fugitive.git
 bundle/git_markdown = [git]https://github.com/hallison/vim-markdown.git
+bundle/git_riv = [git]https://github.com/Rykka/riv.vim.git
