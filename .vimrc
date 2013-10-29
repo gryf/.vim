@@ -402,13 +402,13 @@ if has('gui_running')
     " I like this font, but it looks like crap on linux
     "set guifont=Consolas\ 12  
     " at least, some ttf font that looks good
-    "set guifont=DejaVu\ Sans\ Mono\ 12
+    set guifont=DejaVu\ Sans\ Mono\ 12
     " Unfortunately there is a problem with TTF fonts in my gvim instance.  
     " After editing a while there are some leaving trash appearing on the
     " buffer. Refreshing the screen helps, but is kinda annoying. It is 
     " probably my X11 setup, because on other similar workstations and setup I 
     " didn't noticed such behavior. Fallback to fixed-misc for a while.
-    set guifont=Fixed\ 14
+    "set guifont=Fixed\ 13
     set mouse=a                "Enable mouse support
     " No toolbar, menu, scrollbars, draw simple text tabs. This would keep
     " window in one place, and also this will conserve space. Tabs are huge
