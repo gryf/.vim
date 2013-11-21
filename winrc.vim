@@ -62,4 +62,9 @@ if exists("g:vim_bin_path")
 endif
 let g:vim_bin_path = expand($VIM) . '/bin'
 
+" Make the interface speaks english
+set langmenu=en_US
+let $LANG = 'en_US.UTF-8'
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vi
 " vim:ts=4:sw=4:wrap:fdm=marker:
