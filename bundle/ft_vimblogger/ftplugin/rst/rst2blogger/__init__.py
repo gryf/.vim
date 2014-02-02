@@ -1,1 +1,0 @@
-# module rst2blogger
