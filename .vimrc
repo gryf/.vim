@@ -180,8 +180,8 @@ let g:ctrlp_custom_ignore = {
     \ 'dir': '\.git$\|\.hg$\|\.svn$',
     \ 'file': '\.pyo$\|\.pyc$\|\.pyd$',
     \ }
-let g:ctrlp_map = '<c-f>'
-map <Leader>b :CtrlPBuffer<CR>
+let g:ctrlp_map = '<C-F>'
+map <C-B> :CtrlPBuffer<CR>
 "}}}
 "NERDCommenter {{{2
 let g:NERDSpaceDelims=1
@@ -199,6 +199,15 @@ let g:jedi#popup_on_dot = 0
 " also this one is pretty annoying
 let g:jedi#show_function_definition = "0"
 "let g:languagetool_lang=pl
+"}}}
+"NERDtree {{{
+map <F2> :NERDTreeToggle<cr>
+"}}}
+"Riv {{{
+" Don't fold the file; it's annoying 
+let g:riv_fold_level = -1
+" formatting tables, doesn't work so good with complex grid tables
+let g:riv_auto_format_table = 0
 "}}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
