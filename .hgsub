@@ -22,3 +22,5 @@ bundle/git_riv = [git]https://github.com/Rykka/riv.vim.git
 bundle/git_zoom = [git]https://github.com/gryf/zoom.vim.git
 bundle/git_nerdtree = [git]https://github.com/scrooloose/nerdtree.git
 bundle/git_css = [git]https://github.com/skammer/vim-css-color.git
+bundle/ft_git_matchtagalways = [git]https://github.com/Valloric/MatchTagAlways.git
+bundle/git_vim-snippets = [git]https://github.com/honza/vim-snippets.git

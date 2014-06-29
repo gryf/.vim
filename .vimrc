@@ -190,7 +190,7 @@ let g:NERDSpaceDelims=1
 let g:python_version_2=1
 "}}}
 "LanguageTool {{{
-let g:languagetool_jar='/opt/LanguageTool/LanguageTool.jar'
+let g:languagetool_jar='/opt/LanguageTool/languagetool-commandline.jar'
 "let g:languagetool_lang=pl
 "}}}
 "Jedi {{{
@@ -217,6 +217,8 @@ map <C-p> :bp<CR>
 map <C-n> :bn<CR>
 
 map <F5> :call <SID>Make()<cr>
+
+map <F6> :echom <SID>CreateScratch()<CR>
 
 "QuickFix jumps
 map <F9> :cp<CR>
@@ -402,6 +404,11 @@ function <SID>ToggleHex()
     let &mod=l:modified
     let &readonly=l:oldreadonly
     let &modifiable=l:oldmodifiable
+endfunction
+
+function <SID>CreateScratch()
+    new|setl bt=nofile bh=wipe nobl
+    return ""
 endfunction
 
 "Toggle
