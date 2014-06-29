@@ -197,7 +197,7 @@ let g:languagetool_jar='/opt/LanguageTool/languagetool-commandline.jar'
 " automatically popup is annoying
 let g:jedi#popup_on_dot = 0
 " also this one is pretty annoying
-let g:jedi#show_function_definition = "0"
+let g:jedi#show_call_signatures = "0"
 "let g:languagetool_lang=pl
 "}}}
 "NERDtree {{{
