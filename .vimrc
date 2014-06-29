@@ -213,8 +213,8 @@ let g:riv_auto_format_table = 0
 "KEYS: User defined keyboard shortcuts {{{
 
 "Cycle through buffers.
-map <C-p> :bp<CR>
-map <C-n> :bn<CR>
+" map <C-p> :bp<CR>
+" map <C-n> :bn<CR>
 
 map <F5> :call <SID>Make()<cr>
 

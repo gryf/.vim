@@ -24,3 +24,6 @@ bundle/git_nerdtree = [git]https://github.com/scrooloose/nerdtree.git
 bundle/git_css = [git]https://github.com/skammer/vim-css-color.git
 bundle/ft_git_matchtagalways = [git]https://github.com/Valloric/MatchTagAlways.git
 bundle/git_vim-snippets = [git]https://github.com/honza/vim-snippets.git
+bundle/git_jedi = [git]https://github.com/davidhalter/jedi-vim.git
+bundle/git_multiple-cursors = [git]https://github.com/terryma/vim-multiple-cursors.git
+bundle/git_html5 = [git]https://github.com/othree/html5.vim.git
