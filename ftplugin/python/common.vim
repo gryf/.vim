@@ -24,8 +24,6 @@ let g:pyflakes_use_quickfix = 0
 autocmd BufWinLeave *.py mkview
 autocmd BufWinEnter *.py silent loadview
 
-compiler pylint
-
 finish "end here. all below is just for the record.
 
 " Pylint function, which can be optionally mapped to some keys. Currently 

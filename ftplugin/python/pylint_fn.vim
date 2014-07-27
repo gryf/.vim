@@ -78,6 +78,7 @@ if !exists("b:did_pylint_init")
 
     python << EOF
 import sys
+import re
 from StringIO import StringIO
 
 class VImPylint(object):

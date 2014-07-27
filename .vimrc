@@ -1,6 +1,67 @@
 "Basic setup for all files {{{
-call pathogen#infect()              "infect path for boundles
 set nocompatible                    "VIM over VI
+
+" NeoBundle conf {{{
+if has('vim_starting')
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle "Finkregh/pythonhelper"
+NeoBundle "Rykka/riv.vim"
+NeoBundle "SirVer/ultisnips"
+NeoBundle "Valloric/MatchTagAlways"
+NeoBundle "davidhalter/jedi-vim"
+NeoBundle "ervandew/taglisttoo"
+NeoBundle "fs111/pydoc.vim"
+NeoBundle "gryf/mark"
+NeoBundle "gryf/zoom.vim"
+NeoBundle "hallison/vim-markdown"
+NeoBundle "honza/vim-snippets"
+NeoBundle "http://repo.or.cz/r/vcscommand.git"
+NeoBundle "https://code.google.com/p/vimwiki/"
+NeoBundle "kazuyukitanimura/jsbeautify"
+NeoBundle "kevinw/pyflakes-vim"
+NeoBundle "kien/ctrlp.vim"
+NeoBundle "majutsushi/tagbar"
+NeoBundle "mattn/calendar-vim"
+NeoBundle "mduan/python.vim"
+NeoBundle "mikeage/occur.vim"
+NeoBundle "mileszs/ack.vim"
+NeoBundle "myhere/vim-nodejs-complete"
+NeoBundle "othree/html5.vim"
+NeoBundle "pangloss/vim-javascript"
+NeoBundle "pcaro90/jpythonfold.vim"
+NeoBundle "scrooloose/nerdcommenter"
+NeoBundle "scrooloose/nerdtree"
+NeoBundle "scrooloose/syntastic"
+NeoBundle "sjl/gundo.vim"
+NeoBundle "skammer/vim-css-color"
+NeoBundle "taylor/ctags.vim"
+NeoBundle "terryma/vim-multiple-cursors"
+NeoBundle "tpope/vim-fugitive"
+NeoBundle "tpope/vim-repeat"
+NeoBundle "tpope/vim-surround"
+NeoBundle "vim-scripts/LanguageTool"
+NeoBundle "vim-scripts/MatchTag"
+NeoBundle "vim-scripts/Python-2.x-Standard-Library-Reference"
+NeoBundle "vim-scripts/ShowMarks"
+NeoBundle "vim-scripts/indentpython"
+NeoBundle "vim-scripts/loremipsum"
+NeoBundle "vim-scripts/mako.vim"
+NeoBundle "vim-scripts/mako.vim--Torborg"
+NeoBundle "yegappan/grep"
+NeoBundle "zhaocai/DirDiff.vim"
+NeoBundle "vim-scripts/JavaScript-Indent"
+
+let g:ctags_statusline=1
+let generate_tags=1
+
+call neobundle#end()
+" }}}
 
 filetype plugin indent on           "turn plugins/indent on
 syntax on                           "Turn syntax highlighting on
@@ -204,11 +265,16 @@ let g:jedi#show_call_signatures = "0"
 map <F2> :NERDTreeToggle<cr>
 "}}}
 "Riv {{{
-" Don't fold the file; it's annoying 
+" Don't fold the file; it's annoying
 let g:riv_fold_level = -1
 " formatting tables, doesn't work so good with complex grid tables
 let g:riv_auto_format_table = 0
 "}}}
+" Occur {{{
+nnoremap <silent> <unique> <Leader>oc :Occur<CR>
+nnoremap <silent> <unique> <Leader>om :Moccur<CR>
+nnoremap <silent> <unique> <Leader>8 *<C-o>:Moccur<CR>
+" }}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
 
@@ -416,13 +482,13 @@ endfunction
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
     " I like this font, but it looks like crap on linux
-    "set guifont=Consolas\ 12  
+    "set guifont=Consolas\ 12
     " at least, some ttf font that looks good
     set guifont=DejaVu\ Sans\ Mono\ 12
-    " Unfortunately there is a problem with TTF fonts in my gvim instance.  
+    " Unfortunately there is a problem with TTF fonts in my gvim instance.
     " After editing a while there are some leaving trash appearing on the
-    " buffer. Refreshing the screen helps, but is kinda annoying. It is 
-    " probably my X11 setup, because on other similar workstations and setup I 
+    " buffer. Refreshing the screen helps, but is kinda annoying. It is
+    " probably my X11 setup, because on other similar workstations and setup I
     " didn't noticed such behavior. Fallback to fixed-misc for a while.
     "set guifont=Fixed\ 13
     set mouse=a                "Enable mouse support
