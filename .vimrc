@@ -22,7 +22,7 @@ NeoBundle "gryf/zoom.vim"
 NeoBundle "hallison/vim-markdown"
 NeoBundle "honza/vim-snippets"
 NeoBundle "http://repo.or.cz/r/vcscommand.git"
-NeoBundle "https://code.google.com/p/vimwiki/"
+NeoBundle "vimwiki/vimwiki"
 NeoBundle "kazuyukitanimura/jsbeautify"
 NeoBundle "kevinw/pyflakes-vim"
 NeoBundle "kien/ctrlp.vim"
@@ -131,6 +131,10 @@ set noswapfile
 "in case they are needed, store swapfiles in tmp
 "set dir=~/tmp/
 
+" Strip trailing whitespace option
+let stripTrailingWhitespace = 1
+
+
 " TOhtml options
 let html_number_lines = 1
 let html_use_css = 1
@@ -143,12 +147,7 @@ let g:browser = 'firefox'
 "COMMON: specific vim behaviour {{{
 "
 "remove all trailing whitespace for specified files before write
-autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.rst :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.wiki :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.css :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.xml :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0)
 "set correct filetype for tmux
 autocmd BufRead *.tmux.conf set filetype=tmux
 autocmd BufRead *.mako set filetype=mako
@@ -295,7 +294,7 @@ map <S-F9> :QFix<CR>
 map <S-F11> :LWin<CR>
 
 "remove trailing whitespaces
-nnoremap <leader>e :StripTrailingWhitespaces<CR>
+nnoremap <leader>e :StripTrailingWhitespaces!<CR>
 
 " copy current buffer filename (full path)
 nmap ,cn :silent call <SID>CopyFileName(1)<CR>
@@ -350,18 +349,24 @@ function <SID>Make()
 endfunction
 
 " Remove trailing whitespace
-function <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
+function <SID>StripTrailingWhitespaces(force)
+    if a:force != 1 && g:stripTrailingWhitespace == 0
+        return
+    endif
+
+    if a:force == 1 || &ft =~ 'python\|rst\|wiki\|javascript\|css\|html\|xml'
+        " Preparation: save last search, and cursor position.
+        let _s=@/
+        let l = line(".")
+        let c = col(".")
+        " Do the business:
+        %s/\s\+$//e
+        " Clean up: restore previous search history, and cursor position
+        let @/=_s
+        call cursor(l, c)
+    endif
 endfunction
-command StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
+command -bang StripTrailingWhitespaces call <SID>StripTrailingWhitespaces(<bang>0)
 
 function <SID>CopyFileName(full)
     if a:full
