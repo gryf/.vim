@@ -11,7 +11,7 @@ to make it (as described in the NeoBundle README file) is like this:
 
    $ curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
 
-And than, just make the symlink to the `.vimrc` file to the home directory.
+And than, just make the symlink to the ``.vimrc`` file to the home directory.
 
 
 .. _NeoBundle: https://github.com/Shougo/neobundle.vim
