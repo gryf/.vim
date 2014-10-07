@@ -7,7 +7,7 @@ of it.
 After cloning, it is necessary to install NeoBundle_. Possibly the easiest way
 to make it (as described in the NeoBundle README file) is like this:
 
-.. code::shell-session
+.. code:: shell-session
 
    $ curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
 
