@@ -3,7 +3,11 @@ set nocompatible                    "VIM over VI
 
 " NeoBundle conf {{{
 if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+    if has('win32')
+        set runtimepath+=$HOME/vimfiles/bundle/neobundle.vim/
+    else
+        set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
+    endif
 endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
@@ -40,7 +44,6 @@ NeoBundle "scrooloose/nerdtree"
 NeoBundle "scrooloose/syntastic"
 NeoBundle "sjl/gundo.vim"
 NeoBundle "skammer/vim-css-color"
-NeoBundle "taylor/ctags.vim"
 NeoBundle "terryma/vim-multiple-cursors"
 NeoBundle "tpope/vim-fugitive"
 NeoBundle "tpope/vim-repeat"
@@ -80,9 +83,11 @@ set hidden                          "Keep hidden windows
 set history=1000                    "Keep 1000 lines of command line history
 set laststatus=2                    "Always show statusbar
 set lazyredraw                      "Don't update screen while executing macros
-if !has('win32')
+try
     set listchars=tab:▸―,trail:·    "Strings to use in 'list' mode. list is off by default.
-endif
+catch /E474:/
+    set listchars=tab:>-,trail:.    "Failsafe for Windows and non-unicode envs
+endtry
 set number                          "show line numbers
 
 " Show ruler and set format of statusline
@@ -512,7 +517,7 @@ if $TERM == 'linux' && !has('gui_running')
     colorscheme pablo
 endif
 if has('win32')
-    source $VIM/vimfiles/winrc.vim
+    source $HOME/vimfiles/winrc.vim
 endif
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:

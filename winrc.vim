@@ -1,6 +1,5 @@
 set fileencoding=utf-8
 set guifont=DejaVu_Sans_Mono:h9:cEASTEUROPE
-set listchars=tab:>-,trail:.
 set guioptions=ceg
 set enc=utf-8
 
