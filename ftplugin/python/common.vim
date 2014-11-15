@@ -7,6 +7,7 @@ setlocal noautoindent
 setlocal smartindent
 setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 setlocal smarttab
+setlocal statusline=%<%F\ %{TagInStatusLine()}\ %h%m%r%=%(%l,%c%V%)\ %3p%%
 
 set wildignore+=*.pyc
 

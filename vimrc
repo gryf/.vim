@@ -279,6 +279,9 @@ nnoremap <silent> <unique> <Leader>oc :Occur<CR>
 nnoremap <silent> <unique> <Leader>om :Moccur<CR>
 nnoremap <silent> <unique> <Leader>8 *<C-o>:Moccur<CR>
 " }}}
+" Pythonhelper {{{
+let g:pythonhelper_updatetime = 1000
+" }}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
 
