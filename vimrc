@@ -75,6 +75,7 @@ set background=dark                 "Hint Vim that I use dark colorscheme
 set confirm                         "Ask for confirmation rather then refuse certain commands
 set cursorline                      "Turn on current line highlight
 set hlsearch                        "Turn on highlighting search text by default
+set smartcase                       "Be case aware when needed
 set expandtab                       "I want spaces instead of tabs
 set fileencodings=ucs-bom,utf-8,latin2,default,latin1,default
 set fileformats=unix,dos            "Type of <EOL> in written files
@@ -150,13 +151,18 @@ let html_use_encoding = "utf-8"
 let g:browser = 'firefox'
 "}}}
 "COMMON: specific vim behaviour {{{
-"
+
 "remove all trailing whitespace for specified files before write
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0)
+
 "set correct filetype for tmux
 autocmd BufRead *.tmux.conf set filetype=tmux
 autocmd BufRead *.mako set filetype=mako
 autocmd BufRead *.ass set filetype=kickass
+
+" make the current line highlighted only on current window
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
 " }}}
 "TERMINAL: options for terminal emulators {{{
 if $TERM == 'rxvt-unicode-256color' || $TERM == 'xterm'
