@@ -57,7 +57,7 @@ NeoBundle "vim-scripts/loremipsum"
 NeoBundle "vim-scripts/mako.vim"
 NeoBundle "vim-scripts/mako.vim--Torborg"
 NeoBundle "yegappan/grep"
-NeoBundle "zhaocai/DirDiff.vim"
+NeoBundle "will133/vim-dirdiff"
 NeoBundle "vim-scripts/JavaScript-Indent"
 
 let g:ctags_statusline=1
@@ -206,7 +206,7 @@ let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 nnoremap <silent> <leader>ff :call g:Jsbeautify()<cr>:retab!<cr>
 "}}}
 "TagListToo {{{2
-nmap <Leader>t :TlistToo<CR>
+"nmap <Leader>t :TlistToo<CR>
 "inherited from TagList
 let Tlist_Use_Right_Window = 1
 "show menu in gvim. usefull to pop it up from kbd
@@ -285,9 +285,12 @@ nnoremap <silent> <unique> <Leader>oc :Occur<CR>
 nnoremap <silent> <unique> <Leader>om :Moccur<CR>
 nnoremap <silent> <unique> <Leader>8 *<C-o>:Moccur<CR>
 " }}}
-" Pythonhelper {{{
+" Pythonhelper {{{2
 let g:pythonhelper_updatetime = 1000
 " }}}
+"TagListToo {{{2
+nmap <Leader>t :Tagbar<CR>
+"}}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
 
