@@ -59,6 +59,8 @@ NeoBundle "vim-scripts/mako.vim--Torborg"
 NeoBundle "yegappan/grep"
 NeoBundle "will133/vim-dirdiff"
 NeoBundle "vim-scripts/JavaScript-Indent"
+NeoBundle "vim-scripts/vis"
+
 
 let g:ctags_statusline=1
 let generate_tags=1
@@ -75,7 +77,8 @@ set background=dark                 "Hint Vim that I use dark colorscheme
 set confirm                         "Ask for confirmation rather then refuse certain commands
 set cursorline                      "Turn on current line highlight
 set hlsearch                        "Turn on highlighting search text by default
-set smartcase                       "Be case aware when needed
+set ignorecase                      "Be case insensitive...
+set smartcase                       "but be case aware when needed
 set expandtab                       "I want spaces instead of tabs
 set fileencodings=ucs-bom,utf-8,latin2,default,latin1,default
 set fileformats=unix,dos            "Type of <EOL> in written files
@@ -136,6 +139,10 @@ set nowb
 set noswapfile
 "in case they are needed, store swapfiles in tmp
 "set dir=~/tmp/
+
+" store the undo in undodir
+"set undofile
+"set undodir=~/.cache
 
 " Strip trailing whitespace option
 let stripTrailingWhitespace = 1
@@ -290,6 +297,9 @@ let g:pythonhelper_updatetime = 1000
 " }}}
 "TagListToo {{{2
 nmap <Leader>t :Tagbar<CR>
+"}}}
+"KickAssembler {{{2
+let g:kickass_path = '/home/gryf/c64/PCTools/Cross-assemblers/KickAssembler/KickAss.jar'
 "}}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{

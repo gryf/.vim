@@ -1,7 +1,7 @@
 " File: pylint_fn.vim
 " Author: Roman 'gryf' Dobosz (gryf73 at gmail.com)
-" Version: 1.0
-" Last Modified: 2010-09-11
+" Version: 1.1
+" Last Modified: 2015-09-20
 "
 " Description: " {{{
 "
@@ -96,7 +96,6 @@ class VImPylint(object):
 
         # args
         args = ['-rn',  # display only the messages instead of full report
-                '-iy',  # Include message's id in output
                 vim.current.buffer.name]
 
         buf = StringIO()  # file-like buffer, instead of stdout
@@ -120,27 +119,24 @@ class VImPylint(object):
         code_line = {}
         error_list = []
 
-        carriage_re = re.compile(r'\s*\^+$')
-        error_re = re.compile(r'^([C,R,W,E,F].+):\s+?([0-9]+):?.*:\s(.*)$')
-
+        error_re = re.compile(r'^(?P<type>[C,R,W,E,F]):\s+?'
+                              r'(?P<lnum>[0-9]+),\s+?'
+                              r'(?P<col>[0-9]+):\s'
+                              r'(?P<text>.*)$')
         for line in buf:
             line = line.rstrip()  # remove trailing newline character
 
-            if error_re.match(line):
-                if code_line:
-                    code_line['bufnr'] = bufnr
-                    error_list.append(code_line)
-                    code_line = {}
+            error_line = error_re.match(line)
+            if error_line:
+                error_line = error_line.groupdict()
+                error_line["bufnr"] = bufnr
 
-                code_line['type'], code_line['lnum'], code_line['text'] = \
-                        error_re.match(line).groups()
+                error_list.append(error_line)
 
-            if carriage_re.match(line) and code_line:
-                code_line['col'] = carriage_re.match(line).group().find('^') \
-                    + 1
         vim.command('call setqflist(%s)' % str(error_list))
         if error_list:
             vim.command('copen')
+
 EOF
     let b:did_pylint_init = 1
 endif
