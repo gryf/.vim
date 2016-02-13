@@ -300,6 +300,13 @@ nmap <Leader>t :Tagbar<CR>
 "KickAssembler {{{2
 let g:kickass_path = '/home/gryf/c64/PCTools/Cross-assemblers/KickAssembler/KickAss.jar'
 "}}}
+"Dragvisuals {{{2
+vmap <expr> <C-LEFT> DVB_Drag('left')
+vmap <expr> <C-RIGHT> DVB_Drag('right')
+vmap <expr> <C-DOWN> DVB_Drag('down')
+vmap <expr> <C-UP> DVB_Drag('up')
+vmap <expr> D DVB_Duplicate()
+"}}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
 
