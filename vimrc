@@ -25,7 +25,7 @@ NeoBundle "gryf/mark"
 NeoBundle "gryf/zoom.vim"
 NeoBundle "hallison/vim-markdown"
 NeoBundle "honza/vim-snippets"
-NeoBundle "http://repo.or.cz/r/vcscommand.git"
+NeoBundle "https://repo.or.cz/r/vcscommand.git"
 NeoBundle "vimwiki/vimwiki"
 NeoBundle "kazuyukitanimura/jsbeautify"
 NeoBundle "kevinw/pyflakes-vim"
@@ -60,7 +60,6 @@ NeoBundle "yegappan/grep"
 NeoBundle "will133/vim-dirdiff"
 NeoBundle "vim-scripts/JavaScript-Indent"
 NeoBundle "vim-scripts/vis"
-
 
 let g:ctags_statusline=1
 let generate_tags=1
