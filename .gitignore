@@ -1,0 +1,6 @@
+*.py[cod]
+__pychache__
+bundle/*
+view/*
+tags
+.netrwhist
