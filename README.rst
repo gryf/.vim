@@ -4,12 +4,11 @@ vim config
 This repository contains my Vim config just for convenience in making the copy
 of it.
 
-After cloning, it is necessary to install NeoBundle_. Possibly the easiest way
-to make it (as described in the NeoBundle README file) is like this:
+It uses `vim-plug`_ plugin manager, so after cloning, just issue command in vim:
 
-.. code:: shell-session
+.. code:: vim
 
-   $ curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+   :PlugInstall
 
 
-.. _NeoBundle: https://github.com/Shougo/neobundle.vim
+.. _vim-plug: https://github.com/junegunn/vim-plug

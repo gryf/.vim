@@ -1,70 +1,57 @@
 "Basic setup for all files {{{
 set nocompatible                    "VIM over VI
 
-" NeoBundle conf {{{
-if has('vim_starting')
-    if has('win32')
-        set runtimepath+=$HOME/vimfiles/bundle/neobundle.vim/
-    else
-        set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
-    endif
-endif
+" vimplug conf {{{
 
-call neobundle#begin(expand('~/.vim/bundle/'))
+call plug#begin('~/.vim/bundle')
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+Plug 'Finkregh/pythonhelper'
+Plug 'Rykka/riv.vim'
+Plug 'SirVer/ultisnips'
+Plug 'Valloric/MatchTagAlways'
+Plug 'davidhalter/jedi-vim'
+Plug 'ervandew/taglisttoo'
+Plug 'fs111/pydoc.vim'
+Plug 'gryf/mark'
+Plug 'gryf/zoom.vim'
+Plug 'hallison/vim-markdown'
+Plug 'honza/vim-snippets'
+Plug 'https://repo.or.cz/r/vcscommand.git'
+Plug 'kazuyukitanimura/jsbeautify'
+Plug 'kevinw/pyflakes-vim'
+Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/calendar-vim'
+Plug 'mduan/python.vim'
+Plug 'mikeage/occur.vim'
+Plug 'mileszs/ack.vim'
+Plug 'myhere/vim-nodejs-complete'
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'pcaro90/jpythonfold.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'sjl/gundo.vim'
+Plug 'skammer/vim-css-color'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/JavaScript-Indent'
+Plug 'vim-scripts/LanguageTool'
+Plug 'vim-scripts/MatchTag'
+Plug 'vim-scripts/Python-2.x-Standard-Library-Reference'
+Plug 'vim-scripts/ShowMarks'
+Plug 'vim-scripts/indentpython'
+Plug 'vim-scripts/loremipsum'
+Plug 'vim-scripts/mako.vim'
+Plug 'vim-scripts/mako.vim--Torborg'
+Plug 'vimwiki/vimwiki'
+Plug 'will133/vim-dirdiff'
+Plug 'yegappan/grep'
 
-NeoBundle "Finkregh/pythonhelper"
-NeoBundle "Rykka/riv.vim"
-NeoBundle "SirVer/ultisnips"
-NeoBundle "Valloric/MatchTagAlways"
-NeoBundle "davidhalter/jedi-vim"
-NeoBundle "ervandew/taglisttoo"
-NeoBundle "fs111/pydoc.vim"
-NeoBundle "gryf/mark"
-NeoBundle "gryf/zoom.vim"
-NeoBundle "hallison/vim-markdown"
-NeoBundle "honza/vim-snippets"
-NeoBundle "https://repo.or.cz/r/vcscommand.git"
-NeoBundle "vimwiki/vimwiki"
-NeoBundle "kazuyukitanimura/jsbeautify"
-NeoBundle "kevinw/pyflakes-vim"
-NeoBundle "kien/ctrlp.vim"
-NeoBundle "majutsushi/tagbar"
-NeoBundle "mattn/calendar-vim"
-NeoBundle "mduan/python.vim"
-NeoBundle "mikeage/occur.vim"
-NeoBundle "mileszs/ack.vim"
-NeoBundle "myhere/vim-nodejs-complete"
-NeoBundle "othree/html5.vim"
-NeoBundle "pangloss/vim-javascript"
-NeoBundle "pcaro90/jpythonfold.vim"
-NeoBundle "scrooloose/nerdcommenter"
-NeoBundle "scrooloose/nerdtree"
-NeoBundle "scrooloose/syntastic"
-NeoBundle "sjl/gundo.vim"
-NeoBundle "skammer/vim-css-color"
-NeoBundle "terryma/vim-multiple-cursors"
-NeoBundle "tpope/vim-fugitive"
-NeoBundle "tpope/vim-repeat"
-NeoBundle "tpope/vim-surround"
-NeoBundle "vim-scripts/LanguageTool"
-NeoBundle "vim-scripts/MatchTag"
-NeoBundle "vim-scripts/Python-2.x-Standard-Library-Reference"
-NeoBundle "vim-scripts/ShowMarks"
-NeoBundle "vim-scripts/indentpython"
-NeoBundle "vim-scripts/loremipsum"
-NeoBundle "vim-scripts/mako.vim"
-NeoBundle "vim-scripts/mako.vim--Torborg"
-NeoBundle "yegappan/grep"
-NeoBundle "will133/vim-dirdiff"
-NeoBundle "vim-scripts/JavaScript-Indent"
-NeoBundle "vim-scripts/vis"
-
-let g:ctags_statusline=1
-let generate_tags=1
-
-call neobundle#end()
+call plug#end()
 " }}}
 
 filetype plugin indent on           "turn plugins/indent on
