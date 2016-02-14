@@ -7,7 +7,15 @@ setlocal noautoindent
 setlocal smartindent
 setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 setlocal smarttab
-setlocal statusline=%<%F\ %{TagInStatusLine()}\ %h%m%r%=%(%l,%c%V%)\ %3p%%
+
+setlocal statusline=%<%F                 " filename (fullpath)
+setlocal statusline+=\ %h                " indicator for help buffer
+setlocal statusline+=%m                  " modified flag
+setlocal statusline+=%r                  " readonly flag
+setlocal statusline+=\ %{TagInStatusLine()} " current tag and its type
+setlocal statusline+=%=                  " switch to the right
+setlocal statusline+=%(%l,%c%V%)         " line, column and virtual column
+setlocal statusline+=\ %3p%%             " percentage of the file
 
 set wildignore+=*.pyc
 
@@ -27,7 +35,7 @@ autocmd BufWinEnter *.py silent loadview
 
 finish "end here. all below is just for the record.
 
-" Pylint function, which can be optionally mapped to some keys. Currently 
+" Pylint function, which can be optionally mapped to some keys. Currently
 " not used.
 if !exists('*<SID>runPyLint')
     function <SID>runPyLint()
@@ -49,7 +57,7 @@ if !exists('*<SID>PyLintBuf')
         if has('win32') || has('win64')
             let cmd = 'cmd /c "' . cmd . '"'
         endif
-        
+
         exec "bel silent new " . file . ".lint"
         exec "silent! read! " . cmd
     endfunction

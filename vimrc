@@ -20,7 +20,8 @@ Plug 'https://repo.or.cz/r/vcscommand.git'
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'kevinw/pyflakes-vim'
 Plug 'kien/ctrlp.vim'
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
+Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'mattn/calendar-vim'
 Plug 'mduan/python.vim'
 Plug 'mikeage/occur.vim'
@@ -82,7 +83,15 @@ set number                          "show line numbers
 
 " Show ruler and set format of statusline
 set ruler
-set statusline=%<%F\ %h%m%r%=%(%l,%c%V%)\ %3p%%
+set statusline=%<%F                 " filename (fullpath)
+set statusline+=\ %h                " indicator for help buffer
+set statusline+=%m                  " modified flag
+set statusline+=%r                  " readonly flag
+set statusline+=\ %{tagbar#currenttag('%s','','f')} " current tag
+set statusline+=\ %{tagbar#currenttagtype('(%s)','')} " current tag type
+set statusline+=%=                  " switch to the right
+set statusline+=%(%l,%c%V%)         " line, column and virtual column
+set statusline+=\ %3p%%             " percentage of the file
 
 set scrolloff=5                     "Minimal number of screen lines to keep above and below the cursor
 set selection=exclusive             "Define the behavior of the selection
@@ -178,44 +187,48 @@ if $TERM == 'linux' && !has("gui_running")
 endif
 "}}}
 "PLUGINS: {{{
-"VimWIKI {{{2
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-          \ 'template_path': '~/vimwiki/',
-          \ 'template_default': 'default',
-          \ 'template_ext': '.tpl'}]
-"redefine tab key for vimwiki
-map <Leader>wn <Plug>VimwikiNextWord
-map <Leader>wp <Plug>VimwikiPrevWord
-" }}}
-"FuzzyFinder {{{2
-"let g:fuf_file_exclude = '\v\~$|\.(o|bak|swp|pyc|pyo|pyd)$|(^|[/\\])\.(hg|git|bzr|cvs)($|[/\\])'
-"map <C-F> :FufFile **/<CR>
+"KickAssembler {{{2
+let g:kickass_path = '/home/gryf/c64/PCTools/Cross-assemblers/KickAssembler/KickAss.jar'
 "}}}
-"ShowMarks {{{2
-let g:showmarks_ignore_type = "hqprm"
-let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"CtrlP {{{2
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\.git$\|\.hg$\|\.svn$',
+    \ 'file': '\.pyo$\|\.pyc$\|\.pyd$',
+    \ }
+let g:ctrlp_map = '<C-F>'
+map <C-B> :CtrlPBuffer<CR>
+"}}}
+" DirDiff {{{2
+let g:DirDiffExcludes = ".svn,CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
+" Make use of cursor keys
+nmap <M-Up> [c
+nmap <M-Down> ]c
+nmap <C-Up> \dk
+nmap <C-Down> \dj
+" }}}
+"Dragvisuals {{{2
+vmap <expr> <C-LEFT> DVB_Drag('left')
+vmap <expr> <C-RIGHT> DVB_Drag('right')
+vmap <expr> <C-DOWN> DVB_Drag('down')
+vmap <expr> <C-UP> DVB_Drag('up')
+vmap <expr> D DVB_Duplicate()
+"}}}
+"Gundo {{{2
+map <Leader>u :GundoToggle<cr>
+"}}}
+"Jedi {{{
+" automatically popup is annoying
+let g:jedi#popup_on_dot = 0
+" also this one is pretty annoying
+let g:jedi#show_call_signatures = "0"
+"let g:languagetool_lang=pl
 "}}}
 "jsbeautify {{{2
 nnoremap <silent> <leader>ff :call g:Jsbeautify()<cr>:retab!<cr>
 "}}}
-"TagListToo {{{2
-"nmap <Leader>t :TlistToo<CR>
-"inherited from TagList
-let Tlist_Use_Right_Window = 1
-"show menu in gvim. usefull to pop it up from kbd
-let Tlist_Show_Menu = 1
-let Tlist_Auto_Open = 0
-let Tlist_Display_Prototype = 1
-"open fold for current buff, and close all others...
-let Tlist_File_Fold_Auto_Close = 1
-".. or just display current file
-"let Tlist_Show_One_File = 1
-let Tlist_Sort_Type = "name"
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_WinWidth = 40
-"}}}
-"Pydoc {{{2
-let g:pydoc_cmd = "/usr/bin/pydoc"
+"LanguageTool {{{
+let g:languagetool_jar='/opt/LanguageTool/languagetool-commandline.jar'
+"let g:languagetool_lang=pl
 "}}}
 "mark {{{2
 " addidtional colors --
@@ -228,72 +241,50 @@ endfun
 autocmd ColorScheme * call <SID>CustomHighlightings()
 
 "}}}
-" DirDiff {{{2
-let g:DirDiffExcludes = ".svn,CVS,*.class,*.exe,.*.swp,*.pyc,*.pyo"
-" Make use of cursor keys
-nmap <M-Up> [c
-nmap <M-Down> ]c
-nmap <C-Up> \dk
-nmap <C-Down> \dj
-" }}}
-"Gundo {{{2
-map <Leader>u :GundoToggle<cr>
-"}}}
-"CtrlP {{{2
-let g:ctrlp_custom_ignore = {
-    \ 'dir': '\.git$\|\.hg$\|\.svn$',
-    \ 'file': '\.pyo$\|\.pyc$\|\.pyd$',
-    \ }
-let g:ctrlp_map = '<C-F>'
-map <C-B> :CtrlPBuffer<CR>
-"}}}
 "NERDCommenter {{{2
 let g:NERDSpaceDelims=1
 "}}}
-"Python indent{{{2
-let g:python_version_2=1
-"}}}
-"LanguageTool {{{
-let g:languagetool_jar='/opt/LanguageTool/languagetool-commandline.jar'
-"let g:languagetool_lang=pl
-"}}}
-"Jedi {{{
-" automatically popup is annoying
-let g:jedi#popup_on_dot = 0
-" also this one is pretty annoying
-let g:jedi#show_call_signatures = "0"
-"let g:languagetool_lang=pl
-"}}}
 "NERDtree {{{
 map <F2> :NERDTreeToggle<cr>
-"}}}
-"Riv {{{
-" Don't fold the file; it's annoying
-let g:riv_fold_level = -1
-" formatting tables, doesn't work so good with complex grid tables
-let g:riv_auto_format_table = 0
 "}}}
 " Occur {{{
 nnoremap <silent> <unique> <Leader>oc :Occur<CR>
 nnoremap <silent> <unique> <Leader>om :Moccur<CR>
 nnoremap <silent> <unique> <Leader>8 *<C-o>:Moccur<CR>
 " }}}
+"Pydoc {{{2
+let g:pydoc_cmd = "/usr/bin/pydoc"
+"}}}
+"Python indent{{{2
+let g:python_version_2=1
+"}}}
 " Pythonhelper {{{2
 let g:pythonhelper_updatetime = 1000
 " }}}
-"TagListToo {{{2
+"Riv {{{
+" Don't fold the file; it's annoying
+let g:riv_fold_level = -1
+" formatting tables, doesn't work so good with complex grid tables
+let g:riv_auto_format_table = 0
+"}}}
+"ShowMarks {{{2
+let g:showmarks_ignore_type = "hqprm"
+let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"}}}
+"Tagbar {{{2
 nmap <Leader>t :Tagbar<CR>
+let g:tagbar_compact = 1
+" Note: see statusline settings for status bar tag conf
 "}}}
-"KickAssembler {{{2
-let g:kickass_path = '/home/gryf/c64/PCTools/Cross-assemblers/KickAssembler/KickAss.jar'
-"}}}
-"Dragvisuals {{{2
-vmap <expr> <C-LEFT> DVB_Drag('left')
-vmap <expr> <C-RIGHT> DVB_Drag('right')
-vmap <expr> <C-DOWN> DVB_Drag('down')
-vmap <expr> <C-UP> DVB_Drag('up')
-vmap <expr> D DVB_Duplicate()
-"}}}
+"VimWIKI {{{2
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+          \ 'template_path': '~/vimwiki/',
+          \ 'template_default': 'default',
+          \ 'template_ext': '.tpl'}]
+"redefine tab key for vimwiki
+map <Leader>wn <Plug>VimwikiNextWord
+map <Leader>wp <Plug>VimwikiPrevWord
+" }}}
 "}}}
 "KEYS: User defined keyboard shortcuts {{{
 
