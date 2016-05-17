@@ -5,7 +5,6 @@ set nocompatible                    "VIM over VI
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'Finkregh/pythonhelper'
 Plug 'Rykka/riv.vim'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
@@ -13,6 +12,8 @@ Plug 'davidhalter/jedi-vim'
 Plug 'ervandew/taglisttoo'
 Plug 'fs111/pydoc.vim'
 Plug 'gryf/mark'
+Plug 'gryf/pythonhelper'
+Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'gryf/zoom.vim'
 Plug 'hallison/vim-markdown'
 Plug 'honza/vim-snippets'
@@ -21,7 +22,6 @@ Plug 'kazuyukitanimura/jsbeautify'
 Plug 'kevinw/pyflakes-vim'
 Plug 'kien/ctrlp.vim'
 " Plug 'majutsushi/tagbar'
-Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'mattn/calendar-vim'
 Plug 'mduan/python.vim'
 Plug 'mikeage/occur.vim'
@@ -30,6 +30,7 @@ Plug 'myhere/vim-nodejs-complete'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'pcaro90/jpythonfold.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
