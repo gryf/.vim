@@ -33,6 +33,11 @@ let g:pyflakes_use_quickfix = 0
 autocmd BufWinLeave *.py mkview
 autocmd BufWinEnter *.py silent loadview
 
+"Something bad happens for python comments - it places 2 spaces instead of 1
+"after the # sign. Workaround:
+let g:NERDCustomDelimiters = {'python': {'left': '#'}}
+let g:NERDSpaceDelims = 0
+
 finish "end here. all below is just for the record.
 
 " Pylint function, which can be optionally mapped to some keys. Currently
