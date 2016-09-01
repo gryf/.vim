@@ -6,7 +6,7 @@ setlocal smartindent
 setlocal autoindent
 setlocal formatoptions=tcq  "set VIms default
 
-function <SID>ShowInBrowser()
+function! <SID>ShowInBrowser()
     let l:uri = expand("%:p:r") . ".html"
     silent make
     call system(g:browser . " " . l:uri)
