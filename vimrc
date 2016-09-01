@@ -5,7 +5,6 @@ set nocompatible                    "VIM over VI
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'Finkregh/pythonhelper'
 Plug 'Rykka/riv.vim'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
@@ -13,12 +12,13 @@ Plug 'davidhalter/jedi-vim'
 Plug 'ervandew/taglisttoo'
 Plug 'fs111/pydoc.vim'
 Plug 'gryf/mark'
+Plug 'gryf/pythonhelper'
 Plug 'gryf/zoom.vim'
 Plug 'hallison/vim-markdown'
 Plug 'honza/vim-snippets'
 Plug 'https://repo.or.cz/r/vcscommand.git'
 Plug 'kazuyukitanimura/jsbeautify'
-Plug 'kevinw/pyflakes-vim'
+" Plug 'kevinw/pyflakes-vim'  " deprecated, use syntastic instead
 Plug 'kien/ctrlp.vim'
 " Plug 'majutsushi/tagbar'
 Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
@@ -51,6 +51,9 @@ Plug 'vim-scripts/mako.vim--Torborg'
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
 Plug 'yegappan/grep'
+
+"in development
+Plug '~/Devel/vim/kickass-vim/'
 
 call plug#end()
 " }}}
@@ -160,7 +163,7 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0)
 "set correct filetype for tmux
 autocmd BufRead *.tmux.conf set filetype=tmux
 autocmd BufRead *.mako set filetype=mako
-autocmd BufRead *.ass set filetype=kickass
+autocmd BufRead *.ass, *asm set filetype=kickass
 
 " make the current line highlighted only on current window
 autocmd WinEnter * setlocal cursorline
@@ -189,6 +192,10 @@ endif
 "PLUGINS: {{{
 "KickAssembler {{{2
 let g:kickass_path = '/home/gryf/c64/PCTools/Cross-assemblers/KickAssembler/KickAss.jar'
+"}}}
+" Calendar {{{2
+let g:calendar_monday = 1
+let g:calendar_weeknm = 1
 "}}}
 "CtrlP {{{2
 let g:ctrlp_custom_ignore = {
@@ -492,8 +499,6 @@ function <SID>CreateScratch()
     new|setl bt=nofile bh=wipe nobl
     return ""
 endfunction
-
-"Toggle
 "}}}
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
