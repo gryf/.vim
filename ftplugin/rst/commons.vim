@@ -1,6 +1,8 @@
 " Some common settings for all reSt files
 setlocal textwidth=80
-setlocal makeprg=rst2html.py\ \"%\"\ \"%:p:r.html\"
+"setlocal makeprg=rst2html.sh\ \"%\"\ \"%:p:r.html\"
+let &makeprg = 'rst2html.py --syntax-highlight=short --stylesheet ' . expand('<sfile>:p:h', 1) . '/style.css "%" "%:p:r.html"'
+
 setlocal spell
 setlocal smartindent
 setlocal autoindent
