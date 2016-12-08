@@ -152,7 +152,7 @@ let html_ignore_folding = 1
 let html_use_encoding = "utf-8"
 
 "Set the browser executable
-let g:browser = 'firefox'
+let g:browser = 'xdg-open'
 "}}}
 "COMMON: specific vim behaviour {{{
 
