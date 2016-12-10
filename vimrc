@@ -14,6 +14,8 @@ Plug 'fs111/pydoc.vim'
 Plug 'gryf/mark'
 Plug 'gryf/pythonhelper'
 Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
+Plug 'gryf/pep8-vim'
+Plug 'gryf/pylint-vim'
 Plug 'gryf/zoom.vim'
 Plug 'hallison/vim-markdown'
 Plug 'honza/vim-snippets'
@@ -504,7 +506,7 @@ if has('gui_running')
     " I like this font, but it looks like crap on linux
     "set guifont=Consolas\ 12
     " at least, some ttf font that looks good
-    set guifont=DejaVu\ Sans\ Mono\ 12
+    set guifont=DejaVuSansMonoForPowerline\ \Nerd\ Font\ 12
     " Unfortunately there is a problem with TTF fonts in my gvim instance.
     " After editing a while there are some leaving trash appearing on the
     " buffer. Refreshing the screen helps, but is kinda annoying. It is
