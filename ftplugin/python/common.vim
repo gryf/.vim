@@ -37,34 +37,3 @@ autocmd BufWinEnter *.py silent loadview
 "after the # sign. Workaround:
 let g:NERDCustomDelimiters = {'python': {'left': '#'}}
 let g:NERDSpaceDelims = 0
-
-finish "end here. all below is just for the record.
-
-" Pylint function, which can be optionally mapped to some keys. Currently
-" not used.
-if !exists('*<SID>runPyLint')
-    function <SID>runPyLint()
-        echohl Statement
-        echo "Running pylint (ctrl-c to cancel) ..."
-        echohl Normal
-        :Pylint
-    endfunction
-endif
-
-if !exists('*<SID>PyLintBuf')
-    function <SID>PyLintBuf()
-        echohl Statement
-        echo "Running pylint (ctrl-c to cancel) ..."
-        echohl Normal
-        let file = expand('%:p')
-        let cmd = 'pylint --reports=n --output-format=text "' . file . '"'
-
-        if has('win32') || has('win64')
-            let cmd = 'cmd /c "' . cmd . '"'
-        endif
-
-        exec "bel silent new " . file . ".lint"
-        exec "silent! read! " . cmd
-    endfunction
-endif
-
