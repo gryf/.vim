@@ -94,8 +94,10 @@ set statusline=%<%F                 " filename (fullpath)
 set statusline+=\ %h                " indicator for help buffer
 set statusline+=%m                  " modified flag
 set statusline+=%r                  " readonly flag
-set statusline+=\ %{tagbar#currenttag('%s','','f')} " current tag
-set statusline+=\ %{tagbar#currenttagtype('(%s)','')} " current tag type
+if exists(':Tagbar')
+    set statusline+=\ %{tagbar#currenttag('%s','','f')} " current tag
+    set statusline+=\ %{tagbar#currenttagtype('(%s)','')} " current tag type
+endif
 set statusline+=%=                  " switch to the right
 set statusline+=%(%l,%c%V%)         " line, column and virtual column
 set statusline+=\ %3p%%             " percentage of the file
