@@ -12,10 +12,10 @@ Plug 'davidhalter/jedi-vim'
 Plug 'ervandew/taglisttoo'
 Plug 'fs111/pydoc.vim'
 Plug 'gryf/mark'
-Plug 'gryf/pythonhelper'
-Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'gryf/pep8-vim'
 Plug 'gryf/pylint-vim'
+Plug 'gryf/pythonhelper'
+Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'gryf/zoom.vim'
 Plug 'hallison/vim-markdown'
 Plug 'honza/vim-snippets'
@@ -52,6 +52,9 @@ Plug 'vim-scripts/mako.vim--Torborg'
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
 Plug 'yegappan/grep'
+
+Plug 'vim-scripts/DrawIt'
+Plug 'rust-lang/rust.vim'
 
 "in development
 Plug '~/Devel/vim/kickass-vim/'
@@ -503,16 +506,7 @@ endfunction
 "}}}
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
-    " I like this font, but it looks like crap on linux
-    "set guifont=Consolas\ 12
-    " at least, some ttf font that looks good
     set guifont=DejaVuSansMonoForPowerline\ \Nerd\ Font\ 12
-    " Unfortunately there is a problem with TTF fonts in my gvim instance.
-    " After editing a while there are some leaving trash appearing on the
-    " buffer. Refreshing the screen helps, but is kinda annoying. It is
-    " probably my X11 setup, because on other similar workstations and setup I
-    " didn't noticed such behavior. Fallback to fixed-misc for a while.
-    "set guifont=Fixed\ 13
     set mouse=a                "Enable mouse support
     " No toolbar, menu, scrollbars, draw simple text tabs. This would keep
     " window in one place, and also this will conserve space. Tabs are huge
