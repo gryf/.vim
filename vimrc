@@ -316,7 +316,8 @@ map <S-F9> :QFix<CR>
 map <S-F11> :LWin<CR>
 
 "remove trailing whitespaces
-nnoremap <leader>e :StripTrailingWhitespaces!<CR>
+nnoremap <leader>e :call <SID>StripTrailingWhitespaces(1, 'n')<CR>
+vnoremap <silent> <Leader>e :<C-U>call <SID>StripTrailingWhitespaces(1, 'v')<CR>
 
 " copy current buffer filename (full path)
 nmap ,cn :silent call <SID>CopyFileName(1)<CR>
@@ -371,7 +372,7 @@ function <SID>Make()
 endfunction
 
 " Remove trailing whitespace
-function <SID>StripTrailingWhitespaces(force)
+function <SID>StripTrailingWhitespaces(force, mode) range
     if a:force != 1 && g:stripTrailingWhitespace == 0
         return
     endif
@@ -382,13 +383,17 @@ function <SID>StripTrailingWhitespaces(force)
         let l = line(".")
         let c = col(".")
         " Do the business:
-        %s/\s\+$//e
+        if a:mode == 'v'
+            '<,'>s/\s\+$//e
+        else
+            %s/\s\+$//e
+        endif
         " Clean up: restore previous search history, and cursor position
         let @/=_s
         call cursor(l, c)
     endif
 endfunction
-command -bang StripTrailingWhitespaces call <SID>StripTrailingWhitespaces(<bang>0)
+command -bang StripTrailingWhitespaces call <SID>StripTrailingWhitespaces(<bang>0, 'n')
 
 function <SID>CopyFileName(full)
     if a:full
