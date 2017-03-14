@@ -162,7 +162,7 @@ let g:browser = 'xdg-open'
 "COMMON: specific vim behaviour {{{
 
 "remove all trailing whitespace for specified files before write
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0)
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0, 'n')
 
 "set correct filetype for tmux
 autocmd BufRead *.tmux.conf set filetype=tmux
