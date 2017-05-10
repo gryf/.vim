@@ -51,7 +51,6 @@ Plug 'vim-scripts/mako.vim'
 Plug 'vim-scripts/mako.vim--Torborg'
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
-Plug 'yegappan/grep'
 
 Plug 'vim-scripts/DrawIt'
 Plug 'rust-lang/rust.vim'
@@ -194,6 +193,11 @@ if $TERM == 'linux' && !has("gui_running")
 endif
 "}}}
 "PLUGINS: {{{
+"Ack {{{2
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+"}}}
 "KickAssembler {{{2
 let g:kickass_path = '/home/gryf/c64/PCTools/Cross-assemblers/KickAssembler/KickAss.jar'
 "}}}
@@ -207,6 +211,17 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\.pyo$\|\.pyc$\|\.pyd$',
     \ }
 let g:ctrlp_map = '<C-F>'
+" The Silver Searcher
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
 map <C-B> :CtrlPBuffer<CR>
 "}}}
 " DirDiff {{{2
