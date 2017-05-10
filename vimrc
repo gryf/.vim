@@ -118,7 +118,7 @@ set softtabstop=4
 
 "spell options
 set spelllang=pl,en
-let &spellfile=expand('$HOME/.vim/pol.utf8.add')
+let &spellfile=expand('/home/gryf/.vim/spell/pl.utf-8.add')
 
 set splitbelow                      "Create new window below current one
 set swapfile                        "Use swap file
