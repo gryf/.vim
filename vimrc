@@ -20,6 +20,7 @@ Plug 'fs111/pydoc.vim'
 Plug 'gryf/mark'
 Plug 'gryf/pep8-vim'
 Plug 'gryf/pylint-vim'
+Plug 'gryf/python-syntax'
 Plug 'gryf/pythonhelper'
 Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'gryf/zoom.vim'
