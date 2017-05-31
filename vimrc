@@ -25,6 +25,7 @@ Plug 'gryf/python-syntax'
 Plug 'gryf/pythonhelper'
 Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'gryf/wombat256grf'
+Plug 'gryf/vim-latex-compiler'
 Plug 'gryf/zoom.vim'
 Plug 'hallison/vim-markdown'
 Plug 'honza/vim-snippets'
@@ -303,6 +304,9 @@ let g:riv_fold_level = -1
 " formatting tables, doesn't work so good with complex grid tables
 let g:riv_auto_format_table = 0
 "}}}
+" Rubber {{{2
+let g:rubber_make_on_save = 1
+" }}}
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
 let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
