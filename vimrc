@@ -24,6 +24,7 @@ Plug 'gryf/pylint-vim'
 Plug 'gryf/python-syntax'
 Plug 'gryf/pythonhelper'
 Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
+Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
 Plug 'hallison/vim-markdown'
 Plug 'honza/vim-snippets'
