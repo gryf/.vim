@@ -18,6 +18,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'dogrover/vim-pentadactyl'
 Plug 'ervandew/taglisttoo'
 Plug 'fs111/pydoc.vim'
+Plug 'gryf/dragvisuals'
 Plug 'gryf/mark'
 Plug 'gryf/pep8-vim'
 Plug 'gryf/pylint-vim'
@@ -249,6 +250,7 @@ vmap <expr> <C-RIGHT> DVB_Drag('right')
 vmap <expr> <C-DOWN> DVB_Drag('down')
 vmap <expr> <C-UP> DVB_Drag('up')
 vmap <expr> D DVB_Duplicate()
+let g:DVB_TrimWS = 1
 "}}}
 "Gundo {{{2
 map <Leader>u :GundoToggle<cr>
