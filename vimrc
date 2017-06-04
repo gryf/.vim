@@ -170,7 +170,161 @@ let html_use_encoding = "utf-8"
 "Set the browser executable
 let g:browser = 'xdg-open'
 "}}}
-"COMMON: specific vim behaviour {{{
+"FileTypes: specific vim behaviour {{{
+function s:SetPythonSettings() "{{{2
+    " Python specific options
+    setlocal cinkeys-=0#
+    setlocal indentkeys-=0#
+    setlocal foldlevel=100
+    setlocal foldmethod=indent
+    setlocal list
+    setlocal noautoindent
+    setlocal smartindent
+    setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+    setlocal smarttab
+
+    setlocal statusline=%<%F                 " filename (fullpath)
+    setlocal statusline+=\ %h                " indicator for help buffer
+    setlocal statusline+=%m                  " modified flag
+    setlocal statusline+=%r                  " readonly flag
+    setlocal statusline+=\ %{TagInStatusLine()} " current tag and its type
+    setlocal statusline+=%=                  " switch to the right
+    setlocal statusline+=%(%l,%c%V%)         " line, column and virtual column
+    setlocal statusline+=\ %3p%%             " percentage of the file
+
+    set wildignore+=*.pyc
+
+    inoremap # X<BS>#
+
+    "set ofu=syntaxcomplete#Complete
+
+    "autocmd FileType python setlocal omnifunc=pysmell#Complete
+    let python_highlight_all=1
+
+    "I don't want to have pyflakes errors in qfix, it interfering with 
+    "Pep8/Pylint
+    let g:pyflakes_use_quickfix = 0
+
+    "Load views for py files
+    autocmd BufWinLeave *.py mkview
+    autocmd BufWinEnter *.py silent loadview
+
+    "Something bad happens for python comments - it places 2 spaces instead 
+    "of 1 after the # sign. Workaround:
+    let g:NERDCustomDelimiters = {'python': {'left': '#'}}
+    let g:NERDSpaceDelims = 0
+endfunction
+"}}}
+function s:SetJavaScriptSettings() "{{{2
+    setlocal foldmethod=syntax
+    setlocal list
+
+    " reformat json struct
+    map <leader>] <esc>:%!python -m json.tool<cr>
+endfunction
+"}}}
+function s:SetMarkdownSettings() "{{{2
+    setlocal textwidth=80
+    setlocal makeprg=md2html.py\ \"%\"\ \"%:p:r.html\"
+    setlocal spell
+    setlocal smartindent
+    setlocal autoindent
+    setlocal formatoptions=tcq "set VIms default
+
+    autocmd BufWritePost *.md :silent make
+endfunction
+"}}}
+function s:SetSnippetSettings() "{{{2
+    set nolist
+    set tabstop=4
+    set autoindent
+    "set foldmethod=manual
+    set noexpandtab
+    set shiftwidth=4
+    set noexpandtab
+    set list
+endfunction
+"}}}
+function s:SetSqlSettings() "{{{2
+    set nolist
+    set nosmartindent
+    set autoindent
+    set foldmethod=manual
+endfunction
+"}}}
+function s:SetVimSettings() "{{{2
+    set nolist
+    set nosmartindent
+    set autoindent
+    set foldmethod=manual
+endfunction
+"}}}
+function s:SetYamlSettings() "{{{2
+    " Set indents compatible to yaml specification
+    setlocal softtabstop=2
+    setlocal tabstop=2
+    setlocal shiftwidth=2
+    setlocal expandtab
+endfunction
+"}}}
+function s:SetRestSettings() "{{{2
+    " Some common settings for all reSt files
+    setlocal textwidth=79
+    let &makeprg = 'rst2html.sh "%" "%:p:r.html"'
+
+    setlocal spell
+    setlocal smartindent
+    setlocal autoindent
+    setlocal formatoptions=tcq  "set VIms default
+
+    function! <SID>ShowInBrowser()
+        let l:uri = expand("%:p:r") . ".html"
+        silent make
+        call system(g:browser . " " . l:uri)
+
+        echohl Statement
+        echo "Opened '" . l:uri ."' in " . g:browser
+        echohl None
+    endfunction
+
+    if !exists(":ShowInBrowser")
+        command ShowInBrowser call s:ShowInBrowser()
+        map <S-F5> :ShowInBrowser<CR>
+    endif
+
+    function! WordFrequency() range
+        let all = split(join(getline(a:firstline, a:lastline)), '\k\+')
+        let frequencies = {}
+        for word in all
+            let frequencies[word] = get(frequencies, word, 0) + 1
+        endfor
+        new
+        setlocal buftype=nofile bufhidden=hide noswapfile tabstop=4
+        for [key,value] in items(frequencies)
+            call append('$', value."\t".key)
+        endfor
+        sort i
+    endfunction
+    command! -range=% WordFrequency <line1>,<line2>call WordFrequency()
+
+    function! CreateDict() range
+        let all = split(join(getline(a:firstline, a:lastline)), 
+                    \ '[^A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]\+')
+        let frequencies = {}
+        for word in all
+            let frequencies[word] = get(frequencies, word, 0) + 1
+        endfor
+        new
+        setlocal buftype=nofile bufhidden=hide noswapfile
+        for [key,value] in items(frequencies)
+            call append('$', key)
+        endfor
+        sort i
+    endfunction
+    command! -range=% CreateDict <line1>,<line2>call CreateDict()
+
+endfunction
+"}}}
 
 "remove all trailing whitespace for specified files before write
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0, 'n')
@@ -183,6 +337,17 @@ autocmd BufRead *.ass, *asm set filetype=kickass
 " make the current line highlighted only on current window
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
+
+autocmd FileType python call <SID>SetPythonSettings()
+autocmd FileType json call <SID>SetJavaScriptSettings()
+autocmd FileType javascript call <SID>SetJavaScriptSettings()
+autocmd FileType rst call <SID>SetRestSettings()
+autocmd FileType yaml call <SID>SetRestSettings()
+autocmd FileType snippet call <SID>SetSnippetSettings()
+autocmd FileType sql call <SID>SetSqlSettings()
+autocmd FileType markdown call <SID>SetMarkdownSettings()
+autocmd FileType vim call <SID>SetVimSettings()
+
 " }}}
 "TERMINAL: options for terminal emulators {{{
 if $TERM == 'rxvt-unicode-256color' || $TERM == 'xterm'
@@ -271,12 +436,12 @@ let g:languagetool_jar='/opt/LanguageTool/languagetool-commandline.jar'
 "}}}
 "mark {{{2
 " addidtional colors --
-fun! s:CustomHighlightings()
+function s:CustomHighlightings()
     highlight def MarkWord7 ctermbg=White ctermfg=Black guibg=#E8E8E8 guifg=Black
     highlight def MarkWord8 ctermbg=LightGray ctermfg=Black guibg=#C0C0C0 guifg=Black
     highlight def MarkWord9 ctermbg=DarkYellow ctermfg=Black guibg=#FFC299 guifg=Black
     highlight def MarkWord10 ctermbg=DarkGreen ctermfg=Black guibg=#6E9954 guifg=Black
-endfun
+endfunction
 autocmd ColorScheme * call <SID>CustomHighlightings()
 
 "}}}
