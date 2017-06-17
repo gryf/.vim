@@ -484,8 +484,8 @@ let g:riv_fold_level = -1
 " formatting tables, doesn't work so good with complex grid tables
 let g:riv_auto_format_table = 0
 "}}}
-" Rubber {{{2
-let g:rubber_make_on_save = 1
+" Rubber / vim-latex-compiler {{{2
+let g:rubber_make_on_save = 0
 " }}}
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
