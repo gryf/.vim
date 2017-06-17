@@ -538,35 +538,11 @@ map ]b :call OpenInWebBrowser()<cr>
 
 "remove search highlight and refresh
 nnoremap <silent> <C-l> :nohl<CR>:syn sync fromstart<CR><C-l>
-map <F3> :call <SID>ChangeVCS()<cr>
 map <F4> :call <SID>ToggleHex()<cr>
 " }}}
-" FUNCTIONS: usefull functions for all of th files {{{
+" FUNCTIONS: usefull functions for all of the files {{{
 
 " Switch VCSCommand current used VCS system
-function <SID>ChangeVCS()
-    echo ""
-    let l:vcs = ["HG", "SVN", "CVS", "GIT"]
-    let l:scv = {1: "HG", 2: "SVN", 3: "CVS", 4: "GIT"}
-    let l:cho = ""
-    let l:current = 0
-
-    if exists("VCSCommandVCSTypeExplicitOverride") &&
-        \ index(vcs, g:VCSCommandVCSTypeExplicitOverride) != -1
-        let l:current = vcs[g:VCSCommandVCSTypeExplicitOverride]
-    endif
-
-    let l:choice = confirm('Switch VCS: ', "&" . join(l:vcs, "\n&"), l:current)
-    execute ':redraw!'
-
-    if has_key(l:scv, l:choice)
-        let g:VCSCommandVCSTypeExplicitOverride=l:scv[l:choice]
-
-        echohl Statement
-        echo "Switched to " . g:VCSCommandVCSTypeExplicitOverride
-        echohl None
-    endif
-endfunction
 
 " Simple wrapper for :make command
 function <SID>Make()
