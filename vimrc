@@ -236,7 +236,7 @@ function s:SetPythonSettings() "{{{2
     "autocmd FileType python setlocal omnifunc=pysmell#Complete
     let python_highlight_all=1
 
-    "I don't want to have pyflakes errors in qfix, it interfering with 
+    "I don't want to have pyflakes errors in qfix, it interfering with
     "Pep8/Pylint
     let g:pyflakes_use_quickfix = 0
 
@@ -244,7 +244,7 @@ function s:SetPythonSettings() "{{{2
     autocmd BufWinLeave *.py mkview
     autocmd BufWinEnter *.py silent loadview
 
-    "Something bad happens for python comments - it places 2 spaces instead 
+    "Something bad happens for python comments - it places 2 spaces instead
     "of 1 after the # sign. Workaround:
     let g:NERDCustomDelimiters = {'python': {'left': '#'}}
     let g:NERDSpaceDelims = 0
@@ -356,7 +356,7 @@ function s:SetRestSettings() "{{{2
     command! -range=% WordFrequency <line1>,<line2>call WordFrequency()
 
     function! CreateDict() range
-        let all = split(join(getline(a:firstline, a:lastline)), 
+        let all = split(join(getline(a:firstline, a:lastline)),
                     \ '[^A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]\+')
         let frequencies = {}
         for word in all
@@ -371,6 +371,12 @@ function s:SetRestSettings() "{{{2
     endfunction
     command! -range=% CreateDict <line1>,<line2>call CreateDict()
 
+endfunction
+"}}}
+function s:SetVimwikiSettings() "{{{2
+    map <F5> :Vimwiki2HTML<CR>
+    map <S-F5> :Vimwiki2HTMLBrowse<CR>
+    map <C-F5> :VimwikiAll2HTML<CR>
 endfunction
 "}}}
 
@@ -395,6 +401,7 @@ autocmd FileType snippet call <SID>SetSnippetSettings()
 autocmd FileType sql call <SID>SetSqlSettings()
 autocmd FileType markdown call <SID>SetMarkdownSettings()
 autocmd FileType vim call <SID>SetVimSettings()
+autocmd FileType vimwiki call <SID>SetVimwikiSettings()
 
 " }}}
 "TERMINAL: options for terminal emulators {{{
@@ -542,8 +549,6 @@ map <Leader>wp <Plug>VimwikiPrevWord
 " }}}
 "}}}
 " FUNCTIONS: usefull functions for all of the files {{{
-
-" Switch VCSCommand current used VCS system
 
 " Simple wrapper for :make command
 function <SID>Make()
