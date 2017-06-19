@@ -170,6 +170,41 @@ let html_use_encoding = "utf-8"
 "Set the browser executable
 let g:browser = 'xdg-open'
 "}}}
+"KEYS: User defined keyboard shortcuts {{{
+
+"Cycle through buffers.
+" map <C-p> :bp<CR>
+" map <C-n> :bn<CR>
+
+map <F5> :call <SID>Make()<cr>
+
+map <F6> :echom <SID>CreateScratch()<CR>
+
+"QuickFix jumps
+map <F9> :cp<CR>
+map <F10> :cn<CR>
+map <F11> :lprevious<CR>
+map <F12> :lnext<CR>
+map <S-F9> :QFix<CR>
+map <S-F11> :LWin<CR>
+
+"remove trailing whitespaces
+nnoremap <leader>e :call <SID>StripTrailingWhitespaces(1, 'n')<CR>
+vnoremap <silent> <Leader>e :<C-U>call <SID>StripTrailingWhitespaces(1, 'v')<CR>
+
+" copy current buffer filename (full path)
+nmap ,cn :silent call <SID>CopyFileName(1)<CR>
+" copy current buffer filename (filename only)
+nmap ,cs :silent call <SID>CopyFileName(0)<CR>
+
+"open link under cursor in Firefox
+map ]b :call OpenInWebBrowser()<cr>
+
+"remove search highlight and refresh
+nnoremap <silent> <C-l> :nohl<CR>:syn sync fromstart<CR><C-l>
+map <F3> :call <SID>ChangeVCS()<cr>
+map <F4> :call <SID>ToggleHex()<cr>
+" }}}
 "FileTypes: specific vim behaviour {{{
 function s:SetPythonSettings() "{{{2
     " Python specific options
@@ -506,40 +541,6 @@ map <Leader>wn <Plug>VimwikiNextWord
 map <Leader>wp <Plug>VimwikiPrevWord
 " }}}
 "}}}
-"KEYS: User defined keyboard shortcuts {{{
-
-"Cycle through buffers.
-" map <C-p> :bp<CR>
-" map <C-n> :bn<CR>
-
-map <F5> :call <SID>Make()<cr>
-
-map <F6> :echom <SID>CreateScratch()<CR>
-
-"QuickFix jumps
-map <F9> :cp<CR>
-map <F10> :cn<CR>
-map <F11> :lprevious<CR>
-map <F12> :lnext<CR>
-map <S-F9> :QFix<CR>
-map <S-F11> :LWin<CR>
-
-"remove trailing whitespaces
-nnoremap <leader>e :call <SID>StripTrailingWhitespaces(1, 'n')<CR>
-vnoremap <silent> <Leader>e :<C-U>call <SID>StripTrailingWhitespaces(1, 'v')<CR>
-
-" copy current buffer filename (full path)
-nmap ,cn :silent call <SID>CopyFileName(1)<CR>
-" copy current buffer filename (filename only)
-nmap ,cs :silent call <SID>CopyFileName(0)<CR>
-
-"open link under cursor in Firefox
-map ]b :call OpenInWebBrowser()<cr>
-
-"remove search highlight and refresh
-nnoremap <silent> <C-l> :nohl<CR>:syn sync fromstart<CR><C-l>
-map <F4> :call <SID>ToggleHex()<cr>
-" }}}
 " FUNCTIONS: usefull functions for all of the files {{{
 
 " Switch VCSCommand current used VCS system
