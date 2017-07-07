@@ -11,38 +11,38 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'Rykka/riv.vim'
+Plug 'Rykka/riv.vim', { 'for': 'rst' }
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'dogrover/vim-pentadactyl'
 Plug 'ervandew/taglisttoo'
-Plug 'fs111/pydoc.vim'
+Plug 'fs111/pydoc.vim', { 'for': 'python' }
 Plug 'gryf/dragvisuals'
 Plug 'gryf/mark'
-Plug 'gryf/pep8-vim'
-Plug 'gryf/pylint-vim'
-Plug 'gryf/python-syntax'
-Plug 'gryf/pythonhelper'
+Plug 'gryf/pep8-vim', { 'for': 'python' }
+Plug 'gryf/pylint-vim', { 'for': 'python' }
+Plug 'gryf/python-syntax', { 'for': 'python' }
+Plug 'gryf/pythonhelper', { 'for': 'python' }
 Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'gryf/wombat256grf'
 Plug 'gryf/vim-latex-compiler'
 Plug 'gryf/zoom.vim'
-Plug 'hallison/vim-markdown'
+Plug 'hallison/vim-markdown', { 'for': 'markdown' }
 Plug 'honza/vim-snippets'
 Plug 'https://repo.or.cz/r/vcscommand.git'
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'keith/tmux.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'mattn/calendar-vim'
-Plug 'mduan/python.vim'
+Plug 'mduan/python.vim', { 'for': 'python' }
 Plug 'mikeage/occur.vim'
 Plug 'mileszs/ack.vim'
-Plug 'myhere/vim-nodejs-complete'
-Plug 'othree/html5.vim'
-Plug 'pangloss/vim-javascript'
+Plug 'myhere/vim-nodejs-complete', { 'for': 'javascript' }
+Plug 'othree/html5.vim', { 'for': 'html' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'pcaro90/jpythonfold.vim'
-Plug 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
@@ -52,20 +52,18 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/JavaScript-Indent'
+Plug 'vim-scripts/JavaScript-Indent', { 'for': 'javascript' }
 Plug 'vim-scripts/LanguageTool'
 Plug 'vim-scripts/MatchTag'
-Plug 'vim-scripts/Python-2.x-Standard-Library-Reference'
+Plug 'vim-scripts/Python-2.x-Standard-Library-Reference', { 'for': 'python' }
 Plug 'vim-scripts/ShowMarks'
-Plug 'vim-scripts/indentpython'
+Plug 'vim-scripts/indentpython', { 'for': 'python' }
 Plug 'vim-scripts/loremipsum'
-Plug 'vim-scripts/mako.vim'
-Plug 'vim-scripts/mako.vim--Torborg'
+Plug 'vim-scripts/mako.vim', { 'for': 'mako' }
+Plug 'vim-scripts/mako.vim--Torborg', { 'for': 'mako' }
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
-
 Plug 'vim-scripts/DrawIt'
-Plug 'rust-lang/rust.vim'
 
 "in development
 Plug '~/Devel/vim/kickass-vim/'
@@ -717,9 +715,6 @@ colorscheme wombat256grf
 if $TERM == 'linux' && !has('gui_running')
     " fallback to basic 8-color colorscheme
     colorscheme pablo
-endif
-if has('win32')
-    source $HOME/vimfiles/winrc.vim
 endif
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:
