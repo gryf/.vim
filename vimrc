@@ -65,9 +65,6 @@ Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
 Plug 'vim-scripts/DrawIt'
 
-"in development
-Plug '~/Devel/vim/kickass-vim/'
-
 call plug#end()
 " }}}
 
@@ -512,15 +509,12 @@ nnoremap <silent> <unique> <Leader>8 *<C-o>:Moccur<CR>
 "Pydoc {{{2
 let g:pydoc_cmd = "/usr/bin/pydoc"
 "}}}
-"Python indent{{{2
-let g:python_version_2=1
-"}}}
-" Pythonhelper {{{2
+"Pythonhelper {{{2
 let g:pythonhelper_updatetime = 1000
-" }}}
 "}}}
-"Python syntax{{{2
+"Python syntax {{{2
 let g:python_highlight_all=1
+let g:python_version_2=1
 "}}}
 "Riv {{{
 " Don't fold the file; it's annoying
