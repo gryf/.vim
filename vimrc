@@ -518,6 +518,10 @@ let g:python_version_2=1
 " Pythonhelper {{{2
 let g:pythonhelper_updatetime = 1000
 " }}}
+"}}}
+"Python syntax{{{2
+let g:python_highlight_all=1
+"}}}
 "Riv {{{
 " Don't fold the file; it's annoying
 let g:riv_fold_level = -1
