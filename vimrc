@@ -19,7 +19,6 @@ Plug 'dogrover/vim-pentadactyl'
 Plug 'ervandew/taglisttoo'
 Plug 'fs111/pydoc.vim', { 'for': 'python' }
 Plug 'gryf/dragvisuals'
-Plug 'gryf/mark'
 Plug 'gryf/pep8-vim', { 'for': 'python' }
 Plug 'gryf/pylint-vim', { 'for': 'python' }
 Plug 'gryf/python-syntax', { 'for': 'python' }
@@ -31,6 +30,7 @@ Plug 'gryf/zoom.vim'
 Plug 'hallison/vim-markdown', { 'for': 'markdown' }
 Plug 'honza/vim-snippets'
 Plug 'https://repo.or.cz/r/vcscommand.git'
+Plug 'inkarkat/vim-mark'
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'keith/tmux.vim'
 Plug 'kien/ctrlp.vim'
