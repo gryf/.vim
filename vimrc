@@ -22,10 +22,11 @@ Plug 'gryf/dragvisuals'
 Plug 'gryf/pep8-vim', { 'for': 'python' }
 Plug 'gryf/pylint-vim', { 'for': 'python' }
 Plug 'gryf/python-syntax', { 'for': 'python' }
+Plug 'gryf/python.vim', { 'for': 'python' }
 Plug 'gryf/pythonhelper', { 'for': 'python' }
 Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
-Plug 'gryf/wombat256grf'
 Plug 'gryf/vim-latex-compiler'
+Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
 Plug 'hallison/vim-markdown', { 'for': 'markdown' }
 Plug 'honza/vim-snippets'
@@ -35,7 +36,6 @@ Plug 'kazuyukitanimura/jsbeautify'
 Plug 'keith/tmux.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'mattn/calendar-vim'
-Plug 'mduan/python.vim', { 'for': 'python' }
 Plug 'mikeage/occur.vim'
 Plug 'mileszs/ack.vim'
 Plug 'myhere/vim-nodejs-complete', { 'for': 'javascript' }
@@ -52,6 +52,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/JavaScript-Indent', { 'for': 'javascript' }
 Plug 'vim-scripts/LanguageTool'
 Plug 'vim-scripts/MatchTag'
@@ -63,7 +64,6 @@ Plug 'vim-scripts/mako.vim', { 'for': 'mako' }
 Plug 'vim-scripts/mako.vim--Torborg', { 'for': 'mako' }
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
-Plug 'vim-scripts/DrawIt'
 
 call plug#end()
 " }}}
@@ -528,6 +528,10 @@ let g:rubber_make_on_save = 0
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
 let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"}}}
+"Syntastic {{{2
+"don't use pylint to check since it's slow on big modules
+let g:syntastic_python_checkers = ["python", "flake8"]
 "}}}
 "Tagbar {{{2
 nmap <Leader>t :Tagbar<CR>
