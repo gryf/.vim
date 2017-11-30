@@ -719,4 +719,9 @@ if $TERM == 'linux' && !has('gui_running')
     colorscheme pablo
 endif
 "}}}
+" Custom: custom config per machine {{{
+if filereadable($MYVIMRC . '.local')
+    exec "source " . $MYVIMRC . '.local'
+endif
+"}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:
