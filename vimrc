@@ -16,7 +16,6 @@ Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'dogrover/vim-pentadactyl'
-Plug 'ervandew/taglisttoo'
 Plug 'fs111/pydoc.vim', { 'for': 'python' }
 Plug 'gryf/dragvisuals'
 Plug 'gryf/pep8-vim', { 'for': 'python' }
