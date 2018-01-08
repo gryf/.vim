@@ -45,7 +45,7 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-Plug 'sjl/gundo.vim'
+Plug 'ikalnytskyi/gundo.vim', { 'branch': 'py3-if-no-other-choice' }
 Plug 'skammer/vim-css-color'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
