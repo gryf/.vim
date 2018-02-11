@@ -207,7 +207,6 @@ function s:SetPythonSettings() "{{{2
     setlocal foldlevel=100
     setlocal foldmethod=indent
     setlocal list
-    setlocal noautoindent
     setlocal smartindent
     setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     setlocal smarttab
