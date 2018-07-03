@@ -27,12 +27,12 @@ Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
 Plug 'gryf/vim-latex-compiler'
 Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
-Plug 'hallison/vim-markdown', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'honza/vim-snippets'
 Plug 'https://repo.or.cz/r/vcscommand.git'
 Plug 'inkarkat/vim-mark'
 Plug 'kazuyukitanimura/jsbeautify'
-Plug 'keith/tmux.vim'
+Plug 'ericpruitt/tmux.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'mattn/calendar-vim'
 Plug 'mikeage/occur.vim'
@@ -45,7 +45,7 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-Plug 'ikalnytskyi/gundo.vim', { 'branch': 'py3-if-no-other-choice' }
+Plug 'sjl/gundo.vim'
 Plug 'skammer/vim-css-color'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
