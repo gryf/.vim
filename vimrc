@@ -463,6 +463,7 @@ let g:DVB_TrimWS = 1
 "}}}
 "Gundo {{{2
 map <Leader>u :GundoToggle<cr>
+let g:gundo_prefer_python3 = 1
 "}}}
 "Jedi {{{
 " automatically popup is annoying
