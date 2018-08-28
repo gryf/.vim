@@ -1,13 +1,13 @@
 snippet dbg "IPython Debugger abbrv" !b
-import ipdb; ipdb.set_trace()
+__import__('pdb').set_trace()
 endsnippet
 
-snippet rdbg "Remote ipdb abbrv" !b
-import ripdb; ripdb.set_trace()
+snippet ripdb "Remote ipdb abbrv" !b
+__import__('ripdb').set_trace()
 endsnippet
 
-snippet pdb "pdb abbrv" !b
-import pdb; pdb.set_trace()
+snippet ipdb "pdb abbrv" !b
+__import__('ipdb').set_trace()
 endsnippet
 
 snippet docmodule "Doc module" !b
