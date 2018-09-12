@@ -29,7 +29,6 @@ Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'honza/vim-snippets'
-Plug 'https://repo.or.cz/r/vcscommand.git'
 Plug 'inkarkat/vim-mark'
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'ericpruitt/tmux.vim'
@@ -196,7 +195,6 @@ map ]b :call OpenInWebBrowser()<cr>
 
 "remove search highlight and refresh
 nnoremap <silent> <C-l> :nohl<CR>:syn sync fromstart<CR><C-l>
-map <F3> :call <SID>ChangeVCS()<cr>
 map <F4> :call <SID>ToggleHex()<cr>
 " }}}
 "FileTypes: specific vim behaviour {{{
