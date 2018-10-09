@@ -692,6 +692,9 @@ function <SID>CreateScratch()
     new|setl bt=nofile bh=wipe nobl
     return ""
 endfunction
+
+"write files as a root using sudo
+command W w !sudo tee "%" > /dev/null
 "}}}
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
