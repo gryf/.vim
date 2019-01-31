@@ -29,7 +29,7 @@ Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'honza/vim-snippets'
-Plug 'inkarkat/vim-mark'
+Plug 'inkarkat/vim-mark', {'commit': 'b0b0cb9'}
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'ericpruitt/tmux.vim'
 Plug 'kien/ctrlp.vim'
