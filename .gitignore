@@ -6,3 +6,4 @@ tags
 .netrwhist
 autoload/plug.vim
 vimrc.local
+plugins.local

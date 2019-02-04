@@ -63,6 +63,12 @@ Plug 'vim-scripts/mako.vim--Torborg', { 'for': 'mako' }
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
 
+" Custom plugins: custom plugins per machine {{{
+" if filereadable($MYVIMRC . '.local')
+if filereadable(fnamemodify($MYVIMRC, ':h') . '/plugins.local')
+    exec "source " . fnamemodify($MYVIMRC, ':h') . '/plugins.local'
+endif
+
 call plug#end()
 " }}}
 
