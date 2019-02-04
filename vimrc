@@ -14,6 +14,7 @@ call plug#begin('~/.vim/bundle')
 Plug 'Rykka/riv.vim', { 'for': 'rst' }
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
+Plug 'ayuanx/vim-mark-standalone'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'dogrover/vim-pentadactyl'
 Plug 'fs111/pydoc.vim', { 'for': 'python' }
@@ -29,7 +30,6 @@ Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'honza/vim-snippets'
-Plug 'inkarkat/vim-mark', {'commit': 'b0b0cb9'}
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'ericpruitt/tmux.vim'
 Plug 'kien/ctrlp.vim'
