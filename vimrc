@@ -14,6 +14,7 @@ call plug#begin('~/.vim/bundle')
 Plug 'Rykka/riv.vim', { 'for': 'rst' }
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
+Plug 'andymass/vim-matchup'
 Plug 'ayuanx/vim-mark-standalone'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'dogrover/vim-pentadactyl'
