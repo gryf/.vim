@@ -72,6 +72,7 @@ endif
 
 call plug#end()
 " }}}
+" }}}
 
 filetype plugin indent on           "turn plugins/indent on
 syntax on                           "Turn syntax highlighting on
