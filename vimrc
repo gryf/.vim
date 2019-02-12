@@ -374,6 +374,11 @@ function s:SetVimwikiSettings() "{{{2
     map <C-F5> :VimwikiAll2HTML<CR>
 endfunction
 "}}}
+function s:SetGitcommitSettings() "{{{2
+    setlocal textwidth=72
+    setlocal spell
+endfunction
+"}}}
 
 "remove all trailing whitespace for specified files before write
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0, 'n')
@@ -397,6 +402,7 @@ autocmd FileType sql call <SID>SetSqlSettings()
 autocmd FileType markdown call <SID>SetMarkdownSettings()
 autocmd FileType vim call <SID>SetVimSettings()
 autocmd FileType vimwiki call <SID>SetVimwikiSettings()
+autocmd FileType gitcommit call <SID>SetGitcommitSettings()
 
 " }}}
 "TERMINAL: options for terminal emulators {{{
