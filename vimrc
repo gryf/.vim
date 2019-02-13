@@ -161,6 +161,8 @@ set noswapfile
 " Strip trailing whitespace option
 let stripTrailingWhitespace = 1
 
+" Ignore missing spell files
+let loaded_spellfile_plugin = 1
 
 " TOhtml options
 let html_number_lines = 1
