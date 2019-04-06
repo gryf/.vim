@@ -11,7 +11,7 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'Rykka/riv.vim', { 'for': 'rst' }
+Plug 'gu-fan/riv.vim', { 'for': 'rst' }
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
 Plug 'andymass/vim-matchup'
