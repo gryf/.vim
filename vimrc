@@ -276,7 +276,7 @@ function s:SetMarkdownSettings() "{{{2
         map <S-F5> :ShowInBrowser<CR>
     endif
 
-    autocmd BufWritePost *.md :silent make
+    " autocmd BufWritePost *.md :silent make
 endfunction
 "}}}
 function s:SetSnippetSettings() "{{{2
