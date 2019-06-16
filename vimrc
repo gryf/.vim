@@ -129,7 +129,7 @@ set softtabstop=4
 
 "spell options
 set spelllang=pl,en
-let &spellfile=expand('/home/gryf/.vim/spell/pl.utf-8.add')
+let &spellfile=expand('~/.vim/spell/pl.utf-8.add')
 
 set splitbelow                      "Create new window below current one
 set swapfile                        "Use swap file
@@ -433,7 +433,7 @@ if executable('ag')
 endif
 "}}}
 "KickAssembler {{{2
-let g:kickass_path = '/home/gryf/c64/PCTools/Cross-assemblers/KickAssembler/KickAss.jar'
+let g:kickass_path = '/opt/KickAssembler/KickAss.jar'
 "}}}
 " Calendar {{{2
 let g:calendar_monday = 1
