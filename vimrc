@@ -724,7 +724,9 @@ if has('gui_running')
     "Turn off annoying beep
     au GUIEnter * set vb t_vb=
 endif
-colorscheme wombat256grf
+
+silent! colorscheme wombat256grf
+
 if $TERM == 'linux' && !has('gui_running')
     " fallback to basic 8-color colorscheme
     colorscheme pablo
