@@ -320,6 +320,7 @@ function s:SetRestSettings() "{{{2
     setlocal smartindent
     setlocal autoindent
     setlocal formatoptions=tcq  "set VIms default
+    syn spell toplevel
 
     function! <SID>ShowInBrowser()
         let l:uri = expand("%:p:r") . ".html"
