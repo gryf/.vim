@@ -556,6 +556,12 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
 map <Leader>wn <Plug>VimwikiNextWord
 map <Leader>wp <Plug>VimwikiPrevWord
 " }}}
+"Zoom {{{2
+"Additinal mappings for keypadless keyboards
+nmap <C-S-F12> :ZoomIn<CR>
+nmap <C-S-F11> :ZoomOut<CR>
+nmap <C-S-F10> :ZoomReset<CR>
+" }}}
 "}}}
 " FUNCTIONS: usefull functions for all of the files {{{
 
