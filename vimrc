@@ -11,13 +11,13 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'gu-fan/riv.vim', { 'for': 'rst' }
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
 Plug 'andymass/vim-matchup'
 Plug 'ayuanx/vim-mark-standalone'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'dogrover/vim-pentadactyl'
+Plug 'ericpruitt/tmux.vim'
 Plug 'fs111/pydoc.vim', { 'for': 'python' }
 Plug 'gryf/dragvisuals'
 Plug 'gryf/pep8-vim', { 'for': 'python' }
@@ -25,14 +25,13 @@ Plug 'gryf/pylint-vim', { 'for': 'python' }
 Plug 'gryf/python-syntax', { 'for': 'python' }
 Plug 'gryf/python.vim', { 'for': 'python' }
 Plug 'gryf/pythonhelper', { 'for': 'python' }
-Plug 'gryf/tagbar', {'branch': 'show_tag_kind2'}
+Plug 'gryf/tagbar', { 'branch': 'show_tag_kind2' }
 Plug 'gryf/vim-latex-compiler'
 Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'gu-fan/riv.vim', { 'for': 'rst' }
 Plug 'honza/vim-snippets'
 Plug 'kazuyukitanimura/jsbeautify'
-Plug 'ericpruitt/tmux.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'mattn/calendar-vim'
 Plug 'mikeage/occur.vim'
@@ -41,6 +40,7 @@ Plug 'myhere/vim-nodejs-complete', { 'for': 'javascript' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'pcaro90/jpythonfold.vim'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
