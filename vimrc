@@ -18,6 +18,7 @@ Plug 'ayuanx/vim-mark-standalone'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'dogrover/vim-pentadactyl'
 Plug 'ericpruitt/tmux.vim'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'fs111/pydoc.vim', { 'for': 'python' }
 Plug 'gryf/dragvisuals'
 Plug 'gryf/pep8-vim', { 'for': 'python' }
