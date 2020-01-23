@@ -26,7 +26,6 @@ Plug 'gryf/pylint-vim', { 'for': 'python' }
 Plug 'gryf/python-syntax', { 'for': 'python' }
 Plug 'gryf/python.vim', { 'for': 'python' }
 Plug 'gryf/pythonhelper', { 'for': 'python' }
-Plug 'gryf/tagbar', { 'branch': 'show_tag_kind2' }
 Plug 'gryf/vim-latex-compiler'
 Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
@@ -34,6 +33,7 @@ Plug 'gu-fan/riv.vim', { 'for': 'rst' }
 Plug 'honza/vim-snippets'
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
 Plug 'mattn/calendar-vim'
 Plug 'mikeage/occur.vim'
 Plug 'mileszs/ack.vim'
