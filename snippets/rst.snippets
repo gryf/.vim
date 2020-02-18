@@ -1,0 +1,33 @@
+snippet dbg
+	debugger;
+
+snippet code
+	.. code:: ${1:python}
+	   :cssclass: ${2:wombat}
+	   ${3::linenos:} ${4:1}
+
+	   ${5:}
+
+snippet figure
+	.. figure:: ${1:image.png}
+	   :target: ${1:}
+	   :alt: ${2:description}
+	   :figclass: ${3:custclass}
+
+	   ${2:}
+
+snippet article
+	:Title: ${1:Blog post title}
+	:Date: ${2:`!v strftime("%Y-%m-%d %H:%M:%S")`}
+	:Modified: ${3:}
+	:Tags: ${4:blogtag1, blogtag2}
+
+	${5:}
+
+	.. more
+
+snippet raw
+	.. raw:: html
+
+	   ${1:}
+

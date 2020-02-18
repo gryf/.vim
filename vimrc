@@ -11,7 +11,6 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
 Plug 'andymass/vim-matchup'
 Plug 'ayuanx/vim-mark-standalone'
@@ -26,6 +25,7 @@ Plug 'gryf/pylint-vim', { 'for': 'python' }
 Plug 'gryf/python-syntax', { 'for': 'python' }
 Plug 'gryf/python.vim', { 'for': 'python' }
 Plug 'gryf/pythonhelper', { 'for': 'python' }
+Plug 'gryf/snipmate.vim'
 Plug 'gryf/vim-latex-compiler'
 Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
