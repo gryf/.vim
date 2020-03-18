@@ -42,6 +42,7 @@ Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'pcaro90/jpythonfold.vim'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'regedarek/ZoomWin'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -102,7 +103,8 @@ set number                          "show line numbers
 
 " Show ruler and set format of statusline
 set ruler
-set statusline=%<%F                 " filename (fullpath)
+set statusline=%{exists(':ZoomWin')!=0?GetWinState():'xxx'} " Z for zoomed in window state
+set statusline+=%<%F                " filename (fullpath)
 set statusline+=\ %h                " indicator for help buffer
 set statusline+=%m                  " modified flag
 set statusline+=%r                  " readonly flag
@@ -562,6 +564,26 @@ map <Leader>wp <Plug>VimwikiPrevWord
 nmap <C-S-F12> :ZoomIn<CR>
 nmap <C-S-F11> :ZoomOut<CR>
 nmap <C-S-F10> :ZoomReset<CR>
+" }}}
+" ZoomWin {{{2
+
+map <C-W>z :ZoomWin<CR>
+let g:win_state=''
+fun! ZWStatline(state)
+    if a:state
+        let g:win_state='[Z] '
+    else
+        let g:win_state=''
+    endif
+endfun
+if !exists("g:ZoomWin_funcref")
+    let g:ZoomWin_funcref = function("ZWStatline")
+endif
+
+function GetWinState()
+    return g:win_state
+endfunction
+
 " }}}
 "}}}
 " FUNCTIONS: usefull functions for all of the files {{{
