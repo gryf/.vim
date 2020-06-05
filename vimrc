@@ -223,15 +223,6 @@ function s:SetPythonSettings() "{{{2
     setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     setlocal smarttab
 
-    setlocal statusline=%<%F                 " filename (fullpath)
-    setlocal statusline+=\ %h                " indicator for help buffer
-    setlocal statusline+=%m                  " modified flag
-    setlocal statusline+=%r                  " readonly flag
-    setlocal statusline+=\ %{TagInStatusLine()} " current tag and its type
-    setlocal statusline+=%=                  " switch to the right
-    setlocal statusline+=%(%l,%c%V%)         " line, column and virtual column
-    setlocal statusline+=\ %3p%%             " percentage of the file
-
     set wildignore+=*.pyc
 
     inoremap # X<BS>#
