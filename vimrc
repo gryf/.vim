@@ -12,7 +12,6 @@ endif
 call plug#begin('~/.vim/bundle')
 
 Plug 'Valloric/MatchTagAlways'
-Plug 'andymass/vim-matchup'
 Plug 'ayuanx/vim-mark-standalone'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'dogrover/vim-pentadactyl'
