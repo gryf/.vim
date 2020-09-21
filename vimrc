@@ -34,7 +34,6 @@ Plug 'gu-fan/riv.vim', { 'for': 'rst' }
 Plug 'honza/vim-snippets'
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'kien/ctrlp.vim'
-Plug 'majutsushi/tagbar'
 Plug 'mattn/calendar-vim'
 Plug 'mikeage/occur.vim'
 Plug 'mileszs/ack.vim'
@@ -43,11 +42,11 @@ Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'pcaro90/jpythonfold.vim'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdtree'
+Plug 'preservim/tagbar'
 Plug 'regedarek/ZoomWin'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'skammer/vim-css-color'
 Plug 'terryma/vim-multiple-cursors'
@@ -63,6 +62,7 @@ Plug 'vim-scripts/indentpython', { 'for': 'python' }
 Plug 'vim-scripts/loremipsum'
 Plug 'vim-scripts/mako.vim', { 'for': 'mako' }
 Plug 'vim-scripts/mako.vim--Torborg', { 'for': 'mako' }
+Plug 'vim-syntastic/syntastic'
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
 
