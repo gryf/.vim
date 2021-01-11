@@ -104,7 +104,7 @@ set number                          "show line numbers
 
 " Show ruler and set format of statusline
 set ruler
-set statusline=%{exists(':ZoomWin')!=0?GetWinState():'xxx'} " Z for zoomed in window state
+set statusline=%{exists(':ZoomWin')!=0?GetWinState():''} " Z for zoomed in window state
 set statusline+=%<%F                " filename (fullpath)
 set statusline+=\ %h                " indicator for help buffer
 set statusline+=%m                  " modified flag
