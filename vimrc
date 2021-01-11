@@ -57,7 +57,6 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/JavaScript-Indent', { 'for': 'javascript' }
 Plug 'vim-scripts/LanguageTool'
-Plug 'vim-scripts/Python-2.x-Standard-Library-Reference', { 'for': 'python' }
 Plug 'vim-scripts/ShowMarks'
 Plug 'vim-scripts/indentpython', { 'for': 'python' }
 Plug 'vim-scripts/loremipsum'
