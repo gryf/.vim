@@ -19,6 +19,7 @@ Plug 'ericpruitt/tmux.vim'
 if has("patch-8.0.1453")
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 endif
+Plug 'dense-analysis/ale'
 Plug 'fs111/pydoc.vim', { 'for': 'python' }
 Plug 'gryf/dragvisuals'
 Plug 'gryf/pep8-vim', { 'for': 'python' }
@@ -62,7 +63,6 @@ Plug 'vim-scripts/indentpython', { 'for': 'python' }
 Plug 'vim-scripts/loremipsum'
 Plug 'vim-scripts/mako.vim', { 'for': 'mako' }
 Plug 'vim-scripts/mako.vim--Torborg', { 'for': 'mako' }
-Plug 'vim-syntastic/syntastic'
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
 
@@ -528,10 +528,6 @@ let g:rubber_make_on_save = 0
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
 let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-"}}}
-"Syntastic {{{2
-"don't use pylint to check since it's slow on big modules
-let g:syntastic_python_checkers = ["python", "flake8"]
 "}}}
 "Tagbar {{{2
 nmap <Leader>t :Tagbar<CR>
