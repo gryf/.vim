@@ -44,7 +44,6 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'pcaro90/jpythonfold.vim'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'preservim/nerdcommenter'
-Plug 'preservim/nerdtree'
 Plug 'preservim/tagbar'
 Plug 'regedarek/ZoomWin'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
@@ -496,9 +495,6 @@ autocmd ColorScheme * call <SID>CustomHighlightings()
 "}}}
 "NERDCommenter {{{2
 let g:NERDSpaceDelims=1
-"}}}
-"NERDtree {{{
-map <F2> :NERDTreeToggle<cr>
 "}}}
 " Occur {{{
 nnoremap <silent> <unique> <Leader>oc :Occur<CR>
