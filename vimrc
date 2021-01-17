@@ -206,6 +206,7 @@ map ]b :call OpenInWebBrowser()<cr>
 
 "remove search highlight and refresh
 nnoremap <silent> <C-l> :nohl<CR>:syn sync fromstart<CR><C-l>
+map <F3> :call <SID>CycleDiffAlgorithm()<cr>
 map <F4> :call <SID>ToggleHex()<cr>
 " }}}
 "FileTypes: specific vim behaviour {{{
@@ -715,6 +716,31 @@ endfunction
 function <SID>CreateScratch()
     new|setl bt=nofile bh=wipe nobl
     return ""
+endfunction
+
+function s:CycleDiffAlgorithm()
+    " TODO: hardcoded map for available diff algorithms, maybe there is a way
+    " to retrieve it somehow.
+    let l:algomap = {}
+    let l:algomap.myers = 'algorithm:minimal'
+    let l:algomap.minimal = 'algorithm:patience'
+    let l:algomap.patience = 'algorithm:histogram'
+    let l:algomap.histogram = 'algorithm:myers'
+    let l:nextalgo = 'algorithm:myers'
+    let l:opts = split(&diffopt, ',')
+
+    " find first algorithm: option, if exists.
+    for item in l:opts
+        if item =~ 'algorithm:'
+           let l:nextalgo = get(l:algomap, split(item, ':')[1], l:nextalgo)
+           break
+        endif
+    endfor
+
+    " filter out all the algorithm:... occurrences
+    let l:opts = add(filter(l:opts, 'v:val !~ "algorithm:"'), l:nextalgo)
+    let &diffopt = join(l:opts, ',')
+    echom 'Set diff algorithm to: ' . split(l:nextalgo, ':')[1]
 endfunction
 
 "write files as a root using sudo
