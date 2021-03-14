@@ -534,7 +534,8 @@ let g:tagbar_compact = 1
 let g:vimwiki_list = [{'path': '~/vimwiki/',
           \ 'template_path': '~/vimwiki/',
           \ 'template_default': 'default',
-          \ 'template_ext': '.tpl'}]
+          \ 'template_ext': '.tpl',
+          \ 'css_name': 'vimwiki_style.css'}]
 "redefine tab key for vimwiki
 map <Leader>wn <Plug>VimwikiNextWord
 map <Leader>wp <Plug>VimwikiPrevWord
