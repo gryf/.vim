@@ -588,7 +588,7 @@ function <SID>StripTrailingWhitespaces(force, mode) range
         return
     endif
 
-    if a:force == 1 || &ft =~ 'python\|rst\|wiki\|javascript\|css\|html\|xml'
+    if a:force == 1 || &ft =~ 'python\|rst\|wiki\|javascript\|css\|html\|xml\|yaml\|sh'
         " Preparation: save last search, and cursor position.
         let _s=@/
         let l = line(".")
