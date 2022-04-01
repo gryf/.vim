@@ -42,7 +42,6 @@ Plug 'myhere/vim-nodejs-complete', { 'for': 'javascript' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'pcaro90/jpythonfold.vim'
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/tagbar'
 Plug 'regedarek/ZoomWin'
