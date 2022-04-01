@@ -520,6 +520,7 @@ let g:riv_auto_format_table = 0
 "}}}
 " Rubber / vim-latex-compiler {{{2
 let g:rubber_make_on_save = 0
+let g:rubber_command = 'xelatex'
 " }}}
 "ShowMarks {{{2
 let g:showmarks_ignore_type = "hqprm"
