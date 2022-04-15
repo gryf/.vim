@@ -464,6 +464,10 @@ vmap <expr> <C-UP> DVB_Drag('up')
 vmap <expr> D DVB_Duplicate()
 let g:DVB_TrimWS = 1
 "}}}
+"Fugitive {{{2
+" I like simple G* commands, i.e. Gblame over Git blame
+let g:fugitive_legacy_commands = 1
+"}}}
 "Gundo {{{2
 map <Leader>u :GundoToggle<cr>
 let g:gundo_prefer_python3 = 1
