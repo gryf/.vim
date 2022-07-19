@@ -364,6 +364,7 @@ function s:SetRestSettings() "{{{2
 endfunction
 "}}}
 function s:SetVimwikiSettings() "{{{2
+    setlocal spell
     map <F5> :Vimwiki2HTML<CR>
     map <S-F5> :Vimwiki2HTMLBrowse<CR>
     map <C-F5> :VimwikiAll2HTML<CR>
