@@ -758,7 +758,7 @@ command W w !sudo tee "%" > /dev/null
 "}}}
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
-    set guifont=RobotoMono\ Nerd\ Font\ 12
+    set guifont=RobotoMono\ Nerd\ Font\ 11
     set mouse=a                "Enable mouse support
     " No toolbar, menu, scrollbars, draw simple text tabs. This would keep
     " window in one place, and also this will conserve space. Tabs are huge
