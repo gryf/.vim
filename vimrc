@@ -31,7 +31,7 @@ Plug 'gryf/snipmate.vim'
 Plug 'gryf/vim-latex-compiler'
 Plug 'gryf/wombat256grf'
 Plug 'gryf/zoom.vim'
-Plug 'gu-fan/riv.vim', { 'for': 'rst' }
+Plug 'habamax/vim-rst', { 'for': 'rst' }
 Plug 'honza/vim-snippets'
 Plug 'kazuyukitanimura/jsbeautify'
 Plug 'kien/ctrlp.vim'
