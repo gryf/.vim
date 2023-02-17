@@ -546,7 +546,7 @@ let g:tagbar_type_vimwiki = {
 \ }
 " Note: see statusline settings for status bar tag conf
 "}}}
-"{{{2  
+"Sandwitch {{{2  
 " Make sandwitch to use my memorymuscle craved shorcuts for surround
 runtime macros/sandwich/keymap/surround.vim
 "}}}
