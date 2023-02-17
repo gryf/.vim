@@ -537,6 +537,13 @@ let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 "Tagbar {{{2
 nmap <Leader>t :Tagbar<CR>
 let g:tagbar_compact = 1
+let g:tagbar_type_vimwiki = {
+\ 'ctagstype' : 'vimwiki',
+\ 'kinds'     : [
+\ 'h:header',
+\ ],
+\ 'sort'    : 0
+\ }
 " Note: see statusline settings for status bar tag conf
 "}}}
 "{{{2  
