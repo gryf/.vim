@@ -423,6 +423,10 @@ if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 "}}}
+"Ale {{{2
+let g:ale_sh_bashate_executable="bashate -i E006"
+let g:ale_virtualtext_cursor=0
+"}}}
 "KickAssembler {{{2
 let g:kickass_path = '/opt/KickAssembler/KickAss.jar'
 "}}}
