@@ -12,16 +12,16 @@ snippet dbg Python Debugger abbrv
 snippet ipdb ipdb abbrv
 	__import__('ipdb').set_trace()
 snippet rpdb remote_pdb debbuger
-	__import__('remote_pdb').set_trace()
+	__import__('remote_pdb').RemotePdb('127.0.0.1', 4444).set_trace()
 snippet msg Tk graphical message
-	from Tkinter import Tk
-	import ttk
-	import tkMessageBox
-	window = Tk()
+	import tkinter
+	import tkinter.ttk
+	import tkinter.messagebox
+	window = tkinter.Tk()
 	window.wm_withdraw()  # make window invisible. we only want message boxes
-	ttk.Style().theme_use('clam')
-	tkMessageBox.showinfo(title="${1:title}",
-						  message="${2:msg}",
-						  parent=window)
+	tkinter.ttk.Style().theme_use('clam')
+	tkinter.messagebox.showinfo(title="${1:title}",
+								message="${2:msg}",
+								parent=window)
 snippet _ Dunder completion
 	__${1:init}__$0
