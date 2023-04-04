@@ -50,7 +50,7 @@ Plug 'skammer/vim-css-color'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
-Plug 'machakann/vim-sandwich'
+Plug 'tpope/vim-surround'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/JavaScript-Indent', { 'for': 'javascript' }
 Plug 'vim-scripts/LanguageTool'
@@ -542,10 +542,6 @@ let g:tagbar_type_vimwiki = {
 \ 'sort'    : 0
 \ }
 " Note: see statusline settings for status bar tag conf
-"}}}
-"Sandwitch {{{2  
-" Make sandwitch to use my memorymuscle craved shorcuts for surround
-runtime macros/sandwich/keymap/surround.vim
 "}}}
 "VimWIKI {{{2
 let g:vimwiki_list = [{'path': '~/vimwiki/',
