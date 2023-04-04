@@ -15,7 +15,6 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'ayuanx/vim-mark-standalone'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'dogrover/vim-pentadactyl'
-Plug 'ericpruitt/tmux.vim'
 if has("patch-8.0.1453")
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 endif
@@ -379,8 +378,6 @@ endfunction
 "remove all trailing whitespace for specified files before write
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0, 'n')
 
-"set correct filetype for tmux
-autocmd BufRead *.tmux.conf set filetype=tmux
 autocmd BufRead *.mako set filetype=mako
 autocmd BufRead *.ass, *asm set filetype=kickass
 
