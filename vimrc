@@ -11,15 +11,14 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'Valloric/MatchTagAlways'
+Plug 'Valloric/MatchTagAlways', { 'for': ['html', 'xml'] }
 Plug 'ayuanx/vim-mark-standalone'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'dogrover/vim-pentadactyl'
 if has("patch-8.0.1453")
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 endif
 Plug 'dense-analysis/ale'
-Plug 'fs111/pydoc.vim', { 'for': 'python' }
+Plug 'fs111/pydoc.vim', { 'for': 'python' } " adds Pydoc command and K under cursor
 Plug 'gryf/dragvisuals'
 Plug 'gryf/pep8-vim', { 'for': 'python' }
 Plug 'gryf/pylint-vim', { 'for': 'python' }
@@ -27,32 +26,26 @@ Plug 'gryf/python-syntax', { 'for': 'python' }
 Plug 'gryf/python.vim', { 'for': 'python' }
 Plug 'gryf/pythonhelper', { 'for': 'python' }
 Plug 'gryf/snipmate.vim'
-Plug 'gryf/vim-latex-compiler'
+Plug 'gryf/vim-latex-compiler', { 'for': 'tex' }
 Plug 'gryf/wombat256grf'
-Plug 'gryf/zoom.vim'
+Plug 'gryf/zoom.vim'  " control gui font size with '+' or '-; keys. 
 Plug 'habamax/vim-rst', { 'for': 'rst' }
 Plug 'honza/vim-snippets'
-Plug 'kazuyukitanimura/jsbeautify'
 Plug 'kien/ctrlp.vim'
-Plug 'mattn/calendar-vim'
 Plug 'mikeage/occur.vim'
 Plug 'mileszs/ack.vim'
-Plug 'myhere/vim-nodejs-complete', { 'for': 'javascript' }
 Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'pcaro90/jpythonfold.vim'
+Plug 'pcaro90/jpythonfold.vim', { 'for': 'python' }
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/tagbar'
 Plug 'regedarek/ZoomWin'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'sjl/gundo.vim'
-Plug 'skammer/vim-css-color'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'skammer/vim-css-color', { 'for': 'css' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/DrawIt'
-Plug 'vim-scripts/JavaScript-Indent', { 'for': 'javascript' }
 Plug 'vim-scripts/LanguageTool'
 Plug 'vim-scripts/ShowMarks'
 Plug 'vim-scripts/indentpython', { 'for': 'python' }
