@@ -38,7 +38,7 @@ Plug 'gryf/pythonhelper', { 'for': 'python' }
 Plug 'gryf/snipmate.vim'
 Plug 'gryf/vim-latex-compiler', { 'for': 'tex' }
 Plug 'gryf/wombat256grf'
-Plug 'gryf/zoom.vim'  " control gui font size with '+' or '-; keys. 
+Plug 'gryf/zoom.vim'  " control gui font size with '+' or '-; keys.
 Plug 'habamax/vim-rst', { 'for': 'rst' }
 Plug 'honza/vim-snippets'
 Plug 'kien/ctrlp.vim'
@@ -206,6 +206,12 @@ map <F3> :call <SID>CycleDiffAlgorithm()<cr>
 map <F4> :call <SID>ToggleHex()<cr>
 " }}}
 "FileTypes: specific vim behaviour {{{
+function s:SetAsciiDoc() "{{{2
+    " AsciiDoc specific options
+    setlocal makeprg=asciidoc\ -b\ html5\ \"%\"
+    map <S-F5> :ShowInBrowser<CR>
+endfunction
+"}}}
 function s:SetPythonSettings() "{{{2
     " Python specific options
     setlocal cinkeys-=0#
@@ -252,18 +258,7 @@ function s:SetMarkdownSettings() "{{{2
     setlocal autoindent
     setlocal formatoptions=tcq "set VIms default
 
-    function! <SID>ShowInBrowser()
-        let l:uri = expand("%:p:r") . ".html"
-        call system(g:browser . " " . l:uri)
-        echohl Statement
-        echo "Opened '" . l:uri ."' in " . g:browser
-        echohl None
-    endfunction
-
-    if !exists(":ShowInBrowser")
-        command ShowInBrowser call s:ShowInBrowser()
-        map <S-F5> :ShowInBrowser<CR>
-    endif
+    map <S-F5> :ShowInBrowser<CR>
 
     " autocmd BufWritePost *.md :silent make
 endfunction
@@ -312,20 +307,7 @@ function s:SetRestSettings() "{{{2
     setlocal formatoptions=tcq  "set VIms default
     syn spell toplevel
 
-    function! <SID>ShowInBrowser()
-        let l:uri = expand("%:p:r") . ".html"
-        silent make
-        call system(g:browser . " " . l:uri)
-
-        echohl Statement
-        echo "Opened '" . l:uri ."' in " . g:browser
-        echohl None
-    endfunction
-
-    if !exists(":ShowInBrowser")
-        command ShowInBrowser call s:ShowInBrowser()
-        map <S-F5> :ShowInBrowser<CR>
-    endif
+    map <S-F5> :ShowInBrowser<CR>
 
     function! WordFrequency() range
         let all = split(join(getline(a:firstline, a:lastline)), '\k\+')
@@ -380,6 +362,7 @@ autocmd BufRead *.ass, *asm set filetype=kickass
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 
+autocmd FileType asciidoc call <SID>SetAsciiDoc()
 autocmd FileType python call <SID>SetPythonSettings()
 autocmd FileType json call <SID>SetJavaScriptSettings()
 autocmd FileType javascript call <SID>SetJavaScriptSettings()
@@ -576,6 +559,19 @@ endfunction
 " }}}
 "}}}
 " FUNCTIONS: usefull functions for all of the files {{{
+
+" open file in a browser. Usefull for documentation filetypes like reST, md or
+" asciidoc
+function! <SID>ShowInBrowser()
+    let l:uri = expand("%:p:r") . ".html"
+    silent make
+    call system(g:browser . " " . l:uri)
+
+    echohl Statement
+    echo "Opened '" . l:uri ."' in " . g:browser
+    echohl None
+endfunction
+command ShowInBrowser call s:ShowInBrowser()
 
 " Simple wrapper for :make command
 function <SID>Make()
