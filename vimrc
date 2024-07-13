@@ -64,12 +64,7 @@ Plug 'vim-scripts/mako.vim', { 'for': 'mako' }
 Plug 'vim-scripts/mako.vim--Torborg', { 'for': 'mako' }
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
-
-" Custom plugins: custom plugins per machine {{{
-" if filereadable($MYVIMRC . '.local')
-if filereadable(fnamemodify($MYVIMRC, ':h') . '/plugins.local')
-    exec "source " . fnamemodify($MYVIMRC, ':h') . '/plugins.local'
-endif
+Plug 'thinca/vim-localrc'
 
 call plug#end()
 " }}}
@@ -779,10 +774,5 @@ endif
 
 silent! exec 'colorscheme ' . s:_colorscheme
 
-"}}}
-" Custom: custom config per machine {{{
-if filereadable($MYVIMRC . '.local')
-    exec "source " . $MYVIMRC . '.local'
-endif
 "}}}
 " vim:ts=4:sw=4:wrap:fdm=marker:
