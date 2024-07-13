@@ -156,7 +156,7 @@ set noswapfile
 "set undodir=~/.cache
 
 " Strip trailing whitespace option
-let stripTrailingWhitespace = 1
+let stripTrailingWhitespace = 0
 
 " Ignore missing spell files
 let loaded_spellfile_plugin = 1
@@ -372,9 +372,6 @@ function s:SetGitcommitSettings() "{{{2
     setlocal spell
 endfunction
 "}}}
-
-"remove all trailing whitespace for specified files before write
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces(0, 'n')
 
 autocmd BufRead *.mako set filetype=mako
 autocmd BufRead *.ass, *asm set filetype=kickass
