@@ -1,15 +1,25 @@
 "Basic setup for all files {{{
 set nocompatible                    "VIM over VI
 
-" vimplug conf {{{
+" Get the config dir, as config can be either on ~/.vim or ~/.config/vim
+let s:_confdir = fnamemodify($MYVIMRC, ':h')
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" Set colorscheme depending on the environment vim is running
+if $TERM == 'linux' && !has('gui_running')
+    " fallback to basic 8-color colorscheme
+    let s:_colorscheme = 'pablo'
+else
+    let s:_colorscheme = 'wombat256grf'
+endif
+
+" vimplug conf {{{
+if ! filereadable(s:_confdir . '/autoload/plug.vim')
+    silent exec "!curl -fLo " . s:_confdir . "/autoload/plug.vim --create-dirs"
+                \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.vim/bundle')
+call plug#begin(s:_confdir . '/bundle')
 
 Plug 'Valloric/MatchTagAlways', { 'for': ['html', 'xml'] }
 Plug 'ayuanx/vim-mark-standalone'
@@ -122,7 +132,7 @@ set softtabstop=4
 
 "spell options
 set spelllang=pl,en
-let &spellfile=expand('~/.vim/spell/pl.utf-8.add')
+let &spellfile=expand(s:_confdir . '/spell/pl.utf-8.add')
 
 set splitbelow                      "Create new window below current one
 set swapfile                        "Use swap file
@@ -767,12 +777,8 @@ if has('gui_running')
     au GUIEnter * set vb t_vb=
 endif
 
-silent! colorscheme wombat256grf
+silent! exec 'colorscheme ' . s:_colorscheme
 
-if $TERM == 'linux' && !has('gui_running')
-    " fallback to basic 8-color colorscheme
-    colorscheme pablo
-endif
 "}}}
 " Custom: custom config per machine {{{
 if filereadable($MYVIMRC . '.local')
