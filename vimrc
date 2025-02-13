@@ -64,10 +64,10 @@ Plug 'vim-scripts/mako.vim', { 'for': 'mako' }
 Plug 'vim-scripts/mako.vim--Torborg', { 'for': 'mako' }
 Plug 'vimwiki/vimwiki'
 Plug 'will133/vim-dirdiff'
+Plug 'rickhowe/diffchar.vim'
 Plug 'thinca/vim-localrc'
 
 call plug#end()
-" }}}
 " }}}
 
 filetype plugin indent on           "turn plugins/indent on
