@@ -343,10 +343,11 @@ function s:SetRestSettings() "{{{2
 endfunction
 "}}}
 function s:SetVimwikiSettings() "{{{2
+    let b:ale_enabled=0
     setlocal spell
-    map <F5> :Vimwiki2HTML<CR>
+    setlocal makeprg=vw2html\ \"%\"
     map <S-F5> :Vimwiki2HTMLBrowse<CR>
-    map <C-F5> :VimwikiAll2HTML<CR>
+    map <C-F5> :PyVimwikiAll2Html<CR>
 endfunction
 "}}}
 function s:SetGitcommitSettings() "{{{2
@@ -355,8 +356,8 @@ function s:SetGitcommitSettings() "{{{2
 endfunction
 "}}}
 
-autocmd BufRead *.mako set filetype=mako
-autocmd BufRead *.ass, *asm set filetype=kickass
+autocmd BufRead,BufNewFile *.mako set filetype=mako
+autocmd BufRead,BufNewFile *.ass, *asm set filetype=kickass
 
 " make the current line highlighted only on current window
 autocmd WinEnter * setlocal cursorline
@@ -527,6 +528,7 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
           \ 'template_default': 'default',
           \ 'template_ext': '.tpl',
           \ 'css_name': 'vimwiki_style.css'}]
+let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr,span'
 "redefine tab key for vimwiki
 map <Leader>wn <Plug>VimwikiNextWord
 map <Leader>wp <Plug>VimwikiPrevWord
@@ -746,6 +748,27 @@ function s:CycleDiffAlgorithm()
     let l:opts = add(filter(l:opts, 'v:val !~ "algorithm:"'), l:nextalgo)
     let &diffopt = join(l:opts, ',')
     echom 'Set diff algorithm to: ' . split(l:nextalgo, ':')[1]
+endfunction
+
+" Convert wiki files to HTML
+command -bang -nargs=? PyVimwikiAll2Html call ConvertVimwikiToHtml(<bang>0, 0)
+command -bang -nargs=? PyVimwikiHtml call ConvertVimwikiToHtml(<bang>0, 1)
+function ConvertVimwikiToHtml(forced, currentfile)
+    if &ft != 'vimwiki'
+        " not vimwiki file, do nothing
+        return
+    endif
+    let l:command = 'vw2html'
+    if a:forced == 1
+        let l:command = l:command . ' -f'
+    endif
+
+    if a:currentfile == 1
+        let l:command = l:command . ' ' . bufname("%")
+    endif
+
+    call system(l:command)
+    echom "Conversion to HTML done with command: " . l:command
 endfunction
 
 "write files as a root using sudo
