@@ -345,9 +345,17 @@ endfunction
 function s:SetVimwikiSettings() "{{{2
     let b:ale_enabled=0
     setlocal spell
-    setlocal makeprg=vw2html\ \"%\"
+    setlocal makeprg=vw2html\ -q\ \"%\"
     map <S-F5> :Vimwiki2HTMLBrowse<CR>
     map <C-F5> :PyVimwikiAll2Html<CR>
+
+    let g:tagbar_type_vimwiki = {
+    \      'ctagstype' : 'vimwiki',
+    \      'kinds'     : [
+    \          'h:header',
+    \      ],
+    \      'sort'    : 0
+    \ }
 endfunction
 "}}}
 function s:SetGitcommitSettings() "{{{2
@@ -529,6 +537,8 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
           \ 'template_ext': '.tpl',
           \ 'css_name': 'vimwiki_style.css'}]
 let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr,span'
+" Do not make syntax=vimwiki for markdown files, ignore md as vimwiki flavor
+let g:vimwiki_ext2syntax = {}
 "redefine tab key for vimwiki
 map <Leader>wn <Plug>VimwikiNextWord
 map <Leader>wp <Plug>VimwikiPrevWord
@@ -758,7 +768,7 @@ function ConvertVimwikiToHtml(forced, currentfile)
         " not vimwiki file, do nothing
         return
     endif
-    let l:command = 'vw2html'
+    let l:command = 'vw2html -q'
     if a:forced == 1
         let l:command = l:command . ' -f'
     endif
