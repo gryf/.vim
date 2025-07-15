@@ -260,6 +260,22 @@ function s:SetMarkdownSettings() "{{{2
 
     map <S-F5> :ShowInBrowser<CR>
 
+    " https://github.com/jszakmeister/markdown2ctags
+    let g:tagbar_type_markdown = {
+        \   'ctagstype': 'markdown',
+        \   'ctagsbin' : 'markdown2ctags.py',
+        \   'ctagsargs' : '-f - --sort=yes --sro=»',
+        \   'kinds' : [
+        \     's:sections',
+        \     'i:images'
+        \   ],
+        \   'sro' : '»',
+        \   'kind2scope' : {
+        \     's' : 'section',
+        \   },
+        \   'sort': 0,
+        \ }
+
     " autocmd BufWritePost *.md :silent make
 endfunction
 "}}}
@@ -410,6 +426,7 @@ endif
 "Ale {{{2
 let g:ale_sh_bashate_executable="bashate -i E006"
 let g:ale_virtualtext_cursor=0
+let g:ale_linters={'python': ['ruff']}
 "}}}
 "KickAssembler {{{2
 let g:kickass_path = '/opt/KickAssembler/KickAss.jar'
@@ -531,11 +548,14 @@ let g:tagbar_type_vimwiki = {
 " Note: see statusline settings for status bar tag conf
 "}}}
 "VimWIKI {{{2
-let g:vimwiki_list = [{'path': '~/vimwiki/',
+let g:vimwiki_list = [
+          \ {'path': '~/vimwiki/',
           \ 'template_path': '~/vimwiki/',
+          \ 'path_html': '~/vimwiki_html_vw',
           \ 'template_default': 'default',
           \ 'template_ext': '.tpl',
-          \ 'css_name': 'vimwiki_style.css'}]
+          \ 'css_name': 'css/main.css'}
+        \ ]
 let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr,span'
 " Do not make syntax=vimwiki for markdown files, ignore md as vimwiki flavor
 let g:vimwiki_ext2syntax = {}
@@ -783,6 +803,23 @@ endfunction
 
 "write files as a root using sudo
 command W w !sudo tee "%" > /dev/null
+
+" stolen and modified from reddit, user and post doesn't exists enymore
+function! InsertVimwikiLink()
+    " TODO: hardcoded, perhaps make some variables to handle this, or use
+    " g:vimwiki_list to guess the wiki location and default extension.
+    let l:wikilocation = '~/vimwiki'
+    let l:wikiext = '.wiki'
+    let files = systemlist("find " . l:wikilocation . " -name '*" . l:wikiext .
+        \ "' | sed 's#.*" . l:wikilocation[2:] .
+        \ "/##; s/\\" . l:wikiext . "$//'")
+    let choice = fzf#run(fzf#wrap(
+        \ {'source': files,
+        \   'sink*': { lines -> execute("normal! a[[" . lines[0] . "]]") }
+        \}))
+endfunction
+nnoremap <leader>wl :call InsertVimwikiLink()<CR>
+inoremap <C-x><C-w> <Esc>:call InsertVimwikiLink()<CR>
 "}}}
 " GUI: detect graphics mode, set colorscheme {{{
 if has('gui_running')
